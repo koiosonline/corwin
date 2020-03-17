@@ -1,6 +1,6 @@
     var chatlink="https://gitter.im/web3examples/test/~embed";
     
-      SetupChat("chat",chatlink);
+      //SetupChat("chat",chatlink);
       
       
 async function SetupChat(windowid,chatlink) {
