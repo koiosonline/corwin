@@ -1,6 +1,6 @@
     var chatlink="https://gitter.im/web3examples/test/~embed";
     
-      //SetupChat("chat",chatlink);
+      SetupChat("chat",chatlink);
       
       
 async function SetupChat(windowid,chatlink) {
@@ -13,8 +13,8 @@ async function SetupChat(windowid,chatlink) {
     chat.src=chatlink;
     chat.width="100%"
     chat.height="100%"
-   // chat.style.outline="1px";
-   // chat.style.outlineStyle="solid";
+    chat.style.outline="1px";
+    chat.style.outlineStyle="solid";
     chatdom.appendChild(chat);
 
     function getChatandCopyToClipboard() {
