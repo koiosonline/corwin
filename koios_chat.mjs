@@ -2,7 +2,6 @@ import {LinkButton} from './koios_util.mjs';
 
 
     
-
       
       
 export async function SetupChat(windowid,chatlink) {
