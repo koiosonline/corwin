@@ -270,11 +270,11 @@ function EnableSound(fOn) {
     if (player)
         if (fOn) {
             player.unMute(); 
-            UpdateAudioIndicator();
+            UpdateAudioIndicator(fOn);
         }
         else {
             player.mute();
-            UpdateAudioIndicator();
+            UpdateAudioIndicator(fOn);
         }
     
 }   
