@@ -259,6 +259,7 @@ function ToggleSound() {
     
    document.getElementById("audio").style.color=fSoundOn?"red":"white"
    document.getElementById("audioMuted").style.color=fSoundOn?"red":"white"
+   UpdateAudioIndicator(true);
 }
 
 
@@ -280,8 +281,8 @@ function EnableSound(fOn) {
 }   
     
 async function UpdateAudioIndicator(fSoundOn) { 
-    HideButton("audio",!fSoundOn);
-    HideButton("mutedAudio",fSoundOn);
+    HideButton("audio",fSoundOn);
+    HideButton("mutedAudio",!fSoundOn);
 }
 
 
