@@ -258,8 +258,6 @@ function ToggleSound() {
 
     
    document.getElementById("audio").style.color=fSoundOn?"red":"white"
-   document.getElementById("audioMuted").style.color=fSoundOn?"red":"white"
-   UpdateAudioIndicator(true);
 }
 
 
@@ -267,25 +265,16 @@ function EnableSound(fOn) {
     fSoundOn = fOn;// store state
        if (video)
         video.muted= !fOn;
-        UpdateAudioIndicator(fOn);
     
     if (player)
         if (fOn) {
             player.unMute(); 
-            UpdateAudioIndicator(fOn);
         }
         else {
             player.mute();
-            UpdateAudioIndicator(fOn);
         }
     
 }   
-    
-async function UpdateAudioIndicator(fSoundOn) { 
-    HideButton("audio",!fSoundOn);
-    HideButton("mutedAudio",fSoundOn);
-}
-
 
 async function SetVideoSeconds(seconds) {
     //console.log(`In SetVideoSeconds, moving to ${seconds}`);
@@ -451,8 +440,6 @@ async function asyncloaded() {
     LinkButton("pause",TogglePauseVideo);
     HideButton("pause",true);
     LinkButton("audio",ToggleSound);
-    LinkButton("mutedAudio",ToggleSound);
-    HideButton("mutedAudio",true);
     LinkButton("speech",ToggleSpeech);
     LinkButton("subtitle",ToggleCueVisibility);     
     LinkButton("fullscreen",ToggleFullScreen);    
