@@ -267,6 +267,7 @@ function EnableSound(fOn) {
     fSoundOn = fOn;// store state
        if (video)
         video.muted= !fOn;
+        UpdateAudioIndicator(fOn);
     
     if (player)
         if (fOn) {
@@ -281,8 +282,8 @@ function EnableSound(fOn) {
 }   
     
 async function UpdateAudioIndicator(fSoundOn) { 
-    HideButton("audio",fSoundOn);
-    HideButton("mutedAudio",!fSoundOn);
+    HideButton("audio",!fSoundOn);
+    HideButton("mutedAudio",fSoundOn);
 }
 
 
@@ -451,6 +452,7 @@ async function asyncloaded() {
     HideButton("pause",true);
     LinkButton("audio",ToggleSound);
     LinkButton("mutedAudio",ToggleSound);
+    HideButton("mutedAudio",true);
     LinkButton("speech",ToggleSpeech);
     LinkButton("subtitle",ToggleCueVisibility);     
     LinkButton("fullscreen",ToggleFullScreen);    
