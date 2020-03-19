@@ -258,6 +258,7 @@ function ToggleSound() {
 
     
    document.getElementById("audio").style.color=fSoundOn?"red":"white"
+   document.getElementById("audioMuted").style.color=fSoundOn?"red":"white"
 }
 
 
