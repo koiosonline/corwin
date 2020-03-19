@@ -267,12 +267,10 @@ function EnableSound(fOn) {
         video.muted= !fOn;
     
     if (player)
-        if (fOn) {
+        if (fOn)
             player.unMute(); 
-        }
-        else {
+        else 
             player.mute();
-        }
     
 }   
 
