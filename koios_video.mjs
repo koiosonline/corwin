@@ -269,14 +269,12 @@ function EnableSound(fOn) {
         video.muted= !fOn;
     
     if (player)
-        if (fOn) 
+        if (fOn)
             player.unMute(); 
         else 
             player.mute();
     
 }   
-    
-
 
 async function SetVideoSeconds(seconds) {
     //console.log(`In SetVideoSeconds, moving to ${seconds}`);
