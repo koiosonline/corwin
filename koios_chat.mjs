@@ -1,5 +1,4 @@
 import {LinkButton,InsertIFrame} from './koios_util.mjs';    
-import Box from '3box';
 
 const Box = require('3box');
    
