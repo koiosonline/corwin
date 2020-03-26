@@ -1,13 +1,11 @@
 import {LinkButton,InsertIFrame} from './koios_util.mjs';    
-import Box from '3box'
+import Box from '3box';
 
-const Box = require('3box')
+const Box = require('3box');
    
 const myProfile = await Box.getProfile(myAddress);
-
-console.log(profile)
-      
-      
+console.log(myProfile);
+          
 export async function SetupChat(windowid,chatlink) {
     
    console.log("In setupchat");
