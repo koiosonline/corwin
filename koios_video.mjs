@@ -17,7 +17,7 @@ console.log(`In ${window.location.href} starting script: ${import.meta.url}`);
     import {GetSetupLitAndAssInfo,SetupLitAndAss} from './koios_drive.mjs';
     import {} from './koios_test.mjs';
     import {Relax,InitPopup} from './koios_popup.mjs';
-    import {DisplayMessageContinous,SwitchDisplayMessageContinous,DisplayMessage} from './koios_messages';
+    import {DisplayMessageContinous,SwitchDisplayMessageContinous,DisplayMessage} from './koios_messages.mjs';
 
 
 export var player=0;
