@@ -1,4 +1,4 @@
-import {sleep,publish,subscribe,MonitorDomid,MonitorVisible,FindDotConnectToTab} from './koios_util.mjs';
+import {sleep,publish,subscribe,MonitorDomid,MonitorVisible,SelectTabBasedOnName} from './koios_util.mjs';
 
 var oldtarget;
 var oldbackgroundColor;
@@ -32,7 +32,7 @@ function ChildChanged(childdomid,childnr) {
 
 export function InitPopup() { 
     MonitorDomid("popup","w-slider-nav","w-slider-dot","w-active",ChildChanged)    
-    MonitorVisible("popup")
+    MonitorVisible("popup") // publishes when object changes vibility
 }    
 
 // Later, you can stop observing
@@ -67,11 +67,10 @@ export async function Relax() {
     }
     console.log(document.getElementById("popup").style.cssText);
     
-   var tabrelax=FindDotConnectToTab("popup","relax");
+   
+   SelectTabBasedOnName("popup","relax");
     
-    //var tabrelax=document.getElementById('tabrelax')
-    if (tabrelax) 
-        tabrelax.click();
+   
     await sleep(RelaxTime);
     
     var style = window.getComputedStyle(document.getElementById("popup"))

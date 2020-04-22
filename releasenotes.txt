@@ -1,3 +1,121 @@
+Version 0.80:
+
+Functional updates:
+- literature tab shows links & notes for the links
+
+Technical updates:
+- fixed issues with video selection
+- shake & tilt mobile triggers disabled
+- improved the large start button logic
+- optimized text layout of notes
+
+Layout updates:
+- large start button added
+- added about tab
+- version info moved to about tab
+- test button hidden
+- music button moved to settings
+- video & slide name popup removed
+- left menu moves the rest of the screen to the right (so can been kept open on large screens)
+- navigation dots on video screen very small
+- adjusted video thumbnail to allways cover
+- adjusted slides to allways fit
+- centered large start button
+- slide-dots: green shadow on selected slide
+
+Version 0.79:
+
+Functional updates:
+- slideswindow can show pdf's and websites (including a link to show in a seperate tab)
+- added introduction video
+ 
+Technical updates:
+- add sort order for courses
+
+Layout updates:
+- resize screen with move button improved 
+    - percentages instead of fr
+    - redraw of screen with every move
+- shadows at < >, oooo (slides & video)
+- hires pictures of video's shown
+- drag to next video is working now
+- test button is hidden in production version 
+
+
+
+Version 0.78:
+
+Functional updates:
+- main screen layout can toggle between large notes ares & large slides area, by clicking on the drag icon
+
+Technical updates:
+- fixed progress bar for android
+- support for multiple ipfs providers
+
+Layout updates:
+- set android search bar color (only works when no theme has been set)
+
+
+Version 0.77:
+
+Functional updates:
+- see what has been watched (in lesson overview)
+
+Technical updates:
+- improved dragging the "move" button 
+- info about watched video's is stored (in the browser)
+
+Layout updates:
+- intro screen layout updated
+- relax animation updated
+- video progress bars shows previousely watched video
+- scroll bar in lesson overview
+
+Version 0.76:
+
+Functional updates:
+
+
+Technical updates:
+- register video progress and display as 9 blocks
+- fixed fullscreen for ios
+
+Layout updates:
+- animation at welcome screen
+- seperated welcome screen and message screen
+- fullscreen buttons
+- video infoscreen on lower right
+- menu buttons (left & right) centered vertically
+- notes screen 
+    - yellow background
+    - larger margins
+- popup screen 
+    - arrows yellow
+    - lessons overview new layout
+
+Version 0.75
+
+Functional updates:
+- Enabled keyboard input: n=next video, p=previous video
+- Fixed the connection of the slides to the video & slide indicators are showing in the progress bar (currently in red)
+
+Technical updates:
+- Adjusted course overview to merge courses & course levels
+
+Layout updates:
+- Hoover over "move" icon to see extra information
+- Video and slide info "on top" of video and slides
+
+Version 0.74
+
+Functional updates:
+
+Technical updates:
+
+Layout updates:
+Shake phone to leave fullscreen mode
+Lay phone flat to see extra information / Or hoover the slides area(e.g. titles of video and sheets)
+
 
 Version 0.73
 

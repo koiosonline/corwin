@@ -8,7 +8,7 @@ export async function DisplayMessage(text) {
     //console.log(msg);
     msgtext.innerText=text;
     
-    msg.style.display="block";
+    msg.style.display="flex";
     await sleep(1000);
     msg.style.display="none";    
 }
@@ -16,7 +16,7 @@ export async function DisplayMessage(text) {
 export async function SwitchDisplayMessageContinous(fOn) {
     console.log("In InitDisplayMessageContinous");
     var msg=document.getElementById("message");
-    msg.style.display=fOn?"block":"none";    
+    msg.style.display=fOn?"flex":"none";    
     
     var msgtext=document.getElementById("msg-text");
     msgtext.innerText = "";
@@ -39,14 +39,15 @@ async function VisibilityChange() {
       console.log(`VisibilityChange ${document.visibilityState}`);
       if (document.visibilityState == 'visible') {
           var currenttime = new Date();
-          DisplayMessage(`Welcome back after ${Math.round( (currenttime.getTime()-prevtime.getTime())/1000)} seconds`);
+          console.log(`Welcome back after ${Math.round( (currenttime.getTime()-prevtime.getTime())/1000)} seconds`);
       }   else 
           prevtime=  new Date()    
 }    
 
 var prevsum=0 
-var count =10;
+//var count =10;
  
+/* 
 function TestAccelerometer() {
     let accelerometer = null;
     try {
@@ -62,13 +63,14 @@ function TestAccelerometer() {
         accelerometer.addEventListener('reading', x=> {
                 var sum = (x.target.x + x.target.y + x.target.z)
                 var delta = Math.abs(sum-prevsum)
-                count++
-                if (delta > 3 ) {
-                    console.log(`delta ${delta} ${count}`)
-                    if (count > 10) {
-                        DisplayMessage("Phone is shaking");
-                        count = 0;
-                    }
+               // count++
+                if (delta > 20 ) {
+                    console.log(`delta ${delta} `) //${count}
+                    //if (count > 10) {
+                        
+                        publish("shaking");
+                      //  count = 0;
+                   // }
                 } 
                  prevsum = sum;
         } );
@@ -85,44 +87,30 @@ function TestAccelerometer() {
         }
     }
 }
+*/
 
-
-var countor =10;
-function handleOrientation(event) {
-    var x= event.beta
-    var y= event.gamma
-    var sum = Math.abs(x+y)
-    countor++;
-    console.log(`sum=${sum} ${countor}`);
-    if (sum < 3) {
-        
-         if (countor > 10) {
-              DisplayMessage("Phone perfectly flat");
-              countor=0;
-         }
-    }
-}
 
 async function MessagesStart() {
-    SwitchDisplayMessageContinous(true)    
-    DisplayMessageContinous("Starting Koios online player");
+    console.log("In MessagesStart");
+    
     document.addEventListener('visibilitychange',VisibilityChange)
     
-    console.log(window.Gyroscope);
-    console.log(window.ProximitySensor);
-    console.log(window.AmbientLightSensor);
-    console.log(window.Accelerometer);
-    TestAccelerometer();
+//    console.log(window.Gyroscope);
+//    console.log(window.ProximitySensor);
+//    console.log(window.AmbientLightSensor);
+//    console.log(window.Accelerometer);
+   // TestAccelerometer();
     
-    window.addEventListener("deviceorientation", handleOrientation, true);
+    
+
+    
+    //console.log(window.onerror);
+
+    
     
 }
 
-async function Playerloaded() {
-    await DisplayMessageContinous("Player loaded, have fun today");
-    await sleep(3000);
-    SwitchDisplayMessageContinous(false)
-}        
-
 subscribe('playerstart',    MessagesStart);
-subscribe('playerloaded',   Playerloaded);
+
+
+

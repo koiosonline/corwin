@@ -1,4 +1,4 @@
-console.log(`In ${window.location.href} starting script: ${import.meta.url}`);
+//console.log(`In ${window.location.href} starting script: ${import.meta.url}`);
 
 
 import "https://apis.google.com/js/api.js";
@@ -73,7 +73,7 @@ export function LinkButton(nameButton,funct) {
 
 function ShowButton(button,fFirst) {    
 
-console.log(`In ShowButton fFirst = ${fFirst}`);
+//console.log(`In ShowButton fFirst = ${fFirst}`);
     //var altcolor="white";
     var buttonchildren=button.getElementsByClassName("w-button")
     
@@ -121,29 +121,34 @@ export function LinkClickButton(nameButton) {
 }
 
 export function LinkToggleButton(nameButton,fInitial) {
-    var fOn=fInitial;
-    
+    ForceButton(nameButton,fInitial);    
     var button=document.getElementById(nameButton);
     if (button) {
-        ShowButton(button,fOn)
         button.title=nameButton; // add hoover text
-        button.addEventListener("click", x=>{
-            fOn = !fOn;
-            publish(`${nameButton}${fOn?"on":"off"}`);            
-            ShowButton(button,fOn)
+        button.addEventListener("click", x=>{            
+            
+            ForceButton(nameButton,!button.fOn);
+            publish(`${nameButton}${button.fOn?"on":"off"}`);
         });
     }
     return button;
 }
 
+export function ForceButton(nameButton,fValue) {
+    var button=document.getElementById(nameButton);
+     if (button) {
+        button.fOn = fValue;
+        ShowButton(button,fValue)
+     }        
+}
 
- export function DragItem(draggable,dragarea,mousearea,XYCB) {
+ export function DragItem(draggable,dragarea,mousearea,XYCB,ClickCB) { 
     var domiddraggable=document.getElementById(draggable); 
     var domidmousearea=document.getElementById(mousearea); 
     var domiddragarea=document.getElementById(dragarea); 
-    
-        
-     async function SliderDrag(ev) {   
+
+             
+   function SliderDrag(ev) {     
         var arearect=domiddragarea.getBoundingClientRect();   // recalc every time
         ev.preventDefault()            
         var x=undefined;
@@ -157,69 +162,82 @@ export function LinkToggleButton(nameButton,fInitial) {
         if (ev.clientY) y=ev.clientY; 
         if (y) percy = (y - arearect.top) / arearect.height     
         XYCB(percx,percy);
-        //console.log(`SliderDrag ${percx} ${percy}`);
-    }
-    
-    function SetzIndex(fChange) {  
-        domiddraggable.style.zIndex = (fChange? "-1": "")
-        domidmousearea.style.zIndex  = (fChange? "1": "")
-        
-        
-        var arrchildren=domidmousearea.children;    
-        for (var i=0;i<arrchildren.length;i++) 
-            arrchildren[i].style.zIndex=(fChange? "-2": "")      
+        //console.log(`SliderDrag ${percx.toFixed(2)} ${percy.toFixed(2)}`);   
+
+window.dispatchEvent(new Event('resize')); // resize window to make sure the slide scroll is calibrated again   
         
     }
     
-    async function SliderStart(ev) {
-        console.log(`Start dragging`);        
-        SetzIndex(true); // set all childeren to lower z-index, so the mouse works well        
-        SliderDrag(ev);
-        
-        domidmousearea.addEventListener("dragover",   SliderDrag);           
-        domidmousearea.addEventListener("mousemove",  SliderDrag);
+var touchstart;    
+    async function SliderStartTouch(ev) {
+        console.log(`Start touch`);   
+        touchstart=new Date();        
+        SliderDrag(ev);               
         domidmousearea.addEventListener("touchmove",  SliderDrag);
-        
-        domidmousearea.addEventListener("mouseup",    ev=>{console.log("mouseup");SliderStop();});  
-        domidmousearea.addEventListener("touchend",   ev=>{console.log("touchend");SliderStop();});  
-        
-        
-/*        
-        domidmousearea.addEventListener("dragend",    ev=>{console.log("dragend");SliderStop();});  
-        domidmousearea.addEventListener("drop",       ev=>{console.log("drop");SliderStop();});  
-        domidmousearea.addEventListener("dragexit",   ev=>{console.log("dragexit");SliderStop();});  
-        domidmousearea.addEventListener("dragleave",  ev=>{console.log("dragleave");SliderStop();});  
-        domidmousearea.addEventListener("mouseleave", ev=>{console.log("mouseleave");SliderStop();});  
-        domidmousearea.addEventListener("touchcancel",ev=>{console.log("touchcancel");SliderStop();});  
-*/        
+        domidmousearea.addEventListener("touchend",   SliderStopTouch);
     }       
     
-    async function SliderStop(ev) {
-        console.log("Stop dragging");
-        SetzIndex(false); // back to normal
-        domidmousearea.removeEventListener("dragover",   SliderDrag);           
-        domidmousearea.removeEventListener("mousemove",  SliderDrag);           
-        domidmousearea.removeEventListener("touchmove",  SliderDrag);
+    async function SliderStopTouch(ev) {
+        console.log(`Stop touch`);    
+        var touchend=new Date();
         
-        domidmousearea.removeEventListener("mouseup",    SliderStop);  
-        domidmousearea.removeEventListener("touchend",   SliderStop);
+        domidmousearea.removeEventListener("touchmove",  SliderDrag);
+        domidmousearea.removeEventListener("touchend",   SliderStopTouch);
+        console.log("Triggering resize");
+        window.dispatchEvent(new Event('resize')); // resize window to make sure the slide scroll is calibrated again        
+        
+        
+          console.log(touchend.getTime()-touchstart.getTime()); 
+        
+        if (ClickCB && (touchend.getTime()-touchstart.getTime() < 200 ) ) { // then just a click
+            console.log("Short touch");
+            ClickCB();
+        }
+        
+        
+    }            
+    
 
-/*        
-        domidmousearea.removeEventListener("drop",       SliderStop);            
-        domidmousearea.removeEventListener("dragend",    SliderStop);  
-        domidmousearea.removeEventListener("dragleave",  SliderStop);  
-        domidmousearea.removeEventListener("dragexit",   SliderStop);          
-        domidmousearea.removeEventListener("mouseleave", SliderStop);
-        domidmousearea.removeEventListener("touchcancel",SliderStop);
-*/
-    console.log("Triggering resize");
-    window.dispatchEvent(new Event('resize')); // resize window to make sure the slide scroll is calibrated again        
-    }   
-    domiddraggable.addEventListener('mousedown',  SliderStart);
-    domiddraggable.addEventListener('touchstart', SliderStart);
-  //  domiddraggable.addEventListener('dragstart',  SliderStart);    
-  
-  
+var mouse;    
+var clickstart;
+    async function SliderStartMouse(ev) {
+        console.log(`Start mouse`);
+        clickstart=new Date();
+        
+        mouse=document.createElement("div");
+        mouse.style.width="100%"
+        mouse.style.height="100%"
+        domidmousearea.parentNode.appendChild(mouse); 
+        mouse.style.backgroundColor="rgba(255, 255, 255, 0.2)"
+        mouse.style.position="absolute"
+        mouse.style.zIndex="200"
+        mouse.style.top="0%"
+
+        mouse.addEventListener("mousemove",  SliderDrag);
+        mouse.addEventListener("mouseup",    SliderStopMouse);
+    }
+    
+    async function SliderStopMouse(ev) {
+        console.log("Stop mouse"); 
+        var clickend=new Date();
+                
+        mouse.removeEventListener("mousemove",  SliderDrag);           
+        mouse.removeEventListener("mouseup",    SliderStopMouse);  
+        mouse.parentNode.removeChild(mouse)
+        console.log("Triggering resize");
+        window.dispatchEvent(new Event('resize')); // resize window to make sure the slide scroll is calibrated again   
+            
+         console.log(clickend.getTime()-clickstart.getTime());   
+            
+        if (ClickCB && (clickend.getTime()-clickstart.getTime() < 150 ) ) { // then just a click
+            console.log("Clicked");
+            ClickCB();
+        }
+        
+    }
+    
+    domiddraggable.addEventListener('touchstart', SliderStartTouch);
+    domiddraggable.addEventListener('mousedown',  SliderStartMouse);  
 }
 
 // Developers can annotate touch and wheel listeners with {passive: true} to indicate that they will never invoke preventDefault.
@@ -312,8 +330,8 @@ export function MonitorVisible(areaid) {
 
 
 
-export function FindDotConnectToTab(areaid,classid) {
-    console.log("In FindDotConnectToTab");
+export function SelectTabBasedOnName(areaid,classid) {
+    console.log("In SelectTabBasedOnName");
     var domid=document.getElementById(areaid);
     var slides=domid.getElementsByClassName("w-slide");
     var dots=domid.getElementsByClassName("w-slider-dot");
@@ -322,10 +340,163 @@ export function FindDotConnectToTab(areaid,classid) {
         var domidclass=slides[i].className;        
         domidclass = domidclass.replace("w-slide", "").trim();
         console.log(domidclass);
-        if (domidclass == classid)
-            return dots[i]
+        if (domidclass == classid) {
+             dots[i].click();
+             break;
+        }
     }    
-    return undefined;
 }   
+
+
+export function SelectTabBasedOnNumber(areaid,id) {
+    
+    var domid=document.getElementById(areaid);
+    var dots=domid.getElementsByClassName("w-slider-dot");
+    //console.log(dots);
+    console.log(`In SelectTabBasedOnNumber id=${id} dots.length=${dots.length}`);
+    dots[id].click()    
+}   
+
+
+
+
+export function CanvasProgressInfo(domid,fHorizontal,seeninfo) {
+    //console.log(seeninfo);
+    //console.log(domid);
+    var canvas=domid.getElementsByTagName("CANVAS")[0];
+    if (!canvas) {
+        canvas=document.createElement("CANVAS");        
+        domid.appendChild(canvas); 
+        canvas.width="20"  // symmetric
+        canvas.height="20"  // symmetric
+        canvas.style.width="100%"
+        canvas.style.height="100%"
+    }    
+    var ctx = canvas.getContext('2d');       
+    canvas.width="20"
+    canvas.height="20"    
+    var arearect=domid.getBoundingClientRect()
+    //console.log(arearect);
+    var factor
+    
+    if (fHorizontal) {
+        factor       = Math.round(arearect.width / seeninfo.seensec.length);
+        if (factor < 1) factor = 1; // in case bounding rect is still empty
+        canvas.width = seeninfo.seensec.length*factor // note, this cleans the ctx
+    }
+    else {
+        factor        = Math.round(arearect.height / seeninfo.seensec.length);
+        if (factor < 1) factor = 1;  // in case bounding rect is still empty
+        canvas.height = seeninfo.seensec.length // note, this cleans the ctx
+    }
+    //console.log(factor);
+    //console.log(canvas);
+    
+    
+    var primcolor=window.getComputedStyle(domid).getPropertyValue("color"); // use text color of parent
+    //console.log( ctx.fillStyle );
+    //void ctx.fillRect(x, y, width, height);
+    for (var i=0;i<seeninfo.seensec.length;i++) {
+        //console.log(seeninfo.seensec[i]) 
+        ctx.fillStyle = primcolor; // seeninfo.seensec[i] ? primcolor:  "yellow";
+        if (seeninfo.seensec[i]) 
+            if (fHorizontal)
+                ctx.fillRect(i*factor, 0, factor, 20);
+            else
+                ctx.fillRect(0, i*factor, 20, factor);
+    }
+}
+
+
+
+
+export function LoadVideoSeen(vidinfo) {
+    var storageid=`video-${vidinfo.videoid}`;
+    var get=localStorage.getItem(storageid);
+    var jsonparsed={}
+    
+    if (get) { // previous info about this video        
+        jsonparsed=JSON.parse(get)
+        jsonparsed.seensum=0
+        for (var i=0;i<vidinfo.duration;i++)
+            jsonparsed.seensum += jsonparsed.seensec[i];
+        
+    } else {
+        jsonparsed.seensum=0;
+        jsonparsed.seensec=[]
+        for (var i=0;i<vidinfo.duration;i++)
+            jsonparsed.seensec[i]=0;
+        jsonparsed.seenend=false;
+    }
+    return jsonparsed;
+}    
+
+export function SaveVideoSeen(seeninfo,vidinfo) {
+    var storageid=`video-${vidinfo.videoid}`;
+    var seenperc=parseFloat(seeninfo.seensum / vidinfo.duration).toFixed(3)
+    var obj = { seensec: seeninfo.seensec, seenperc: seeninfo.seenperc, seenend: seeninfo.seenend };
+    //console.log(obj)
+    var myJSON = JSON.stringify(obj);    
+    localStorage.setItem(storageid,myJSON)  
+}    
+
+
+// see chrome dev console / tab application / left column: Local storage
+
+
+
+
+export function GetCidViaIpfsProvider(cid,nr) {
+    return `${ipfsproviders[nr]}/${cid}`;    
+}    
+
+export function NrIpfsProviders() {
+   return ipfsproviders.length;
+}    
+let ipfsproviders=["https://ipfs.io/ipfs","https://ipfs.infura.io/ipfs"];
+
+export async function ipfsgetjson(cid) {
+
+    var indexjson
+    for (var i=0;i<NrIpfsProviders();i++) {
+        var url=GetCidViaIpfsProvider(cid,i);
+        console.log(`Checking ${url}`);
+        indexjson=await fetch(url);   // /index.json
+        if (indexjson.ok) break; // found a working version     
+    }
+    if (!indexjson.ok)
+        return undefined;    
+    var json = await indexjson.json();
+    return json;
+}    
+
+
+
+export class DomList {    
+    constructor (objectclass) {
+        console.log(`In constructor of DomList with objectclass=${objectclass}`);
+        var list = document.getElementsByClassName(objectclass);
+        //console.log(list)    
+        if (list && list[0]) {
+            this.template    = list[0];        
+            this.parentnode  = list[0].parentNode
+            list[0].remove();
+        } else
+            console.error(`${objectclass} not found`);
+    }
+    
+    AddListItem() {
+        console.log("In AddListItem");
+        if (!this.template) return undefined;
+        var target = this.template.cloneNode(true);
+        this.parentnode.appendChild(target);  
+        return target;
+    }
+ 
+    EmptyList() {        
+        while (this.parentnode && this.parentnode.firstChild)
+            this.parentnode.removeChild(this.parentnode.lastChild); // first remove previous children    
+    }
+}    
 
 

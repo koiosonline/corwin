@@ -1,16 +1,16 @@
-console.log(`In ${window.location.href} starting script: ${import.meta.url}`);
-
+//console.log(`In ${window.location.href} starting script: ${import.meta.url}`);
+// https://browserhow.com/how-to-clear-chrome-android-history-cookies-and-cache-data/
  // imports
-    import {SetupVideoWindowYouTube,SetVideoTitle,ShowVideoTitle} from './koios_playvideo.mjs';
+    import {SetupVideoWindowYouTube,SetVideoTitle} from './koios_playvideo.mjs';
     import {DisplayLessons, SelectLesson,CurrentLesson,LastLesson} from './koios_lessons.mjs';
-    import {LinkButton,HideButton,DragItem,publish,subscribe,LinkClickButton,LinkToggleButton} from './koios_util.mjs';
+    import {LinkButton,HideButton,DragItem,publish,subscribe,LinkClickButton,LinkToggleButton,CanvasProgressInfo,SaveVideoSeen,LoadVideoSeen,ForceButton} from './koios_util.mjs';
     import {GetSubTitlesAndSheets} from './koios_subtitles.mjs';
     import {currentlang,UpdateTranscript,FoundTranscript,SelectLanguage,SetVideoTranscriptCallbacks} from './koios_showtranscript.mjs';
     import {} from './koios_getslides.mjs';
-    import {FoundSlides,PrepareAndLoadSlides,UpdateSlide,SetupSlideWindow} from './koios_showslides.mjs';
+    import {FoundSlides,UpdateSlide} from './koios_showslides.mjs';
     import {} from './koios_chat.mjs';
     import {} from './koios_notes.mjs';
-    import {SetupSliders} from './koios_screenlayout.mjs';
+    import {SetupSliders /*,ShowTitles*/} from './koios_screenlayout.mjs';
     import {InitSpeak,StopSpeak,StartSpeak,EnableSpeech,IsSpeechOn} from './koios_speech.mjs';
     import {SetupLogWindow} from './koios_log.mjs';
     import {SetupChat} from './koios_chat.mjs';
@@ -18,11 +18,19 @@ console.log(`In ${window.location.href} starting script: ${import.meta.url}`);
     import {} from './koios_test.mjs';
     import {Relax,InitPopup} from './koios_popup.mjs';
     import {DisplayMessageContinous,SwitchDisplayMessageContinous,DisplayMessage} from './koios_messages.mjs';
+    import {} from './koios_music.mjs';
+    import {} from './koios_literature.mjs';
+    import {} from './koios_about.mjs';
 
 
 export var player=0;
-export var currentduration;
+//export var currentduration;
+export var currentvidinfo;
+
 { // Global variables
+//var currentvideoid;
+
+
 var position;
 var logpos;
 var logtext=0;
@@ -51,12 +59,24 @@ function GetDuration() {
     if (player && player.getDuration) return  player.getDuration();
     return 0;
 }  
+
+var seeninfo;
+
+function InitProgress(vidinfo) {
+    console.log("InitProgress");
+    seeninfo=LoadVideoSeen(vidinfo);
+    CanvasProgressInfo(document.getElementById("videoprogressbar"),true,seeninfo)
+}    
+
 async function VideoLocation() { 
     var CurrentPos=0;
     var Duration=GetDuration();
     var PlaybackRate=1;
     var ReallyPlayed=0;  
-    //console.log(`In VideoLocation pos=${CurrentPos}`);
+   // console.log(`In VideoLocation pos=${CurrentPos}`);
+    
+    if (IsVideoPaused())
+        return;  // probably just ended, don't update any more
     
     if (player) {
         if (player.getCurrentTime) {
@@ -64,12 +84,29 @@ async function VideoLocation() {
             PlaybackRate=player.getPlaybackRate()
         }
     }
-
     UpdateTranscript(CurrentPos);
     UpdateSlide(CurrentPos);
     SetVideoProgressBar(parseFloat (CurrentPos / Duration ));   
+    
+    var cursec=Math.floor(CurrentPos)
+    if (!seeninfo.seensec[cursec]) {
+        seeninfo.seensec[cursec]=1;
+        seeninfo.seensum++;
+    }    
+    SaveVideoSeen(seeninfo,currentvidinfo)
+    
+    CanvasProgressInfo(document.getElementById("videoprogressbar"),true,seeninfo)
 }  
+ 
+ 
 
+function SeenVideo() { // every few seconds save the progress
+    console.log(`Seen video ${currentvidinfo.txt}`);
+    seeninfo.seenend=true;
+    SaveVideoSeen(seeninfo,currentvidinfo)
+}    
+
+subscribe('videoend',    SeenVideo);
 
 
 
@@ -90,7 +127,7 @@ async function tcallback() {
    // console.log("In tcallback");
     VideoLocation();
    if (!IsVideoPaused())
-        setTimeout( tcallback, 1000); // 400
+        setTimeout( tcallback, 400); // 400
 }    
 /*
 function DisplayCurrentFunctionName(args) {
@@ -133,19 +170,43 @@ function CreateButton(name,funct,place) {
     place.appendChild(buttonback);
 }      
 function SetFullScreen(fSetFullScreen) {
-    console.log("Making fullscreen");
+    console.log(`Making fullscreen ${fSetFullScreen}`);
     let elem = document.body; // let elem = document.documentElement;
-    if (fSetFullScreen) {        
-        elem.requestFullscreen({ navigationUI: "hide" }).then({}).catch(err => {
-            console.log(`An error occurred while trying to switch into full-screen mode: ${err.message} (${err.name})`);
-        });
-    } else 
-       document.exitFullscreen(); 
+    if (fSetFullScreen) {                
+        if (elem.requestFullScreen)       console.log("elem.requestFullScreen")  
+        if (elem.mozRequestFullScreen)    console.log("elem.mozRequestFullScreen") 
+        if (elem.webkitRequestFullScreen) console.log("elem.webkitRequestFullScreen")
+        
+        if (elem.requestFullScreen) {
+            elem.requestFullScreen({ navigationUI: "hide" });
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen({ navigationUI: "hide" });
+        } else if (elem.webkitRequestFullScreen) {
+            elem.webkitRequestFullScreen({ navigationUI: "hide" });
+        }   
+    } else {
+        if (document.exitFullscreen)       console.log("document.exitFullscreen")  
+        if (document.mozExitFullscreen)    console.log("document.mozExitFullscreen") 
+        if (document.webkitExitFullscreen) console.log("document.webkitExitFullscreen")
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozExitFullscreen) {
+            document.mozExitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+    }          
    fFullScreen = fSetFullScreen;
+   console.log(`Making fullscreen at end ${fSetFullScreen}`);
 }    
 function ToggleFullScreen() {
+    console.log(`In ToggleFullScreen current value=${fFullScreen}`);
     SetFullScreen(!fFullScreen);
 }    
+
+//subscribe("shaking",x=>{if (fFullScreen) SetFullScreen(false)});
+//document.addEventListener("keydown", x=>{publish(`keypressed${x.key}`)}); // connect actions to keypresses, not implemented yet
+
 function GetVolume() {
     if (video) return video.volume;
     if (player && player.getVolume) return player.getVolume();
@@ -208,11 +269,11 @@ export async function SetVideoSeconds(seconds) {
 async function SetVideoProgressBar(perc) {
     // console.log(`SetVideoProgressBar ${perc}`); 
     if (slider)    
-        slider.style.width =  (perc*100)+"%";   
+        slider.style.left =  (perc*100)+"%";   
 
 }
 export async function CreateVideoSlider() {
-    slider=document.getElementById("videodrag").parentElement; 
+    slider=document.getElementById("videodrag");//.parentElement; 
 
     function XYUpdate(percx,percy) {
         if (percx >1) percx=1;
@@ -239,7 +300,10 @@ export async function startVideo() {
    //         console.log(player.getDebugText());
    //     console.log(player.getVideoData());
     
-    ShowVideoTitle(false);
+    
+//    ShowTitles(false)
+    ForceButton("start",true);
+    HideButton("largestart",true)
     
     if (video) {
         video.play();
@@ -251,6 +315,9 @@ export async function startVideo() {
     }
  //   UpdateVideoIndicator(false);
 
+
+    publish("videostarted"); 
+
     tcallback(); // callbacks for the progress
 }
 function TranscriptShownCB(txt) {
@@ -259,12 +326,14 @@ function TranscriptShownCB(txt) {
 }
 function stopVideo() {
     console.log("In stopVideo");
-    ShowVideoTitle(true);
+    ForceButton("start",false);
+    HideButton("largestart",false)
+    //ShowTitles(true);
     if (video) video.pause();
     if (player) player.pauseVideo();
    // UpdateVideoIndicator(true);
     StopSpeak();
-
+    publish("videostopped"); 
 
 }
 function TogglePauseVideo() {
@@ -327,25 +396,32 @@ subscribe('popupdisplaynone', x=> { if (fVideoRunning) startVideo(); } ); // if 
 
 async function LoadVideo(vidinfo) { // call when first video is loaded or a diffent video is selected
     
-    console.log(`Loading video ${vidinfo.videoid} ${vidinfo.txt}`);
+    //console.log(`Loading video ${vidinfo.videoid} ${vidinfo.txt}`);
     //console.log(vidinfo);
+    
+    publish("loadvideo",vidinfo); // note: with parameter
+    
+    
     player=await playerpromise;
     if (player)
         player.cueVideoById(vidinfo.videoid,0); // start at beginning   
     
-    currentduration = vidinfo.duration
+    
+    currentvidinfo = vidinfo;
+    //currentduration = vidinfo.duration
+    //currentvideoid = vidinfo.videoid;
     console.log(`In Loadvideo`);
     SetVideoTitle(vidinfo.txt);
-
-    PrepareAndLoadSlides(vidinfo);
+   SetVideoProgressBar(0)
+    
     
     GetSubTitlesAndSheets(vidinfo,FoundTranscript,FoundSlides);
     GetSetupLitAndAssInfo(vidinfo.txt);
-    
+    InitProgress(vidinfo);
     
 }
 async function asyncloaded() {    
-    console.log(`In asyncloaded of script: ${import.meta.url}`);   
+    //console.log(`In asyncloaded of script: ${import.meta.url}`);   
     publish("playerstart");
    
     
@@ -355,7 +431,11 @@ async function asyncloaded() {
     //LinkButton("start",startVideo);
     
     
-   // LinkClickButton("start");subscribe("startclick",startVideo);
+    LinkClickButton("largestart");subscribe("largestartclick",startVideo);
+    subscribe('videocued', x=>{HideButton("largestart",false);})
+    
+    var videofield=document.getElementById("videofield");
+videofield.addEventListener('click', x=>{console.log("videofield click");if (!IsVideoPaused()) stopVideo();}); 
     
     LinkToggleButton("start",false);subscribe("starton",startVideo);subscribe("startoff",stopVideo);
     
@@ -373,8 +453,11 @@ async function asyncloaded() {
     //LinkButton("subtitle",ToggleCueVisibility);     
     LinkToggleButton("subtitle",false);subscribe("subtitleon",ToggleCueVisibility);subscribe("subtitleoff",ToggleCueVisibility);
     
-    //LinkButton("fullscreen",ToggleFullScreen);        
-    LinkToggleButton("fullscreen",false);subscribe("fullscreenon",ToggleFullScreen);subscribe("fullscreenoff",ToggleFullScreen);
+ //   LinkButton("fullscreen",ToggleFullScreen);        
+   LinkToggleButton("fullscreen",false);subscribe("fullscreenon",ToggleFullScreen);subscribe("fullscreenoff",ToggleFullScreen);
+    
+       
+    
     
     CreateVideoSlider(); 
     // CreateSoundSlider();
@@ -386,8 +469,13 @@ async function asyncloaded() {
     var metaDom = document.getElementsByName("viewport");
     metaDom[0].content=metaDom[0].content+", user-scalable=no"; //maximum-scale=1.0, minimum-scale=1.0"; // fix zoom    
     var newmeta=document.createElement("meta");
-    newmeta.name="viewport";
-    newmeta.content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0";   
+    //newmeta.name="viewport";
+//    newmeta.content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0";   // not inserted??   
+  //  newmeta=document.createElement("meta");
+    newmeta.name="theme-color" 
+    newmeta.content="#EBEBD3" //#20FFB1"
+    document.getElementsByTagName("head")[0].appendChild(newmeta);
+     
     SetupSliders();
     //NavigateLessons();   
     
@@ -396,11 +484,13 @@ async function asyncloaded() {
     player=await playerpromise;    
     SetVideoTranscriptCallbacks(SetVideoSeconds,TranscriptShownCB);
     SelectLanguage("nl");    
-    SetupSlideWindow("slideplayer");
+    
     
     console.log("Init ready");
 }
 
+
+publish("playerloading");
 SetupLogWindow();
 var url = window.location.pathname;
 var filename = url.substring(url.lastIndexOf('/')+1);
@@ -412,4 +502,15 @@ window.addEventListener('DOMContentLoaded', asyncloaded);  // load
 //  console.log('page is fully loaded');
    //console.log(Webflow);
 //}); */
+
+window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
+console.log("In onerror");
+    var str=`Error: ${message} ${source}, ${lineno}, ${colno}  `;
+    if (error && error.stack) str = str.concat('\n').concat(error.stack);
+    
+    //console.log(error.stack);
+    
+    DisplayMessage(str)
+    
+} 
 

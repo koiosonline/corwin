@@ -1,13 +1,11 @@
 
-import {LinkButton,sleep,subscribe,FindDotConnectToTab,LinkToggleButton} from './koios_util.mjs';
-import {player,currentduration,startVideo,SetVideoSeconds} from './koios_video.mjs';
+import {LinkButton,sleep,subscribe,LinkToggleButton,HideButton} from './koios_util.mjs';
+import {player,currentvidinfo,startVideo,SetVideoSeconds} from './koios_video.mjs';
 import {SwitchDisplayMessageContinous,DisplayMessageContinous} from './koios_messages.mjs';
-
 import {CurrentLesson,LastLesson} from './koios_lessons.mjs';
 
-var fInTest=window.location.href.includes("test");
+var fInTest;
 
-console.log(`fInTest=${fInTest}`);
 
 
 //const wf=Webflow.require('ix2');
@@ -17,9 +15,26 @@ console.log(`fInTest=${fInTest}`);
 
 
 
+
+
+subscribe("playerloading",  InitTest);
+
+function InitTest() {
+    var fInTest=window.location.href.includes("test");
+    
+    
+    fInTest=false; // disable test button
+    
+    console.log(`fInTest=${fInTest}`);
+
+    HideButton("test",!fInTest)
+    if (fInTest)
+      LinkToggleButton("test",false);subscribe("teston",Test);subscribe("testoff",Test);
+}    
+
 //LinkButton("test",Test);
 
-  LinkToggleButton("test",false);subscribe("teston",Test);subscribe("testoff",Test);
+
 
 /*
 async function Test2() {
@@ -47,11 +62,12 @@ async function Test() {
         //s1=subscribe('videoend',    x=> { DisplayMessageContinous(`Video #${CurrentLesson} has ended`) } );
         
         s2=subscribe('videostart',   async x=> {
+            console.log("videostart event");           
             await sleep(3000);
             var CurrentPos=Math.round(player.getCurrentTime()); // has been updated in the mean time
-            if (CurrentPos < currentduration-7) {
+            if (CurrentPos < currentvidinfo.duration-7) {
                 DisplayMessageContinous(`Fast forward`);
-                SetVideoSeconds(currentduration-5);
+                SetVideoSeconds(currentvidinfo.duration-5);
             } 
                 
         } );               
