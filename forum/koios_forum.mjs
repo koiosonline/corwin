@@ -1,7 +1,7 @@
 import {}  from "https://unpkg.com/3box/dist/3box.js"; // Box
 
 import { initializeContract, getUserAddress, getWeb3,authorize } from "./koios_web3.mjs";
-import { abi, address } from "./constants/forum_contract";
+import { abi, address } from "./constants/forum_contract.js";
 //import { getMaxListeners } from "cluster";
 
 
