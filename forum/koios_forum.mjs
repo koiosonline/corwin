@@ -27,7 +27,7 @@ async function asyncloaded() {
     log("Starting")
     //const KoiosThread="/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline.koiosonline"     
     const KoiosSpace="koiosonline";
-    const KoiosThread="Test";
+    const KoiosThread="TestThread";
 
     ReadThread(KoiosSpace, KoiosThread) // start asap
 
