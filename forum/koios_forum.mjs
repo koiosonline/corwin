@@ -29,6 +29,8 @@ async function asyncloaded() {
     const KoiosSpace="koiosonline";
     const KoiosThread="TestThread";
 
+    ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", false)
+
     log("wait for authorize")
     await authorize()
 
@@ -39,7 +41,7 @@ async function asyncloaded() {
     console.log(space);
 
     WriteThread(KoiosThread)
-    ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", false)
+    GlobalForumentryList = new DomList("forumentry");
 }
 
 
@@ -71,12 +73,11 @@ async function WriteThread(threadAddress) {
     writeThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
     let posts = await writeThread.getPosts()
     console.log(posts)
-    await ShowPosts(posts);  
+    ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", false) 
 }
 
 
 async function ReadThread(spaceName, threadAddress, address, members) {
-    GlobalForumentryList = new DomList("forumentry");
     const posts = await Box.getThread(spaceName, threadAddress, address, members)
     await ShowPosts(posts);
 }
@@ -133,10 +134,6 @@ function SetDeleteButton(domid,postid) { // in seperate function to remember sta
           console.log(error);
         }
     }
-    writeThread.onUpdate(async  () => {
-      var uposts = await writeThread.getPosts()
-      await ShowPosts(uposts);
-    })
 }    
 
 
