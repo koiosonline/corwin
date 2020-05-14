@@ -11,7 +11,7 @@ let threads = [];
 let box;
 let space;
 let currentThread;
-var GlobalForumentryList = new DomList("forumentry");
+var GlobalForumentryList;
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -76,6 +76,7 @@ async function WriteThread(threadAddress) {
 
 
 async function ReadThread(spaceName, threadName, firstModerator, membersOnly) {
+    GlobalForumentryList = new DomList("forumentry");
     const posts = await Box.getThread(spaceName, threadName, firstModerator, membersOnly);;
     await ShowPosts(posts);
 }
