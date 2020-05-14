@@ -40,8 +40,7 @@ async function asyncloaded() {
     console.log(space);
 
     WriteThread(KoiosThread);
-    const posts = await Box.getThread(KoiosSpace, KoiosThread, Moderator, false);
-    await ShowPosts(posts);
+    ReadThread(KoiosSpace, KoiosThread, Moderator, false);
 }
 
 
@@ -76,9 +75,8 @@ async function WriteThread(threadAddress) {
 }
 
 
-async function ReadThread(threadAddress) {
-  const posts = await Box.getThread(KoiosSpace, KoiosThread, Moderator, false);
-  ShowPosts(posts);
+async function ReadThread(spaceName, threadName, firstModerator, membersOnly) {
+    const posts = await Box.getThread(spaceName, threadName, firstModerator, membersOnly);;
     await ShowPosts(posts);
 }
 
