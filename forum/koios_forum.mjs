@@ -11,7 +11,7 @@ let threads = [];
 let box;
 let space;
 let currentThread;
-var GlobalForumentryList;
+var GlobalForumentryList = new DomList("forumentry");
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -30,8 +30,6 @@ async function asyncloaded() {
     const KoiosThread="TestThread";
     const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 
-    Box.getThread(KoiosSpace, KoiosThread, Moderator, false);
-    
     log("wait for authorize")
     await authorize()
 
@@ -41,8 +39,8 @@ async function asyncloaded() {
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
 
-    WriteThread(KoiosThread)
-    GlobalForumentryList = new DomList("forumentry");
+    WriteThread(KoiosThread);
+    Box.getThread(KoiosSpace, KoiosThread, Moderator, false);
     ReadThread(KoiosThread);
 }
 
