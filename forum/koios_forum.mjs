@@ -131,11 +131,6 @@ function SetDeleteButton(domid,postid) { // in seperate function to remember sta
         console.log(writeThread);
         if (writeThread) // might not be ready
             writeThread.deletePost(postid);
-
-        writeThread.onUpdate(async  () => {
-            var uposts = await writeThread.getPosts()
-            await ShowPosts(uposts);
-        })
     }
 }    
 
