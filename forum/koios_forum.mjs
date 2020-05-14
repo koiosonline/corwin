@@ -60,7 +60,11 @@ async function WriteThread(threadAddress, Moderator) {
         console.log("Sending");
         var foruminput = document.getElementById("foruminput");
         console.log(foruminput.innerHTML);
-        let postId = await writeThread.post(foruminput.innerHTML); // thread inherited from parent function
+        try {
+          await writeThread.post(foruminput.innerHTML); // thread inherited from parent function
+        } catch (error) {
+          console.log(error);
+        }
     } 
     
    
