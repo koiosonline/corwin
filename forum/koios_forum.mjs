@@ -47,16 +47,15 @@ async function asyncloaded() {
 
 var writeThread;
 async function WriteThread(threadAddress) {
-
-    writeThread = await space.joinThread(threadAddress, {
-      fistModerator: Moderator,
-      members: false
-    });
     
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
+    writeThread = await space.joinThread(threadAddress, {
+      fistModerator: Moderator,
+      members: false
+    });
     
     async function Send() {
         console.log("Sending");
