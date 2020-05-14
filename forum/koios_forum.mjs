@@ -39,13 +39,13 @@ async function asyncloaded() {
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
 
-    WriteThread(KoiosThread);
+    WriteThread(KoiosThread, Moderator);
     ReadThread(KoiosSpace, KoiosThread, Moderator, false);
 }
 
 
 var writeThread;
-async function WriteThread(threadAddress) {
+async function WriteThread(threadAddress, Moderator) {
     
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
