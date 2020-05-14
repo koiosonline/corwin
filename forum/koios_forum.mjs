@@ -25,8 +25,8 @@ window.addEventListener('DOMContentLoaded', asyncloaded);  // load
 async function asyncloaded() { 
     SetupLogWindow(false)
     log("Starting")
-    const KoiosThread="/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline.koiosonline"     
-
+    //const KoiosThread="/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline.koiosonline"     
+    const KoiosThread="Test";
 
     ReadThread(KoiosThread) // start asap
 
@@ -38,9 +38,7 @@ async function asyncloaded() {
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name    
     space = await box.openSpace('koiosonline');
     console.log(space);
-
-    
-    
+  
     WriteThread(KoiosThread)
 }
 
