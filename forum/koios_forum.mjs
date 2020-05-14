@@ -39,7 +39,7 @@ async function asyncloaded() {
     console.log(space);
 
     WriteThread(KoiosThread)
-    ReadThread(KoiosSpace, KoiosThread, "0x5C84209877934c61047100121C70a4CF68Ec270E", false)
+    ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", true)
 }
 
 
@@ -51,8 +51,8 @@ async function WriteThread(threadAddress) {
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
     writeThread = await space.joinThread(threadAddress, {
-      fistModerator: "0x5C84209877934c61047100121C70a4CF68Ec270E",
-      members: false
+      fistModerator: "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2",
+      members: true
     });
     
     async function Send() {
