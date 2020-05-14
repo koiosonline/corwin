@@ -32,6 +32,8 @@ async function asyncloaded() {
     log("wait for authorize")
     await authorize()
 
+    ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", false);
+
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);
     console.log(box);    
     space = await box.openSpace(KoiosSpace);
@@ -39,8 +41,6 @@ async function asyncloaded() {
     console.log(space);
 
     WriteThread(KoiosThread)
-    ReadThread(KoiosSpace, KoiosThread)
-    GlobalForumentryList = new DomList("forumentry")
 }
 
 
@@ -75,8 +75,9 @@ async function WriteThread(threadAddress) {
 }
 
 
-async function ReadThread(spaceName, threadAddress) {
-    const posts = await Box.getThread(spaceName, threadAddress)
+async function ReadThread(spaceName, threadAddress, address, members) {
+    GlobalForumentryList = new DomList("forumentry")
+    const posts = await Box.getThread(spaceName, threadAddress, address, members)
     await ShowPosts(posts);
 }
 
