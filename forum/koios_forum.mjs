@@ -77,7 +77,7 @@ async function WriteThread(threadAddress, Moderator) {
 
 async function ReadThread(spaceName, threadName, firstModerator, membersOnly) {
     GlobalForumentryList = new DomList("forumentry");
-    const posts = await Box.getThread(spaceName, threadName, firstModerator, membersOnly);;
+    const posts = await Box.getThread(spaceName, threadName, firstModerator, membersOnly);
     await ShowPosts(posts);
 }
 
