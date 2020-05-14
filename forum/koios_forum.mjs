@@ -102,6 +102,7 @@ async function ShowPosts(posts) {
             SetDeleteButton(deletebutton,posts[i].postId)            
         }
     }
+    /*
     var postdomids=document.getElementsByClassName("forumentry");
     //console.log(postdomids);
     for (var i=0;i<postdomids.length;i++) {
@@ -115,7 +116,7 @@ async function ShowPosts(posts) {
         if (!found)
             postdomids[i].style.textDecoration="line-through";
         
-    }    
+    } */   
     
     
 }
