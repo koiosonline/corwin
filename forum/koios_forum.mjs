@@ -125,12 +125,17 @@ async function ShowPosts(posts) {
 function SetDeleteButton(domid,postid) { // in seperate function to remember state
     var id=`delete-${postid}`
     domid.id=id
-    LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry()); 
+    LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry); 
     
-    function DeleteForumEntry() {
+    async function DeleteForumEntry() {
         console.log(writeThread);
-        if (writeThread) // might not be ready
-            writeThread.deletePost(postid);
+        try {
+          await writeThread.deletePost(postid);
+          var uposts = await writeThread.getPosts()
+          await ShowPosts(uposts);
+        } catch (error) {
+          console.log(error);
+        }
     }
 }    
 
