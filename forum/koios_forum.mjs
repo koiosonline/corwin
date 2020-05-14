@@ -26,9 +26,10 @@ async function asyncloaded() {
     SetupLogWindow(false)
     log("Starting")
     //const KoiosThread="/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline.koiosonline"     
+    const KoiosSpace="koiosonline";
     const KoiosThread="Test";
 
-    ReadThread(KoiosThread) // start asap
+    ReadThread(KoiosSpace, KoiosThread) // start asap
 
     log("wait for authorize")
     await authorize()
@@ -36,7 +37,7 @@ async function asyncloaded() {
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);
     console.log(box);
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name    
-    space = await box.openSpace('koiosonline');
+    space = await box.openSpace(KoiosSpace);
     console.log(space);
   
     WriteThread(KoiosThread)
@@ -74,9 +75,9 @@ async function WriteThread(threadAddress) {
 }
 
 
-async function ReadThread(threadAddress) {
+async function ReadThread(spaceName, threadAddress) {
     GlobalForumentryList = new DomList("forumentry")
-    const posts = await Box.getThread(threadAddress)
+    const posts = await Box.getThread(KoiosSpace, threadAddress)
     await ShowPosts(posts);
 }
 
