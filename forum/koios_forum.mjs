@@ -35,9 +35,9 @@ async function asyncloaded() {
     await authorize()
 
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);
-    console.log(box);
-    FindSender(document.getElementById("myname"),box.DID)  // get and display my own name    
+    console.log(box);    
     space = await box.openSpace(KoiosSpace);
+    FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
   
     WriteThread(KoiosThread)
