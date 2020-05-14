@@ -40,6 +40,7 @@ async function asyncloaded() {
 
     WriteThread(KoiosThread)
     ReadThread(KoiosSpace, KoiosThread)
+    GlobalForumentryList = new DomList("forumentry")
 }
 
 
@@ -75,7 +76,6 @@ async function WriteThread(threadAddress) {
 
 
 async function ReadThread(spaceName, threadAddress) {
-    GlobalForumentryList = new DomList("forumentry")
     const posts = await Box.getThread(spaceName, threadAddress)
     await ShowPosts(posts);
 }
