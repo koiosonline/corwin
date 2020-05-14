@@ -30,7 +30,7 @@ async function asyncloaded() {
     const KoiosThread="TestThread";
     const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 
-    ReadThread(KoiosSpace, KoiosThread, Moderator, false);
+    
 
     log("wait for authorize")
     await authorize()
@@ -42,7 +42,7 @@ async function asyncloaded() {
     console.log(space);
 
     WriteThread(KoiosThread, Moderator);
-    
+    ReadThread(KoiosSpace, KoiosThread, Moderator, false);
 }
 
 
