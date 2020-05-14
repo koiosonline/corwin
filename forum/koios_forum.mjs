@@ -40,7 +40,7 @@ async function asyncloaded() {
 
     WriteThread(KoiosThread)
     ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", false)
-    GlobalForumentryList = new DomList("forumentry")
+    //GlobalForumentryList = new DomList("forumentry")
 }
 
 
@@ -81,8 +81,14 @@ async function ReadThread(spaceName, threadAddress, address, members) {
 }
 
 
-async function ShowPosts(posts) {
-    console.log(posts);
+async function ShowPosts(threadAddress) {
+
+  let threadData = [];
+  const posts = await threadAddress.getPosts();
+  threadData.push(...posts);
+  
+  
+  /*console.log(posts);
     for (var i=0;i<posts.length;i++) {        
         if (!document.getElementById(posts[i].postId) ){ // check if post is already shown
             var did=posts[i].author;           
@@ -102,7 +108,7 @@ async function ShowPosts(posts) {
             SetDeleteButton(deletebutton,posts[i].postId)            
         }
     }
-    /*
+    
     var postdomids=document.getElementsByClassName("forumentry");
     //console.log(postdomids);
     for (var i=0;i<postdomids.length;i++) {
