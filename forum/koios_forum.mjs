@@ -50,7 +50,10 @@ async function WriteThread(threadAddress) {
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
-    writeThread = await space.joinThread(threadAddress)
+    writeThread = await space.joinThread(threadAddress, {
+      fistModerator: "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2",
+      members: false
+    })
     
     async function Send() {
         console.log("Sending");
@@ -67,10 +70,7 @@ async function WriteThread(threadAddress) {
     writeThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
     let posts = await writeThread.getPosts()
     console.log(posts)
-    await ShowPosts(posts);
-    
-    
-    
+    await ShowPosts(posts);  
 }
 
 
