@@ -40,6 +40,7 @@ async function asyncloaded() {
 
     WriteThread(KoiosThread)
     ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", false)
+    GlobalForumentryList = new DomList("forumentry")
 }
 
 
@@ -53,7 +54,7 @@ async function WriteThread(threadAddress) {
     writeThread = await space.joinThread(threadAddress, {
       fistModerator: "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2",
       members: false
-    })
+    });
     
     async function Send() {
         console.log("Sending");
@@ -75,7 +76,6 @@ async function WriteThread(threadAddress) {
 
 
 async function ReadThread(spaceName, threadAddress, address, members) {
-    GlobalForumentryList = new DomList("forumentry")
     const posts = await Box.getThread(spaceName, threadAddress, address, members)
     await ShowPosts(posts);
 }
