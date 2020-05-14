@@ -40,7 +40,7 @@ async function asyncloaded() {
 
     WriteThread(KoiosThread)
     GlobalForumentryList = new DomList("forumentry");
-    ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", false)
+    ReadThread(KoiosThread)
 }
 
 
@@ -72,12 +72,12 @@ async function WriteThread(threadAddress) {
     writeThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
     let posts = await writeThread.getPosts()
     console.log(posts)
-    ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", false) 
+    await ShowPosts(posts);
 }
 
 
-async function ReadThread(spaceName, threadAddress, address, members) {
-    const posts = await Box.getThread(spaceName, threadAddress, address, members)
+async function ReadThread(threadAddress) {
+    const posts = await threadAddress.getPosts();
     await ShowPosts(posts);
 }
 
