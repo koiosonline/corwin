@@ -11,7 +11,7 @@ let threads = [];
 let box;
 let space;
 let currentThread;
-var GlobalForumentryList = new DomList("forumentry");
+var GlobalForumentryList;
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -39,7 +39,7 @@ async function asyncloaded() {
     console.log(space);
 
     WriteThread(KoiosThread)
-    ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", true)
+    //ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", true)
 }
 
 
@@ -75,6 +75,7 @@ async function WriteThread(threadAddress) {
 
 
 async function ReadThread(spaceName, threadAddress, address, members) {
+    GlobalForumentryList = new DomList("forumentry");
     const posts = await Box.getThread(spaceName, threadAddress, address, members)
     await ShowPosts(posts);
 }
