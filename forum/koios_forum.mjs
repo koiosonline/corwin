@@ -130,7 +130,12 @@ function SetDeleteButton(domid,postid) { // in seperate function to remember sta
     function DeleteForumEntry() {
         console.log(writeThread);
         if (writeThread) // might not be ready
-            writeThread.deletePost(postid)
+            await writeThread.deletePost(postid);
+
+        writeThread.onUpdate(async  () => {
+            var uposts = await writeThread.getPosts()
+            await ShowPosts(uposts);
+        })
     }
 }    
 
