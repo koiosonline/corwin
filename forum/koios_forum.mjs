@@ -45,15 +45,16 @@ async function asyncloaded() {
 
 var writeThread;
 async function WriteThread(threadAddress) {
+
+    writeThread = await space.joinThread(threadAddress, {
+      fistModerator: "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2",
+      members: false
+    });
     
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
-    writeThread = await space.joinThread(threadAddress, {
-      fistModerator: "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2",
-      members: false
-    });
     
     async function Send() {
         console.log("Sending");
@@ -97,8 +98,8 @@ async function ShowPosts(posts) {
             FitOneLine(target.getElementsByClassName("forumtime")[0])
             
             target.id = posts[i].postId                                        // remember which postId's we've shown
-            //FindSender (target.getElementsByClassName("forumsender")[0],did);  // show then profilename (asynchronous)  
-            //FitOneLine(target.getElementsByClassName("forumsender")[0])
+            FindSender (target.getElementsByClassName("forumsender")[0],did);  // show then profilename (asynchronous)  
+            FitOneLine(target.getElementsByClassName("forumsender")[0])
             var deletebutton=target.getElementsByClassName("forumdelete")[0]
             SetDeleteButton(deletebutton,posts[i].postId)            
         }
