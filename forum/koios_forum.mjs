@@ -28,6 +28,7 @@ async function asyncloaded() {
     //const KoiosThread="/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline.koiosonline"     
     const KoiosSpace="koiosonline";
     const KoiosThread="TestThread";
+    const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 
     log("wait for authorize")
     await authorize()
@@ -40,7 +41,7 @@ async function asyncloaded() {
 
     WriteThread(KoiosThread)
     GlobalForumentryList = new DomList("forumentry");
-    ReadThread(KoiosThread)
+    Box.getThread(KoiosSpace, KoiosThread, Moderator, false);
 }
 
 
@@ -48,7 +49,7 @@ var writeThread;
 async function WriteThread(threadAddress) {
 
     writeThread = await space.joinThread(threadAddress, {
-      fistModerator: "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2",
+      fistModerator: Moderator,
       members: false
     });
     
