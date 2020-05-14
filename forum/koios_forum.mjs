@@ -29,8 +29,6 @@ async function asyncloaded() {
     const KoiosSpace="koiosonline";
     const KoiosThread="TestThread";
 
-    ReadThread(KoiosSpace, KoiosThread) // start asap
-
     log("wait for authorize")
     await authorize()
 
@@ -39,6 +37,8 @@ async function asyncloaded() {
     space = await box.openSpace(KoiosSpace);
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
+
+    ReadThread(KoiosSpace, KoiosThread)
   
     WriteThread(KoiosThread)
 }
