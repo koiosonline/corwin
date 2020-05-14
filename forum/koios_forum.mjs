@@ -29,8 +29,6 @@ async function asyncloaded() {
     const KoiosSpace="koiosonline";
     const KoiosThread="TestThread";
 
-    ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", false)
-
     log("wait for authorize")
     await authorize()
 
@@ -42,6 +40,7 @@ async function asyncloaded() {
 
     WriteThread(KoiosThread)
     GlobalForumentryList = new DomList("forumentry");
+    ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", false)
 }
 
 
