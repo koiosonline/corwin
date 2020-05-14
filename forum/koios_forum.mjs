@@ -96,14 +96,14 @@ async function ShowPosts(posts) {
             target.getElementsByClassName("forumtime")[0].innerHTML = date
             FitOneLine(target.getElementsByClassName("forumtime")[0])
             
-            target.id = posts[i].postId                                        // remember which postId's we've shown
+            //target.id = posts[i].postId                                        // remember which postId's we've shown
             FindSender (target.getElementsByClassName("forumsender")[0],did);  // show then profilename (asynchronous)  
             FitOneLine(target.getElementsByClassName("forumsender")[0])
             var deletebutton=target.getElementsByClassName("forumdelete")[0]
             SetDeleteButton(deletebutton,posts[i].postId)            
         }
     }
-    /*
+    
     var postdomids=document.getElementsByClassName("forumentry");
     //console.log(postdomids);
     for (var i=0;i<postdomids.length;i++) {
@@ -116,7 +116,7 @@ async function ShowPosts(posts) {
         }
         if (!found)
             postdomids[i].style.textDecoration="line-through";   
-    }  */  
+    }   
 }
 
 function SetDeleteButton(domid,postid) { // in seperate function to remember state
