@@ -39,7 +39,7 @@ async function asyncloaded() {
     console.log(space);
 
     WriteThread(KoiosThread)
-    //ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", true)
+    ReadThread(KoiosSpace, KoiosThread, "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2", false)
 }
 
 
@@ -52,7 +52,7 @@ async function WriteThread(threadAddress) {
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
     writeThread = await space.joinThread(threadAddress, {
       fistModerator: "0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2",
-      members: true
+      members: false
     });
     
     async function Send() {
@@ -103,7 +103,7 @@ async function ShowPosts(posts) {
             SetDeleteButton(deletebutton,posts[i].postId)            
         }
     }
-    
+    /*
     var postdomids=document.getElementsByClassName("forumentry");
     //console.log(postdomids);
     for (var i=0;i<postdomids.length;i++) {
@@ -116,7 +116,7 @@ async function ShowPosts(posts) {
         }
         if (!found)
             postdomids[i].style.textDecoration="line-through";   
-    }    
+    }  */  
 }
 
 function SetDeleteButton(domid,postid) { // in seperate function to remember state
