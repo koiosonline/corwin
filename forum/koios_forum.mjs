@@ -40,8 +40,8 @@ async function asyncloaded() {
     console.log(space);
 
     WriteThread(KoiosThread);
-    Box.getThread(KoiosSpace, KoiosThread, Moderator, false);
-    ReadThread(KoiosThread);
+    const posts = await Box.getThread(KoiosSpace, KoiosThread, Moderator, false);
+    ShowPosts(posts);
 }
 
 
