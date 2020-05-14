@@ -30,6 +30,8 @@ async function asyncloaded() {
     const KoiosThread="TestThread";
     const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 
+    Box.getThread(KoiosSpace, KoiosThread, Moderator, false);
+    
     log("wait for authorize")
     await authorize()
 
@@ -41,7 +43,7 @@ async function asyncloaded() {
 
     WriteThread(KoiosThread)
     GlobalForumentryList = new DomList("forumentry");
-    Box.getThread(KoiosSpace, KoiosThread, Moderator, false);
+    ReadThread(KoiosThread);
 }
 
 
