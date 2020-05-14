@@ -38,9 +38,8 @@ async function asyncloaded() {
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
 
-    ReadThread(KoiosSpace, KoiosThread)
-  
     WriteThread(KoiosThread)
+    ReadThread(KoiosSpace, KoiosThread)
 }
 
 
@@ -77,7 +76,7 @@ async function WriteThread(threadAddress) {
 
 async function ReadThread(spaceName, threadAddress) {
     GlobalForumentryList = new DomList("forumentry")
-    const posts = await Box.getThread(KoiosSpace, threadAddress)
+    const posts = await Box.getThread(spaceName, threadAddress)
     await ShowPosts(posts);
 }
 
