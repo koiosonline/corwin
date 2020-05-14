@@ -37,10 +37,10 @@ async function asyncloaded() {
 
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);
     console.log(box);    
+    ReadThread(KoiosSpace, KoiosThread, Moderator, false);
     space = await box.openSpace(KoiosSpace);
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
-    ReadThread(KoiosSpace, KoiosThread, Moderator, false);
     WriteThread(KoiosThread, Moderator);
     
 }
