@@ -40,9 +40,9 @@ async function asyncloaded() {
     space = await box.openSpace(KoiosSpace);
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
-
-    WriteThread(KoiosThread, Moderator);
     ReadThread(KoiosSpace, KoiosThread, Moderator, false);
+    WriteThread(KoiosThread, Moderator);
+    
 }
 
 
