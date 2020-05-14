@@ -50,7 +50,7 @@ async function WriteThread(threadAddress) {
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
-    writeThread = await space.joinThreadByAddress(threadAddress)
+    writeThread = await space.joinThread(threadAddress)
     
     async function Send() {
         console.log("Sending");
@@ -76,7 +76,7 @@ async function WriteThread(threadAddress) {
 
 async function ReadThread(threadAddress) {
     GlobalForumentryList = new DomList("forumentry")
-    const posts = await Box.getThreadByAddress(threadAddress)
+    const posts = await Box.getThread(threadAddress)
     await ShowPosts(posts);
 }
 
