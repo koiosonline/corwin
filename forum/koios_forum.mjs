@@ -41,7 +41,7 @@ async function asyncloaded() {
 
     WriteThread(KoiosThread);
     const posts = await Box.getThread(KoiosSpace, KoiosThread, Moderator, false);
-    ShowPosts(posts);
+    await ShowPosts(posts);
 }
 
 
@@ -56,7 +56,7 @@ async function WriteThread(threadAddress) {
       fistModerator: Moderator,
       members: false
     });
-    
+
     async function Send() {
         console.log("Sending");
         var foruminput = document.getElementById("foruminput");
@@ -77,7 +77,8 @@ async function WriteThread(threadAddress) {
 
 
 async function ReadThread(threadAddress) {
-    const posts = await threadAddress.getPosts();
+  const posts = await Box.getThread(KoiosSpace, KoiosThread, Moderator, false);
+  ShowPosts(posts);
     await ShowPosts(posts);
 }
 
