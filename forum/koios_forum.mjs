@@ -129,7 +129,7 @@ async function ShowPosts(posts) {
 function SetDeleteButton(domid,postid) { // in seperate function to remember state
     var id=`delete-${postid}`
     domid.id=id
-    LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry(writeThread)); 
+    LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry); 
     
     async function DeleteForumEntry() {
         console.log(writeThread);
