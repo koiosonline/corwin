@@ -83,7 +83,7 @@ async function WriteThread(threadAddress, Moderator) {
 
 async function ReadThread(spaceName, threadName, moderatorAddress, membersOnly) {
     
-    const thread = await Box.openThread(spaceName, threadName, { firstModerator: moderatorAddress, members: membersOnly});
+    const thread = await Box.getThread(spaceName, threadName, { firstModerator: moderatorAddress, members: membersOnly});
     const posts = await thread.getPosts()
     await ShowPosts(posts);
 }
