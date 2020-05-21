@@ -45,15 +45,13 @@ async function asyncloaded() {
     
 }
 
-
-const writeThread;
 async function WriteThread(threadAddress) {
     
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
-    writeThread = await space.joinThread(threadAddress);
+    const writeThread = await space.joinThread(threadAddress);
 
     async function Send() {
         console.log("Sending");
@@ -74,7 +72,7 @@ async function WriteThread(threadAddress) {
     writeThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
     const posts = await writeThread.getPosts()
     console.log(posts)
-    await ShowPosts(posts, writeThread);
+    await ShowPosts(posts);
 }
 
 
@@ -82,7 +80,7 @@ async function ReadThread(threadAddress) {
     
     const thread = await Box.getThreadByAddress(threadAddress);
     //const posts = await thread.getPosts()
-    await ShowPosts(thread, thread);
+    await ShowPosts(thread);
 }
 
 
