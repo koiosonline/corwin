@@ -75,7 +75,7 @@ async function WriteThread(threadAddress, Moderator) {
         await ShowPosts(uposts);
     })
     writeThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
-    let posts = await writeThread.getPosts()
+    const posts = await writeThread.getPosts()
     console.log(posts)
     await ShowPosts(posts);
 }
@@ -84,8 +84,8 @@ async function WriteThread(threadAddress, Moderator) {
 async function ReadThread(spaceName, threadName, moderatorAddress, membersOnly) {
     
     const thread = await Box.openThread(spaceName, threadName, { firstModerator: moderatorAddress, members: membersOnly});
-    //const posts = await thread.getPosts()
-    await ShowPosts(thread);
+    const posts = await thread.getPosts()
+    await ShowPosts(posts);
 }
 
 
