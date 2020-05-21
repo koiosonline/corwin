@@ -103,7 +103,7 @@ async function ShowPosts(posts) {
             FindSender (target.getElementsByClassName("forumsender")[0],did);  // show then profilename (asynchronous)  
             FitOneLine(target.getElementsByClassName("forumsender")[0])
             var deletebutton=target.getElementsByClassName("forumdelete")[0]
-            SetDeleteButton(deletebutton,posts[i].postId, writeThread)            
+            SetDeleteButton(deletebutton,posts[i].postId)            
         }
     }
     
