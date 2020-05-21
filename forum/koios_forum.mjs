@@ -25,38 +25,35 @@ window.addEventListener('DOMContentLoaded', asyncloaded);  // load
 async function asyncloaded() { 
     SetupLogWindow(false)
     log("Starting")
-    //const KoiosThread="/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline.koiosonline"     
+    const KoiosThread="/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline.koiosonline"     
     const KoiosSpace="koiosonline";
-    const KoiosThread="TestThread";
+    //const KoiosThread="TestThread";
     const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 
-    
+    ReadThread(KoiosThread);
 
     log("wait for authorize")
     await authorize()
 
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);
     console.log(box);    
-    ReadThread(KoiosSpace, KoiosThread, Moderator, false);
+    
     space = await box.openSpace(KoiosSpace);
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
-    WriteThread(KoiosThread, Moderator);
+    WriteThread(KoiosThread);
     
 }
 
 
 var writeThread;
-async function WriteThread(threadAddress, Moderator) {
+async function WriteThread(threadAddress) {
     
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
-    const writeThread = await space.joinThread(threadAddress, {
-      fistModerator: Moderator,
-      members: false
-    });
+    const writeThread = await space.joinThread(threadAddress);
 
     async function Send() {
         console.log("Sending");
@@ -81,9 +78,9 @@ async function WriteThread(threadAddress, Moderator) {
 }
 
 
-async function ReadThread(spaceName, threadName, moderatorAddress, membersOnly) {
+async function ReadThread(threadAddress) {
     
-    const thread = await Box.getThread(spaceName, threadName, { firstModerator: moderatorAddress, members: membersOnly});
+    const thread = await Box.getThreadByAddress(threadAddress);
     const posts = await thread.getPosts()
     await ShowPosts(posts);
 }
