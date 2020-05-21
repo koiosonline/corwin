@@ -53,7 +53,7 @@ async function WriteThread(threadAddress, Moderator) {
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
-    writeThread = await space.joinThread(threadAddress, {
+    const writeThread = await space.joinThread(threadAddress, {
       fistModerator: Moderator,
       members: false
     });
@@ -83,7 +83,7 @@ async function WriteThread(threadAddress, Moderator) {
 
 async function ReadThread(spaceName, threadName, moderatorAddress, membersOnly) {
     
-    const thread = await Box.getThread(spaceName, threadName, { firstModerator: moderatorAddress, members: membersOnly});
+    const thread = await Box.openThread(spaceName, threadName, { firstModerator: moderatorAddress, members: membersOnly});
     //const posts = await thread.getPosts()
     await ShowPosts(thread);
 }
