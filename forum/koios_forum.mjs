@@ -74,7 +74,7 @@ async function WriteThread(threadAddress) {
     writeThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
     const posts = await writeThread.getPosts()
     console.log(posts)
-    await ShowPosts(posts);
+    await ShowPosts(posts, writeThread);
 }
 
 
@@ -82,11 +82,11 @@ async function ReadThread(threadAddress) {
     
     const thread = await Box.getThreadByAddress(threadAddress);
     //const posts = await thread.getPosts()
-    await ShowPosts(thread);
+    await ShowPosts(thread, thread);
 }
 
 
-async function ShowPosts(posts) {
+async function ShowPosts(posts, writeThread) {
   
   console.log(posts);
     for (var i=0;i<posts.length;i++) {        
@@ -105,7 +105,7 @@ async function ShowPosts(posts) {
             FindSender (target.getElementsByClassName("forumsender")[0],did);  // show then profilename (asynchronous)  
             FitOneLine(target.getElementsByClassName("forumsender")[0])
             var deletebutton=target.getElementsByClassName("forumdelete")[0]
-            SetDeleteButton(deletebutton,posts[i].postId)            
+            SetDeleteButton(deletebutton,posts[i].postId, writeThread)            
         }
     }
     
@@ -124,12 +124,12 @@ async function ShowPosts(posts) {
     }   
 }
 
-function SetDeleteButton(domid,postid) { // in seperate function to remember state
+function SetDeleteButton(domid,postid, writeThread) { // in seperate function to remember state
     var id=`delete-${postid}`
     domid.id=id
-    LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry); 
+    LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry(writeThread)); 
     
-    async function DeleteForumEntry() {
+    async function DeleteForumEntry(writeThread) {
         console.log(writeThread);
         try {
           await writeThread.deletePost(postid);
