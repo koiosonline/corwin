@@ -41,17 +41,21 @@ async function asyncloaded() {
     space = await box.openSpace(KoiosSpace);
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
-    WriteThread(KoiosThread);
+    WriteThread("corwintest", Moderator);
     
 }
 
-async function WriteThread(threadAddress) {
+var writeThread;
+async function WriteThread(threadAddress, moderator) {
     
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
-    const writeThread = await space.joinThread(threadAddress);
+    writeThread = await space.joinThread(threadAddress, {
+      firstModerator: moderator,
+      members: false
+    });
 
     async function Send() {
         console.log("Sending");
