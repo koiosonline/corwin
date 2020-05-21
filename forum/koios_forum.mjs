@@ -81,8 +81,8 @@ async function WriteThread(threadAddress) {
 async function ReadThread(threadAddress) {
     
     const thread = await Box.getThreadByAddress(threadAddress);
-    const posts = await thread.getPosts()
-    await ShowPosts(posts);
+    //const posts = await thread.getPosts()
+    await ShowPosts(thread);
 }
 
 
