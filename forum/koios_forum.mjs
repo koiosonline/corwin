@@ -46,14 +46,14 @@ async function asyncloaded() {
 }
 
 
-var writeThread;
+const writeThread;
 async function WriteThread(threadAddress) {
     
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
-    const writeThread = await space.joinThread(threadAddress);
+    writeThread = await space.joinThread(threadAddress);
 
     async function Send() {
         console.log("Sending");
@@ -86,7 +86,7 @@ async function ReadThread(threadAddress) {
 }
 
 
-async function ShowPosts(posts, writeThread) {
+async function ShowPosts(posts) {
   
   console.log(posts);
     for (var i=0;i<posts.length;i++) {        
@@ -124,12 +124,12 @@ async function ShowPosts(posts, writeThread) {
     }   
 }
 
-function SetDeleteButton(domid,postid, writeThread) { // in seperate function to remember state
+function SetDeleteButton(domid,postid) { // in seperate function to remember state
     var id=`delete-${postid}`
     domid.id=id
     LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry(writeThread)); 
     
-    async function DeleteForumEntry(writeThread) {
+    async function DeleteForumEntry() {
         console.log(writeThread);
         try {
           await writeThread.deletePost(postid);
