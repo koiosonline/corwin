@@ -50,6 +50,11 @@ async function CreateOpenThread(threadName, firstModerator) {
     firstModerator: firstModerator,
     members: false
   });
+
+  newThread.onUpdate(async () => {
+    var uposts = await currentThread.getPosts()
+    await ShowPosts(uposts);
+})
 }
 
 //var currentThread;
@@ -71,11 +76,6 @@ async function WriteThread(threadAddress) {
           console.log(error);
         }
     } 
-  
-    currentThread.onUpdate(async () => {
-        var uposts = await currentThread.getPosts()
-        await ShowPosts(uposts);
-    })
 
     currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
     const posts = await currentThread.getPosts()
