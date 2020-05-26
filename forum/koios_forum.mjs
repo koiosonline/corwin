@@ -133,18 +133,14 @@ async function ShowPosts(posts) {
 }
 
 async function ShowThreads(threads) {
+  console.log(threads);
   var GlobalThreadList = new DomList("threadentry")    
-    
+  for (var i=0;i<threads.length;i++) {        
     var target = GlobalThreadList.AddListItem() // make new entry
-    target.getElementsByClassName("threadname")[0].innerHTML = "First thread"
+    target.getElementsByClassName("threadname")[0].innerHTML = threads[i].name;
     var deletebutton=target.getElementsByClassName("threaddelete")[0]
     SetThreadDeleteButton(deletebutton,"1")   
-    
-    target = GlobalThreadList.AddListItem() // make new entry
-    target.getElementsByClassName("threadname")[0].innerHTML = "Second thread"
-    deletebutton=target.getElementsByClassName("threaddelete")[0]
-    SetThreadDeleteButton(deletebutton,"2")
-    
+  }
 }    
 
 function SetThreadDeleteButton(domid,threadid) { // in seperate function to remember state
