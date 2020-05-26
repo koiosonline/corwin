@@ -12,7 +12,6 @@ let box;
 let space;
 let currentThread;
 var GlobalForumentryList = new DomList("forumentry");
-var GlobalThreadList = new DomList("threadlist");
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -33,7 +32,7 @@ async function asyncloaded() {
     const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 
     //ReadThread(KoiosThread);
-    ReadSpace(SpaceAddress, KoiosSpace)
+    ReadSpace(KoiosSpace)
     log("wait for authorize")
     await authorize()
 
