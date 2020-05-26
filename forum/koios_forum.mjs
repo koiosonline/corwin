@@ -28,10 +28,11 @@ async function asyncloaded() {
     const KoiosThread="/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline.corwintest"     
     const KoiosSpace="koiosonline";
     //const KoiosThread="TestThread";
+    const SpaceAddress = "/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline";
     const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 
-    ReadThread(KoiosThread);
-
+    //ReadThread(KoiosThread);
+    ReadSpace(SpaceAddress, KoiosSpace)
     log("wait for authorize")
     await authorize()
 
@@ -87,6 +88,11 @@ async function ReadThread(threadAddress) {
     await ShowPosts(thread);
 }
 
+async function ReadSpace(spaceAddress, spaceName) {
+  const space = await Box.getSpace(spaceAddress, spaceName);
+  await ShowThreads(space);
+}
+
 
 async function ShowPosts(posts) {
   
@@ -124,6 +130,10 @@ async function ShowPosts(posts) {
         if (!found)
             postdomids[i].style.textDecoration="line-through";   
     }   
+}
+
+async function ShowThreads(space) {
+  console.log(space);
 }
 
 function SetDeleteButton(domid,postid) { // in seperate function to remember state
