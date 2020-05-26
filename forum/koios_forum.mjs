@@ -23,7 +23,7 @@ window.onerror = async function(message, source, lineno, colno, error) {   // es
 window.addEventListener('DOMContentLoaded', asyncloaded);  // load  
 
 async function asyncloaded() { 
-    SetupLogWindow(false)
+    /*SetupLogWindow(false)
     log("Starting")
     const KoiosThread="/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline.corwintest"     
     const KoiosSpace="koiosonline";
@@ -32,7 +32,7 @@ async function asyncloaded() {
     const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 
     //ReadThread(KoiosThread);
-    log("wait for authorize")
+    log("wait for authorize")*/
     await authorize()
 
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);
@@ -43,47 +43,49 @@ async function asyncloaded() {
     console.log(space);
     ReadSpace();
     //WriteThread("corwintest", Moderator);
-    
 }
 
-var writeThread;
-async function WriteThread(threadAddress, moderator) {
+async function CreateOpenThread(threadName, firstModerator) {
+  const newThread = await space.joinThread(threadName, {
+    firstModerator: firstModerator,
+    members: false
+  });
+}
+
+async function WriteThread(threadAddress) {
     
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
-    writeThread = await space.joinThread(threadAddress, {
-      firstModerator: moderator,
-      members: false
-    });
+    const currentThread = await Box.getThreadByAddress(threadAddress);
 
     async function Send() {
         console.log("Sending");
         var foruminput = document.getElementById("foruminput");
         console.log(foruminput.innerHTML);
         try {
-          await writeThread.post(foruminput.innerHTML); // thread inherited from parent function
+          await currentThread.post(foruminput.innerHTML); // thread inherited from parent function
         } catch (error) {
           console.log(error);
         }
     } 
-    
-   
-    writeThread.onUpdate(async  () => {
-        var uposts = await writeThread.getPosts()
+  
+    currentThread.onUpdate(async  () => {
+        var uposts = await currentThread.getPosts()
         await ShowPosts(uposts);
     })
-    writeThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
-    const posts = await writeThread.getPosts()
+
+    currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
+    const posts = await currentThread.getPosts()
     console.log(posts)
-    await ShowPosts(posts);
+    await ShowPosts(posts, currentThread);
 }
 
 
 async function ReadThread(threadAddress) {
     
-    const thread = await Box.getThreadByAddress(threadAddress);
+    
     //const posts = await thread.getPosts()
     await ShowPosts(thread);
 }
@@ -94,7 +96,7 @@ async function ReadSpace() {
 }
 
 
-async function ShowPosts(posts) {
+async function ShowPosts(posts, currentThread) {
   
   console.log(posts);
     for (var i=0;i<posts.length;i++) {        
@@ -113,7 +115,7 @@ async function ShowPosts(posts) {
             FindSender (target.getElementsByClassName("forumsender")[0],did);  // show then profilename (asynchronous)  
             FitOneLine(target.getElementsByClassName("forumsender")[0])
             var deletebutton=target.getElementsByClassName("forumdelete")[0]
-            SetDeleteButton(deletebutton,posts[i].postId)            
+            SetDeleteButton(deletebutton,posts[i].postId,currentThread)            
         }
     }
     
@@ -175,15 +177,15 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
   }
 }
 
-function SetDeleteButton(domid,postid) { // in seperate function to remember state
+function SetDeleteButton(domid,postid,currentThread) { // in seperate function to remember state
     var id=`delete-${postid}`
     domid.id=id
     LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry); 
     
     async function DeleteForumEntry() {
-        console.log(writeThread);
+        console.log(currentThread);
         try {
-          await writeThread.deletePost(postid);
+          await currentThread.deletePost(postid);
         } catch (error) {
           console.log(error);
         }
