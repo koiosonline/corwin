@@ -55,7 +55,7 @@ async function WriteThread(threadAddress) {
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
-    currentThread = await Box.joinThreadByAddress(threadAddress);
+    currentThread = await space.joinThreadByAddress(threadAddress);
 
     async function Send() {
         console.log("Sending");
