@@ -42,7 +42,7 @@ async function asyncloaded() {
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
     ReadSpace();
-    WriteThread("corwintest", Moderator);
+    //WriteThread("corwintest", Moderator);
     
 }
 
@@ -133,7 +133,28 @@ async function ShowPosts(posts) {
 }
 
 async function ShowThreads(threads) {
-  console.log(threads);
+  var GlobalThreadList = new DomList("threadentry")    
+    
+    var target = GlobalThreadList.AddListItem() // make new entry
+    target.getElementsByClassName("threadname")[0].innerHTML = "First thread"
+    var deletebutton=target.getElementsByClassName("threaddelete")[0]
+    SetThreadDeleteButton(deletebutton,"1")   
+    
+    target = GlobalThreadList.AddListItem() // make new entry
+    target.getElementsByClassName("threadname")[0].innerHTML = "Second thread"
+    deletebutton=target.getElementsByClassName("threaddelete")[0]
+    SetThreadDeleteButton(deletebutton,"2")
+    
+}    
+
+function SetThreadDeleteButton(domid,threadid) { // in seperate function to remember state
+    var id=`delete-${threadid}`
+    domid.id=id
+    LinkClickButton(id);subscribe(`${id}click`,DeleteThread); 
+    
+    function DeleteThread() {
+        console.log(`Deleting thread ${threadid}`);
+    }
 }
 
 function SetDeleteButton(domid,postid) { // in seperate function to remember state
