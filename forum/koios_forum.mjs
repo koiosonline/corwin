@@ -46,11 +46,6 @@ async function CreateOpenThread(threadName, firstModerator) {
     firstModerator: firstModerator,
     members: false
   });
-
-  newThread.onUpdate(async () => {
-    var uposts = await currentThread.getPosts()
-    await ShowPosts(uposts);
-})
 }
 
 //var currentThread;
@@ -60,7 +55,7 @@ async function WriteThread(threadAddress) {
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
-    currentThread = await Box.getThreadByAddress(threadAddress);
+    currentThread = await Box.joinThreadByAddress(threadAddress);
 
     async function Send() {
         console.log("Sending");
@@ -73,10 +68,14 @@ async function WriteThread(threadAddress) {
         }
     } 
 
-    //currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
-    //const posts = await currentThread.getPosts()
+    currentThread.onUpdate(async () => {
+      var uposts = await currentThread.getPosts()
+      await ShowPosts(uposts);
+    })
+    currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
+    const posts = await currentThread.getPosts()
     //console.log(posts)
-    await ShowPosts(currentThread);
+    await ShowPosts(posts);
 }
 
 
