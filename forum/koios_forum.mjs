@@ -52,13 +52,14 @@ async function CreateOpenThread(threadName, firstModerator) {
   });
 }
 
+var currentThread;
 async function WriteThread(threadAddress) {
     
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
-    const currentThread = await Box.getThreadByAddress(threadAddress);
+    currentThread = await Box.getThreadByAddress(threadAddress);
 
     async function Send() {
         console.log("Sending");
@@ -73,13 +74,13 @@ async function WriteThread(threadAddress) {
   
     currentThread.onUpdate(async () => {
         var uposts = await currentThread.getPosts()
-        await ShowPosts(uposts, currentThread);
+        await ShowPosts(uposts);
     })
 
     currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
     const posts = await currentThread.getPosts()
     console.log(posts)
-    await ShowPosts(posts, currentThread);
+    await ShowPosts(posts);
 }
 
 
@@ -96,7 +97,7 @@ async function ReadSpace() {
 }
 
 
-async function ShowPosts(posts, currentThread) {
+async function ShowPosts(posts) {
   
   console.log(posts);
     for (var i=0;i<posts.length;i++) {        
@@ -115,7 +116,7 @@ async function ShowPosts(posts, currentThread) {
             FindSender (target.getElementsByClassName("forumsender")[0],did);  // show then profilename (asynchronous)  
             FitOneLine(target.getElementsByClassName("forumsender")[0])
             var deletebutton=target.getElementsByClassName("forumdelete")[0]
-            SetDeleteButton(deletebutton,posts[i].postId,currentThread)            
+            SetDeleteButton(deletebutton,posts[i].postId)            
         }
     }
     
@@ -177,7 +178,7 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
   }
 }
 
-function SetDeleteButton(domid,postid,currentThread) { // in seperate function to remember state
+function SetDeleteButton(domid,postid) { // in seperate function to remember state
     var id=`delete-${postid}`
     domid.id=id
     LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry); 
