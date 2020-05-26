@@ -33,14 +33,10 @@ async function asyncloaded() {
     //ReadThread(KoiosThread);
     log("wait for authorize")*/
     const KoiosSpace="koiosonline";
-    await authorize()
-
-    box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);
-    console.log(box);    
-    
+    await authorize();
+    box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
-    console.log(space);
     ReadSpace();
     //WriteThread("corwintest", Moderator);
 }
@@ -77,7 +73,7 @@ async function WriteThread(threadAddress) {
         }
     } 
 
-    currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
+    //currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
     const posts = await currentThread.getPosts()
     console.log(posts)
     await ShowPosts(posts);
