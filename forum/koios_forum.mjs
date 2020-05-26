@@ -43,7 +43,7 @@ async function asyncloaded() {
     space = await box.openSpace(KoiosSpace);
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
-    //WriteThread("corwintest", Moderator);
+    WriteThread("corwintest", Moderator);
     
 }
 
