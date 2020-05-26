@@ -74,9 +74,9 @@ async function WriteThread(threadAddress) {
     } 
 
     //currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
-    const posts = await currentThread.getPosts()
-    console.log(posts)
-    await ShowPosts(posts);
+    //const posts = await currentThread.getPosts()
+    //console.log(posts)
+    await ShowPosts(currentThread);
 }
 
 
