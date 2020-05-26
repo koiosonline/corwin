@@ -32,7 +32,6 @@ async function asyncloaded() {
     const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 
     //ReadThread(KoiosThread);
-    ReadSpace(KoiosSpace)
     log("wait for authorize")
     await authorize()
 
@@ -42,6 +41,7 @@ async function asyncloaded() {
     space = await box.openSpace(KoiosSpace);
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
+    ReadSpace();
     WriteThread("corwintest", Moderator);
     
 }
@@ -88,7 +88,7 @@ async function ReadThread(threadAddress) {
     await ShowPosts(thread);
 }
 
-async function ReadSpace(space) {
+async function ReadSpace() {
   const threads = await space.subscribedThreads();
   await ShowThreads(threads);
 }
