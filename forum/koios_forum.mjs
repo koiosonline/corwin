@@ -89,9 +89,9 @@ async function ReadThread(threadAddress) {
     await ShowPosts(thread);
 }
 
-async function ReadSpace(spaceAddress, spaceName) {
-  const space = await Box.getSpace(spaceAddress, spaceName);
-  await ShowThreads(space);
+async function ReadSpace(space) {
+  const threads = await space.subscribedThreads();
+  await ShowThreads(threads);
 }
 
 
@@ -133,11 +133,8 @@ async function ShowPosts(posts) {
     }   
 }
 
-async function ShowThreads(space) {
-  console.log(space);
-  for (var i=0;i<space.length;i++) {                
-      console.log(`${i} ${space[i].spaces.koiosonline._activeThreads} ${did} ${date.toString() }`)           
-  }
+async function ShowThreads(threads) {
+  console.log(threads);
 }
 
 function SetDeleteButton(domid,postid) { // in seperate function to remember state
