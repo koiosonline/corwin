@@ -52,7 +52,7 @@ async function CreateOpenThread(threadName, firstModerator) {
   });
 }
 
-var currentThread;
+//var currentThread;
 async function WriteThread(threadAddress) {
     
     var foruminput = document.getElementById("foruminput");
@@ -198,90 +198,3 @@ async function FindSender (target,did) {
     var profile = await Box.getProfile(did);
     target.innerHTML = profile.name ? profile.name : did           
 }
-
-
-
-// Get all threads
-export async function getAllThreads() {
-  threads = [];
-
-  // Get thread count from contract
-  let threadCount = await contractInstance.methods.getThreadCount().call();
-
-  for (let i = 0; i < threadCount; i++) {
-    // Get thread name by index from contract
-    let threadName = await contractInstance.methods.threadNames(i).call();
-
-    // Get thread by name from contract
-    let thread = await contractInstance.methods.threads(threadName).call();
-
-    Object.assign(thread, {'name': threadName});
-    threads.push(thread);
-  }
-
-  return threads;
-}
-
-// Open 3box
-// User is promted to give permission
-export async function open3Box() {
-  box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);
-  
-  // Open koiosonline space
-  space = await box.openSpace('koiosonline');
-  
-}
-
-// Get the thread from the space
-export async function selectThread(threadName) {
-  if (!space) throw error('Space not opened');
-  currentThread = await space.joinThread(threadName);
-}
-
-// Start a new thread
-export async function newThread(threadName) {
-  await contractInstance.methods.newThread(threadName, box.DID).send({
-    from: getUserAddress()
-  })
-}
-
-// Get posts of selected thread
-export async function getPosts() {
-  let posts = await currentThread.getPosts();
-  for (post of posts) {
-    // Get the score for each post from the contract
-    let score = await contractInstance.methods.getPostScore(post.postId).call();
-    Object.assign(post, {score: score});
-  }
-  return posts;
-}
-
-// Create new post on selected thread
-export async function newPost(post) {
-  // Add post to selected thread to get postId
-  let postId = await currentThread.post(post);
-  try {
-    // Try to add the post to the contract
-    await contractInstance.methods.newPost(postId, box.DID).send({
-      from: getUserAddress()
-    });
-  } catch {
-    // If contract call fails, delete post from selected thread
-    await currentThread.deletePost(postId);
-  }
-}
-
-// Adds or Subtracts score from post
-export async function votePost(postId, score) {
-  await contractInstance.methods.votePost(box.DID, postId, score).send({from: getUserAddress()});
-  getAllThreads();
-}
-
-// Adds or Subtracts score from thread
-export async function voteThread(threadName, score) {
-  await contractInstance.methods.voteThread(box.DID, threadName, score).send({from: getUserAddress()});
-  getAllThreads();
-}
-
-// TODO: deletePost
-// TODO: deleteThread
