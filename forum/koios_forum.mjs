@@ -139,7 +139,7 @@ async function ShowThreads(threads) {
     var target = GlobalThreadList.AddListItem() // make new entry
     target.getElementsByClassName("threadname")[0].innerHTML = threads[i].name.substr(24);
     var deletebutton=target.getElementsByClassName("threaddelete")[0]
-    SetThreadDeleteButton(deletebutton, threads[i].name)   
+    SetThreadDeleteButton(deletebutton, threads[i].address)   
   }
 }    
 
@@ -149,7 +149,12 @@ function SetThreadDeleteButton(domid,threadid) { // in seperate function to reme
     LinkClickButton(id);subscribe(`${id}click`,DeleteThread); 
     
     function DeleteThread() {
+      try {
         console.log(`Deleting thread ${threadid}`);
+        space.unsubscribeThread(threadid);
+      } catch (error) {
+        console.log(error);
+      }
     }
 }
 
