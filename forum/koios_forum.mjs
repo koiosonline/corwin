@@ -12,6 +12,7 @@ let box;
 let space;
 let currentThread;
 var GlobalForumentryList = new DomList("forumentry");
+var GlobalThreadList = new DomList("threadlist");
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -42,7 +43,7 @@ async function asyncloaded() {
     space = await box.openSpace(KoiosSpace);
     FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
     console.log(space);
-    WriteThread("corwintest", Moderator);
+    //WriteThread("corwintest", Moderator);
     
 }
 
@@ -134,6 +135,9 @@ async function ShowPosts(posts) {
 
 async function ShowThreads(space) {
   console.log(space);
+  for (var i=0;i<space.length;i++) {                
+      console.log(`${i} ${space[i].spaces.koiosonline._activeThreads} ${did} ${date.toString() }`)           
+  }
 }
 
 function SetDeleteButton(domid,postid) { // in seperate function to remember state
