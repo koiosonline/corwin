@@ -139,7 +139,7 @@ async function ShowThreads(threads) {
     var target = GlobalThreadList.AddListItem() // make new entry
     target.getElementsByClassName("threadname")[0].innerHTML = threads[i].name.substr(24);
     var deletebutton=target.getElementsByClassName("threaddelete")[0]
-    SetThreadDeleteButton(deletebutton,"threadname")   
+    SetThreadDeleteButton(deletebutton, threads[i].name)   
   }
 }    
 
