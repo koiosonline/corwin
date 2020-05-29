@@ -12,6 +12,7 @@ let box;
 let space;
 let currentThread;
 var GlobalForumentryList = new DomList("forumentry");
+var GlobalThreadList = new DomList("threadentry");  
 const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
@@ -138,8 +139,6 @@ async function ShowPosts(posts) {
 }
 
 async function ShowThreads(threads) {
-  console.log(threads);
-  var GlobalThreadList = new DomList("threadentry")    
   for (var i=0;i<threads.length;i++) {        
     var target = GlobalThreadList.AddListItem() // make new entry
     target.getElementsByClassName("threadname")[0].innerHTML = threads[i].name.substr(24);
