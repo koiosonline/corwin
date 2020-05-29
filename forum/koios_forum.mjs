@@ -84,7 +84,7 @@ async function WriteThread(threadAddress) {
 async function ReadSpace() {
   var createnewthread = document.getElementById("threadaddinfo");
   createnewthread.contentEditable="true"; // make div editable
-  LinkClickButton("threadadd");subscribe("sendclick",OpenThread);   
+  LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);   
 
   async function OpenThread() {
       var foruminput = document.getElementById("threadaddinfo");
