@@ -28,10 +28,10 @@ async function asyncloaded() {
     const KoiosThread="/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline.corwintest"     
     //const KoiosThread="TestThread";
     const SpaceAddress = "/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline";
-    const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 
     //ReadThread(KoiosThread);
     log("wait for authorize")*/
+    const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
     const KoiosSpace="koiosonline";
     await authorize();
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
@@ -166,6 +166,8 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
   
   function GoToThread() {
     try {
+      GlobalThreadList.EmptyList();
+      GlobalForumentryList.EmptyList();
       WriteThread(threadid);
     } catch (error) {
       console.log(error);
