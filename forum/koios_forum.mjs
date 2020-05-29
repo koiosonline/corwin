@@ -43,7 +43,7 @@ async function asyncloaded() {
     //WriteThread("corwintest", Moderator);
 }
 
-async function CreateOpenThread(threadName, firstModerator) {
+function CreateOpenThread(threadName, firstModerator) {
   const newThread = await space.joinThread(threadName, {
     firstModerator: firstModerator,
     members: false
@@ -89,7 +89,7 @@ async function ReadSpace() {
       var foruminput = document.getElementById("threadaddinfo");
       console.log(foruminput.innerHTML);
       try {
-        await CreateOpenThread(createnewthread.innerHTML, Moderator); // thread inherited from parent function
+        CreateOpenThread(createnewthread.innerHTML, Moderator); // thread inherited from parent function
       } catch (error) {
         console.log(error);
       }
