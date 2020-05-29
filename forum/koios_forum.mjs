@@ -44,12 +44,13 @@ async function asyncloaded() {
 }
 
 async function CreateOpenThread(threadName, firstModerator) {
-  const newThread = await space.joinThread(threadName, {
+  var newThread = await space.joinThread(threadName, {
     firstModerator: firstModerator,
     members: false
   });
   console.log(newThread);
   console.log(space);
+  WriteThread(newThread.address);
 }
 
 //var currentThread;
@@ -93,7 +94,6 @@ async function ReadSpace() {
       console.log(foruminput.innerHTML);
       try {
         await CreateOpenThread(createnewthread.innerHTML, Moderator); // thread inherited from parent function
-        await UpdateSpace();
       } catch (error) {
         console.log(error);
       }
