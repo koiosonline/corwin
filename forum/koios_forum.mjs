@@ -48,6 +48,7 @@ function CreateOpenThread(threadName, firstModerator) {
     firstModerator: firstModerator,
     members: false
   });
+  console.log(newThread);
 }
 
 //var currentThread;
