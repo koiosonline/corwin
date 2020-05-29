@@ -12,6 +12,7 @@ let box;
 let space;
 let currentThread;
 var GlobalForumentryList = new DomList("forumentry");
+const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -31,7 +32,7 @@ async function asyncloaded() {
 
     //ReadThread(KoiosThread);
     log("wait for authorize")*/
-    const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
+    
     const KoiosSpace="koiosonline";
     await authorize();
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
@@ -50,7 +51,8 @@ async function CreateOpenThread(threadName, firstModerator) {
 
 //var currentThread;
 async function WriteThread(threadAddress) {
-    
+    GlobalThreadList.EmptyList();
+    GlobalForumentryList.EmptyList();
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
@@ -78,15 +80,20 @@ async function WriteThread(threadAddress) {
     await ShowPosts(posts);
 }
 
-
-async function ReadThread(threadAddress) {
-    
-    
-    //const posts = await thread.getPosts()
-    await ShowPosts(thread);
-}
-
 async function ReadSpace() {
+  var createnewthread = document.getElementById("threadaddinfo");
+  createnewthread.contentEditable="true"; // make div editable
+  LinkClickButton("threadadd");subscribe("sendclick",OpenThread);   
+
+  async function OpenThread() {
+      var foruminput = document.getElementById("threadaddinfo");
+      console.log(foruminput.innerHTML);
+      try {
+        await CreateOpenThread(threadaddinfo.innerHTML, Moderator); // thread inherited from parent function
+      } catch (error) {
+        console.log(error);
+      }
+  }
   const threads = await space.subscribedThreads();
   await ShowThreads(threads);
 }
@@ -166,8 +173,6 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
   
   function GoToThread() {
     try {
-      GlobalThreadList.EmptyList();
-      GlobalForumentryList.EmptyList();
       WriteThread(threadid);
     } catch (error) {
       console.log(error);
