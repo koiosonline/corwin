@@ -91,15 +91,19 @@ async function ReadSpace() {
       var foruminput = document.getElementById("threadaddinfo");
       console.log(foruminput.innerHTML);
       try {
-        CreateOpenThread(createnewthread.innerHTML, Moderator); // thread inherited from parent function
+        await CreateOpenThread(createnewthread.innerHTML, Moderator); // thread inherited from parent function
+        await UpdateSpace();
       } catch (error) {
         console.log(error);
       }
   }
+  await UpdateSpace();
+}
+
+async function UpdateSpace() {
   const threads = await space.subscribedThreads();
   await ShowThreads(threads);
 }
-
 
 async function ShowPosts(posts) {
   
