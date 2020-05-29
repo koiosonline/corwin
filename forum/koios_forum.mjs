@@ -94,6 +94,7 @@ async function ReadSpace() {
       console.log(foruminput.innerHTML);
       try {
         await CreateOpenThread(createnewthread.innerHTML, Moderator); // thread inherited from parent function
+        await UpdateSpace();
       } catch (error) {
         console.log(error);
       }
@@ -101,8 +102,14 @@ async function ReadSpace() {
 }
 
 async function UpdateSpace() {
+  GlobalThreadList.EmptyList();
   const threads = await space.subscribedThreads();
   await ShowThreads(threads);
+}
+
+async function UpdateThread() {
+  const posts = await currentThread.getPosts()
+  await ShowPosts(posts);
 }
 
 async function ShowPosts(posts) {
@@ -194,6 +201,7 @@ function SetDeleteButton(domid,postid) { // in seperate function to remember sta
         console.log(currentThread);
         try {
           await currentThread.deletePost(postid);
+          await UpdateThread();
         } catch (error) {
           console.log(error);
         }
