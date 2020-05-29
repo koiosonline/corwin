@@ -88,7 +88,7 @@ async function ReadSpace() {
       var foruminput = document.getElementById("threadaddinfo");
       console.log(foruminput.innerHTML);
       try {
-        await CreateOpenThread(threadaddinfo.innerHTML, Moderator); // thread inherited from parent function
+        await CreateOpenThread(createnewthread.innerHTML, Moderator); // thread inherited from parent function
       } catch (error) {
         console.log(error);
       }
