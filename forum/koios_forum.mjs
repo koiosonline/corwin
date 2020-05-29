@@ -83,6 +83,7 @@ async function WriteThread(threadAddress) {
 }
 
 async function ReadSpace() {
+  await UpdateSpace();
   var createnewthread = document.getElementById("threadaddinfo");
   createnewthread.contentEditable="true"; // make div editable
   LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);   
@@ -97,7 +98,6 @@ async function ReadSpace() {
         console.log(error);
       }
   }
-  await UpdateSpace();
 }
 
 async function UpdateSpace() {
