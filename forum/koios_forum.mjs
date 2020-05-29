@@ -38,7 +38,7 @@ async function asyncloaded() {
     await authorize();
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
-    FindSender(document.getElementById("myname"),box.DID)  // get and display my own name
+      // get and display my own name
     ReadSpace();
     //WriteThread("corwintest", Moderator);
 }
@@ -52,6 +52,7 @@ async function CreateOpenThread(threadName, firstModerator) {
 
 //var currentThread;
 async function WriteThread(threadAddress) {
+    FindSender(document.getElementById("myname"),box.DID)
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
@@ -80,7 +81,7 @@ async function WriteThread(threadAddress) {
 }
 
 async function ReadSpace() {
-  var createnewthread = document.getElementById("threadaddinfo");
+  /*var createnewthread = document.getElementById("threadaddinfo");
   createnewthread.contentEditable="true"; // make div editable
   LinkClickButton("threadadd");subscribe("sendclick",OpenThread);   
 
@@ -92,7 +93,7 @@ async function ReadSpace() {
       } catch (error) {
         console.log(error);
       }
-  }
+  }*/
   const threads = await space.subscribedThreads();
   await ShowThreads(threads);
 }
