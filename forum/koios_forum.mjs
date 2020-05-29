@@ -52,8 +52,6 @@ async function CreateOpenThread(threadName, firstModerator) {
 
 //var currentThread;
 async function WriteThread(threadAddress) {
-    GlobalThreadList.EmptyList();
-    GlobalForumentryList.EmptyList();
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
@@ -172,6 +170,7 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
   
   function GoToThread() {
     try {
+      GlobalThreadList.EmptyList();
       WriteThread(threadid);
     } catch (error) {
       console.log(error);
