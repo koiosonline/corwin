@@ -43,7 +43,7 @@ async function asyncloaded() {
     //WriteThread("corwintest", Moderator);
 }
 
-function CreateOpenThread(threadName, firstModerator) {
+async function CreateOpenThread(threadName, firstModerator) {
   const newThread = await space.joinThread(threadName, {
     firstModerator: firstModerator,
     members: false
