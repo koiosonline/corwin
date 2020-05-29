@@ -49,6 +49,7 @@ async function CreateOpenThread(threadName, firstModerator) {
     members: false
   });
   console.log(newThread);
+  console.log(space);
 }
 
 //var currentThread;
