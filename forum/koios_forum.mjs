@@ -81,7 +81,7 @@ async function WriteThread(threadAddress) {
 }
 
 async function ReadSpace() {
-  /*var createnewthread = document.getElementById("threadaddinfo");
+  var createnewthread = document.getElementById("threadaddinfo");
   createnewthread.contentEditable="true"; // make div editable
   LinkClickButton("threadadd");subscribe("sendclick",OpenThread);   
 
@@ -93,7 +93,7 @@ async function ReadSpace() {
       } catch (error) {
         console.log(error);
       }
-  }*/
+  }
   const threads = await space.subscribedThreads();
   await ShowThreads(threads);
 }
@@ -171,7 +171,7 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
   
   function GoToThread() {
     try {
-      GlobalThreadList.EmptyList();
+      GlobalForumentryList.EmptyList();
       WriteThread(threadid);
     } catch (error) {
       console.log(error);
