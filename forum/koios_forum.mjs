@@ -44,7 +44,7 @@ async function CreateOpenThread(threadName, firstModerator) {
   });
   await space.joinThreadByAddress(newThread.address);
   //WriteThread(newThread.address);
-  UpdateSpace();
+  ReadSpace();
 }
 
 /*
