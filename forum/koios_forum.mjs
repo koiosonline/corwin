@@ -7,7 +7,6 @@ import { /*initializeContract,*/ getUserAddress, getWeb3,authorize } from "./koi
 import {DomList,LinkClickButton,subscribe,FitOneLine} from '../lib/koios_util.mjs';
 import {/*SetupLogWindow,*/log} from '../lib/koios_log.mjs'; 
 
-let threads = [];
 let box;
 let space;
 let currentThread;
@@ -24,42 +23,37 @@ window.onerror = async function(message, source, lineno, colno, error) {   // es
 
 window.addEventListener('DOMContentLoaded', asyncloaded);  // load  
 
-async function asyncloaded() { 
-    /*SetupLogWindow(false)
-    log("Starting")
-    const KoiosThread="/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline.corwintest"     
-    //const KoiosThread="TestThread";
-    const SpaceAddress = "/orbitdb/zdpuAvoxmpwZxT5bpMiuKSBAucpRzTy8hC2tBU9v2NhDxtCMX/3box.thread.koiosonline";
-
-    //ReadThread(KoiosThread);
-    log("wait for authorize")*/
-    
+/*
+ * Enables authorization with Metamask/3Box, loads the space and shows the threads within the space in the user interface
+ */
+async function asyncloaded() {    
     const KoiosSpace="koiosonline";
     await authorize();
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
-      // get and display my own name
     ReadSpace();
-    //WriteThread("corwintest", Moderator);
 }
 
+/*
+ * Creates a new open thread, which everyone can join and post to.
+ */
 async function CreateOpenThread(threadName, firstModerator) {
   var newThread = await space.joinThread(threadName, {
     firstModerator: firstModerator,
     members: false
   });
-  console.log(newThread);
-  console.log(space);
+  UpdateSpace();
   WriteThread(newThread.address);
 }
 
-//var currentThread;
+/*
+ * Open an existing thread, shows the posts in that thread and enables posting to this thread.
+ */
 async function WriteThread(threadAddress) {
     FindSender(document.getElementById("myname"),box.DID)
     var foruminput = document.getElementById("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
-    //const thread = await box.openThread('koiosonline', 'koiosonline', { ghost: true });
     currentThread = await space.joinThreadByAddress(threadAddress);
 
     async function Send() {
@@ -79,10 +73,12 @@ async function WriteThread(threadAddress) {
     })
     currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
     const posts = await currentThread.getPosts()
-    //console.log(posts)
     await ShowPosts(posts);
 }
 
+/*
+ * Updates the threads within the space and allows making new threads within the space
+ */
 async function ReadSpace() {
   await UpdateSpace();
   var createnewthread = document.getElementById("threadaddinfo");
@@ -94,7 +90,6 @@ async function ReadSpace() {
       console.log(foruminput.innerHTML);
       try {
         await CreateOpenThread(createnewthread.innerHTML, Moderator); // thread inherited from parent function
-        await UpdateSpace();
       } catch (error) {
         console.log(error);
       }
