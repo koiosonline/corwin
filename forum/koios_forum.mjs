@@ -96,17 +96,26 @@ async function ReadSpace() {
   }
 }
 
+/*
+ * Update the space with all the subscribed threads
+ */
 async function UpdateSpace() {
   const threads = await space.subscribedThreads();
   GlobalThreadList.EmptyList();
   await ShowThreads(threads);
 }
 
+/*
+ * Update the posts in the thread
+ */
 async function UpdateThread() {
   const posts = await currentThread.getPosts()
   await ShowPosts(posts);
 }
 
+/*
+ * Show the posts in the interface
+ */
 async function ShowPosts(posts) {
   
   console.log(posts);
@@ -145,6 +154,9 @@ async function ShowPosts(posts) {
     }   
 }
 
+/*
+ * Show the threads in the interface
+ */
 async function ShowThreads(threads) {
   for (var i=0;i<threads.length;i++) {        
     var target = GlobalThreadList.AddListItem() // make new entry
@@ -157,6 +169,9 @@ async function ShowThreads(threads) {
   }
 }    
 
+/*
+ * Add button to delete a thread
+ */
 function SetThreadDeleteButton(domid,threadid) { // in seperate function to remember state
     var id=`delete-${threadid}`
     domid.id=id
@@ -172,6 +187,9 @@ function SetThreadDeleteButton(domid,threadid) { // in seperate function to reme
     }
 }
 
+/*
+ * Add button to open the thread and see posts within that thread
+ */
 function SetGoToThreadButton(domid,threadid) { // in seperate function to remember state
   var id=`goto-${threadid}`
   domid.id=id
@@ -187,6 +205,9 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
   }
 }
 
+/*
+ * Add button to delete a post
+ */
 function SetDeleteButton(domid,postid) { // in seperate function to remember state
     var id=`delete-${postid}`
     domid.id=id
@@ -203,7 +224,9 @@ function SetDeleteButton(domid,postid) { // in seperate function to remember sta
     }
 }    
 
-
+/*
+ * Add 3id as name of the post sender
+ */
 async function FindSender (target,did) {
     var profile = await Box.getProfile(did);
     target.innerHTML = profile.name ? profile.name : did           
