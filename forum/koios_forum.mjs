@@ -1,11 +1,11 @@
 // Test via: https://koios-final.webflow.io/test/forum
 
 import { } from "./3box.js"; // from "https://unpkg.com/3box/dist/3box.js"; // prevent rate errors
-import { Resolver} from  "https://unpkg.com/did-resolver/lib/resolver.esm.js" 
-import { initializeContract, getUserAddress, getWeb3,authorize } from "./koios_web3.mjs";
-import { abi, address } from "./constants/forum_contract.js";
+//import { Resolver} from  "https://unpkg.com/did-resolver/lib/resolver.esm.js" 
+import { /*initializeContract,*/ getUserAddress, getWeb3,authorize } from "./koios_web3.mjs";
+//import { abi, address } from "./constants/forum_contract.js";
 import {DomList,LinkClickButton,subscribe,FitOneLine} from '../lib/koios_util.mjs';
-import {SetupLogWindow,log} from '../lib/koios_log.mjs'; 
+import {/*SetupLogWindow,*/log} from '../lib/koios_log.mjs'; 
 
 let threads = [];
 let box;
@@ -35,7 +35,7 @@ async function asyncloaded() {
     log("wait for authorize")*/
     
     const KoiosSpace="koiosonline";
-    //await authorize();
+    await authorize();
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
       // get and display my own name
