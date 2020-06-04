@@ -42,8 +42,8 @@ async function CreateOpenThread(threadName, firstModerator) {
     firstModerator: firstModerator,
     members: false
   });
-  await UpdateSpace();
   WriteThread(newThread.address);
+  await UpdateSpace();
 }
 
 /*
