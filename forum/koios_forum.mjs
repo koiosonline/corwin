@@ -35,7 +35,7 @@ async function asyncloaded() {
     log("wait for authorize")*/
     
     const KoiosSpace="koiosonline";
-    await authorize();
+    //await authorize();
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
       // get and display my own name
