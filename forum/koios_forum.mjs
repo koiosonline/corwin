@@ -42,9 +42,8 @@ async function CreateOpenThread(threadName, firstModerator) {
     firstModerator: firstModerator,
     members: false
   });
-  await space.joinThreadByAddress(newThread.address);
-  //WriteThread(newThread.address);
-  ReadSpace();
+  WriteThread(newThread.address);
+  UpdateThread();
 }
 
 /*
@@ -98,8 +97,8 @@ async function ReadSpace() {
 }
 
 async function UpdateSpace() {
-  GlobalThreadList.EmptyList();
   const threads = await space.subscribedThreads();
+  GlobalThreadList.EmptyList();
   await ShowThreads(threads);
 }
 
