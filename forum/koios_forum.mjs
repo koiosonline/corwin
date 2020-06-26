@@ -50,15 +50,15 @@ async function CreateOpenThread(threadName, firstModerator) {
  * Open an existing thread, shows the posts in that thread and enables posting to this thread.
  */
 async function WriteThread(threadAddress) {
-    FindSender(document.getElementById("myname"),box.DID)
-    var foruminput = document.getElementById("foruminput");
+    FindSender(document.getElementsByClassName("myname"),box.DID)
+    var foruminput = document.getElementsByClassName("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     currentThread = await space.joinThreadByAddress(threadAddress);
 
     async function Send() {
         console.log("Sending");
-        var foruminput = document.getElementById("foruminput");
+        var foruminput = document.getElementsByClassName("foruminput");
         console.log(foruminput.innerHTML);
         try {
           await currentThread.post(foruminput.innerHTML); // thread inherited from parent function
@@ -81,12 +81,12 @@ async function WriteThread(threadAddress) {
  */
 async function ReadSpace() {
   await UpdateSpace();
-  var createnewthread = document.getElementById("threadaddinfo");
+  var createnewthread = document.getElementsByClassName("threadaddinfo");
   createnewthread.contentEditable="true"; // make div editable
   LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);   
 
   async function OpenThread() {
-      var foruminput = document.getElementById("threadaddinfo");
+      var foruminput = document.getElementsByClassName("threadaddinfo");
       console.log(foruminput.innerHTML);
       try {
         await CreateOpenThread(createnewthread.innerHTML, Moderator); // thread inherited from parent function
