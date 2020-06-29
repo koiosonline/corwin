@@ -4,7 +4,7 @@ import { } from "./3box.js"; // from "https://unpkg.com/3box/dist/3box.js"; // p
 //import { Resolver} from  "https://unpkg.com/did-resolver/lib/resolver.esm.js" 
 import { /*initializeContract,*/ getUserAddress, getWeb3,authorize } from "./koios_web3.mjs";
 //import { abi, address } from "./constants/forum_contract.js";
-import {DomList,LinkClickButton,subscribe,FitOneLine} from '../lib/koios_util.mjs';
+import {DomList,LinkClickButton,subscribe,FitOneLine,getElement} from '../lib/koios_util.mjs';
 import {/*SetupLogWindow,*/log} from '../lib/koios_log.mjs'; 
 
 let box;
@@ -50,15 +50,15 @@ async function CreateOpenThread(threadName, firstModerator) {
  * Open an existing thread, shows the posts in that thread and enables posting to this thread.
  */
 async function WriteThread(threadAddress) {
-    FindSender(document.getElementsByClassName("myname"),box.DID)
-    var foruminput = document.getElementsByClassName("foruminput");
+    FindSender(document.getElement("myname"),box.DID)
+    var foruminput = document.getElement("foruminput");
     foruminput.contentEditable="true"; // make div editable
     LinkClickButton("send");subscribe("sendclick",Send);   
     currentThread = await space.joinThreadByAddress(threadAddress);
 
     async function Send() {
         console.log("Sending");
-        var foruminput = document.getElementsByClassName("foruminput");
+        var foruminput = document.getElement("foruminput");
         console.log(foruminput.innerHTML);
         try {
           await currentThread.post(foruminput.innerHTML); // thread inherited from parent function
@@ -81,12 +81,12 @@ async function WriteThread(threadAddress) {
  */
 async function ReadSpace() {
   await UpdateSpace();
-  var createnewthread = document.getElementsByClassName("threadaddinfo");
+  var createnewthread = document.getElement("threadaddinfo");
   createnewthread.contentEditable="true"; // make div editable
   LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);   
 
   async function OpenThread() {
-      var foruminput = document.getElementsByClassName("threadaddinfo");
+      var foruminput = document.getElement("threadaddinfo");
       console.log(foruminput.innerHTML);
       try {
         await CreateOpenThread(createnewthread.innerHTML, Moderator); // thread inherited from parent function
@@ -120,26 +120,26 @@ async function ShowPosts(posts) {
   
   console.log(posts);
     for (var i=0;i<posts.length;i++) {        
-        if (!document.getElementById(posts[i].postId) ){ // check if post is already shown
+        if (!document.getElement(posts[i].postId) ){ // check if post is already shown
             var did=posts[i].author;           
             var date = new Date(posts[i].timestamp * 1000);
             console.log(`${i} ${posts[i].message} ${did} ${date.toString() }`)
             
             var target = GlobalForumentryList.AddListItem() // make new entry
-            target.getElementsByClassName("forummessage")[0].innerHTML = posts[i].message            
-            FitOneLine(target.getElementsByClassName("forummessage")[0])
+            target.getElement("forummessage")[0].innerHTML = posts[i].message            
+            FitOneLine(target.getElement("forummessage")[0])
             target.getElementsByClassName("forumtime")[0].innerHTML = date
-            FitOneLine(target.getElementsByClassName("forumtime")[0])
+            FitOneLine(target.getElement("forumtime")[0])
             
             target.id = posts[i].postId                                        // remember which postId's we've shown
-            FindSender (target.getElementsByClassName("forumsender")[0],did);  // show then profilename (asynchronous)  
-            FitOneLine(target.getElementsByClassName("forumsender")[0])
-            var deletebutton=target.getElementsByClassName("forumdelete")[0]
+            FindSender (target.getElement("forumsender")[0],did);  // show then profilename (asynchronous)  
+            FitOneLine(target.getElement("forumsender")[0])
+            var deletebutton=target.getElement("forumdelete")[0]
             SetDeleteButton(deletebutton,posts[i].postId)            
         }
     }
     
-    var postdomids=document.getElementsByClassName("forumentry");
+    var postdomids=document.getElement("forumentry");
     //console.log(postdomids);
     for (var i=0;i<postdomids.length;i++) {
         
@@ -160,10 +160,10 @@ async function ShowPosts(posts) {
 async function ShowThreads(threads) {
   for (var i=0;i<threads.length;i++) {        
     var target = GlobalThreadList.AddListItem() // make new entry
-    target.getElementsByClassName("threadname")[0].innerHTML = threads[i].name.substr(24);
-    target.getElementsByClassName("firstmoderator")[0].innerHTML = threads[i].firstModerator;
-    var deletebutton=target.getElementsByClassName("threaddelete")[0]
-    var gotobutton=target.getElementsByClassName("threadgoto")[0]
+    target.getElement("threadname")[0].innerHTML = threads[i].name.substr(24);
+    target.getElement("firstmoderator")[0].innerHTML = threads[i].firstModerator;
+    var deletebutton=target.getElement("threaddelete")[0]
+    var gotobutton=target.getElement("threadgoto")[0]
     SetThreadDeleteButton(deletebutton, threads[i].address)
     SetGoToThreadButton(gotobutton, threads[i].address)      
   }
