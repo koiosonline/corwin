@@ -27,6 +27,8 @@ window.addEventListener('DOMContentLoaded', asyncloaded);  // load
  * Enables authorization with Metamask/3Box, loads the space and shows the threads within the space in the user interface
  */
 async function asyncloaded() {    
+    var testbutton = document.getElementsByClassName("test");
+    SetTestButton(testbutton, "123ditiseentest");
     const KoiosSpace="koiosonline";
     await authorize();
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
@@ -80,9 +82,6 @@ async function WriteThread(threadAddress) {
  * Updates the threads within the space and allows making new threads within the space
  */
 async function ReadSpace() {
-  
-  var testbutton = document.getElementsByClassName("test");
-  SetTestButton(testbutton, "123ditiseentest");
 
   await UpdateSpace();
   var createnewthread = document.getElementsByClassName("threadaddinfo");
@@ -237,7 +236,6 @@ function SetTestButton(domid,testid) { // in seperate function to remember state
   LinkClickButton(id);subscribe(`${id}click`,TestStuff); 
   
   async function TestStuff() {
-      console.log(currentThread);
       try {
         await console.log("Dit is een test");
         await log("Dit is een log test");
