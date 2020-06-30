@@ -82,7 +82,7 @@ async function WriteThread(threadAddress) {
 async function ReadSpace() {
   
   var testbutton = document.getElementsByClassName("test");
-  SetTestButton(testbutton);
+  SetTestButton(testbutton, "123ditiseentest");
 
   await UpdateSpace();
   var createnewthread = document.getElementsByClassName("threadaddinfo");
