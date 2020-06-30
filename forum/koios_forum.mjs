@@ -4,7 +4,7 @@ import { } from "./3box.js"; // from "https://unpkg.com/3box/dist/3box.js"; // p
 //import { Resolver} from  "https://unpkg.com/did-resolver/lib/resolver.esm.js" 
 import { /*initializeContract,*/ getUserAddress, getWeb3,authorize } from "./koios_web3.mjs";
 //import { abi, address } from "./constants/forum_contract.js";
-import {DomList,LinkClickButton,subscribe,FitOneLine} from '../lib/koios_util.mjs';
+import {DomList,LinkClickButton,subscribe,FitOneLine,getElement} from '../lib/koios_util.mjs';
 import {/*SetupLogWindow,*/log} from '../lib/koios_log.mjs'; 
 
 let box;
@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', asyncloaded);  // load
  * Enables authorization with Metamask/3Box, loads the space and shows the threads within the space in the user interface
  */
 async function asyncloaded() {    
-    var testbutton = document.getElementsByClassName("test 519:1635 ");
+    var testbutton = getElement("test");
     SetTestButton(testbutton, "123ditiseentest");
     const KoiosSpace="koiosonline";
     await authorize();
