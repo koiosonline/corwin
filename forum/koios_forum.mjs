@@ -81,6 +81,8 @@ async function WriteThread(threadAddress) {
  */
 async function ReadSpace() {
   await UpdateSpace();
+  var testbutton = document.getElementsByClassName("test");
+  await SetTestButton(testbutton);
   var createnewthread = document.getElementsByClassName("threadaddinfo");
   createnewthread.contentEditable="true"; // make div editable
   LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);   
@@ -222,6 +224,25 @@ function SetDeleteButton(domid,postid) { // in seperate function to remember sta
           console.log(error);
         }
     }
+}    
+
+/*
+ * Add button to delete a post
+ */
+function SetTestButton(domid) { // in seperate function to remember state
+  var id=`test-${domid}`
+  domid.id=id
+  LinkClickButton(id);subscribe(`${id}click`,TestStuff); 
+  
+  async function TestStuff() {
+      console.log(currentThread);
+      try {
+        await console.log("Dit is een test");
+        await log("Dit is een log test");
+      } catch (error) {
+        console.log(error);
+      }
+  }
 }    
 
 /*
