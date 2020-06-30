@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', asyncloaded);  // load
  * Enables authorization with Metamask/3Box, loads the space and shows the threads within the space in the user interface
  */
 async function asyncloaded() {    
-    var testbutton = document.getElementsByClassName("test");
+    var testbutton = document.getElementsByClassName("test 519:1635 ");
     SetTestButton(testbutton, "123ditiseentest");
     const KoiosSpace="koiosonline";
     await authorize();
