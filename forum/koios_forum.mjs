@@ -80,9 +80,11 @@ async function WriteThread(threadAddress) {
  * Updates the threads within the space and allows making new threads within the space
  */
 async function ReadSpace() {
-  await UpdateSpace();
+  
   var testbutton = document.getElementsByClassName("test");
-  await SetTestButton(testbutton);
+  SetTestButton(testbutton);
+
+  await UpdateSpace();
   var createnewthread = document.getElementsByClassName("threadaddinfo");
   createnewthread.contentEditable="true"; // make div editable
   LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);   
@@ -229,8 +231,8 @@ function SetDeleteButton(domid,postid) { // in seperate function to remember sta
 /*
  * Add button to delete a post
  */
-function SetTestButton(domid) { // in seperate function to remember state
-  var id=`test-${domid}`
+function SetTestButton(domid,testid) { // in seperate function to remember state
+  var id=`test-${testid}`
   domid.id=id
   LinkClickButton(id);subscribe(`${id}click`,TestStuff); 
   
