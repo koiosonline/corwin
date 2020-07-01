@@ -27,8 +27,8 @@ window.addEventListener('DOMContentLoaded', asyncloaded);  // load
  * Enables authorization with Metamask/3Box, loads the space and shows the threads within the space in the user interface
  */
 async function asyncloaded() {    
-    var testbutton = getElement("test");
-    SetTestButton(testbutton, "123ditiseentest");
+    //var testbutton = getElement("test");
+    testButton();
     //var testinput = getElement("testinput");
     //testinput.contentEditable="true";
 
@@ -257,4 +257,22 @@ function SetTestButton(domid,testid) { // in seperate function to remember state
 async function FindSender (target,did) {
     var profile = await Box.getProfile(did);
     target.innerHTML = profile.name ? profile.name : did           
+}
+
+async function testButton() {
+  var testinput = document.getElementsByClassName("testinput");
+  testinput.contentEditable="true"; // make div editable
+  LinkClickButton("test");subscribe("testclick",TestStuff);   
+  currentThread = await space.joinThreadByAddress(threadAddress);
+
+  async function TestStuff() {
+    try {
+      await console.log("Dit is een test");
+      await log("Dit is een log test");
+      //var testinput = getElement("testinput");
+      //console.log(testinput);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
