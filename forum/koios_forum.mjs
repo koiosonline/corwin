@@ -29,8 +29,8 @@ window.addEventListener('DOMContentLoaded', asyncloaded);  // load
 async function asyncloaded() {    
     var testbutton = getElement("test");
     SetTestButton(testbutton, "123ditiseentest");
-    var testinput = getElement("testinput");
-    testinput.contentEditable="true";
+    //var testinput = getElement("testinput");
+    //testinput.contentEditable="true";
 
     const KoiosSpace="koiosonline";
     await authorize();
