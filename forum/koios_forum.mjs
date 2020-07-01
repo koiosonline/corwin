@@ -31,7 +31,7 @@ async function asyncloaded() {
     SetTestButton(testbutton, "123ditiseentest");
     var testinput = getElement("testinput");
     testinput.contentEditable="true";
-    
+
     const KoiosSpace="koiosonline";
     await authorize();
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
@@ -243,8 +243,8 @@ function SetTestButton(domid,testid) { // in seperate function to remember state
       try {
         await console.log("Dit is een test");
         await log("Dit is een log test");
-        var testinput = getElement("testinput");
-        console.log(testinput);
+        //var testinput = getElement("testinput");
+        //console.log(testinput);
       } catch (error) {
         console.log(error);
       }
