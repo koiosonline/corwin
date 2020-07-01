@@ -29,6 +29,9 @@ window.addEventListener('DOMContentLoaded', asyncloaded);  // load
 async function asyncloaded() {    
     var testbutton = getElement("test");
     SetTestButton(testbutton, "123ditiseentest");
+    var testinput = getElement("testinput");
+    testinput.contentEditable="true";
+    
     const KoiosSpace="koiosonline";
     await authorize();
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
@@ -231,8 +234,7 @@ function SetDeleteButton(domid,postid) { // in seperate function to remember sta
  * Add button to delete a post
  */
 function SetTestButton(domid,testid) { // in seperate function to remember state
-  var testinput = getElement("testinput");
-  testinput.contentEditable="true"; // make div editable
+  // make div editable
   var id=`test-${testid}`
   domid.id=id
   LinkClickButton(id);subscribe(`${id}click`,TestStuff); 
