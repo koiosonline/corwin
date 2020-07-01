@@ -231,6 +231,8 @@ function SetDeleteButton(domid,postid) { // in seperate function to remember sta
  * Add button to delete a post
  */
 function SetTestButton(domid,testid) { // in seperate function to remember state
+  var testinput = getElement("testinput");
+  testinput.contentEditable="true"; // make div editable
   var id=`test-${testid}`
   domid.id=id
   LinkClickButton(id);subscribe(`${id}click`,TestStuff); 
@@ -239,6 +241,8 @@ function SetTestButton(domid,testid) { // in seperate function to remember state
       try {
         await console.log("Dit is een test");
         await log("Dit is een log test");
+        var testinput = getElement("testinput");
+        console.log(testinput);
       } catch (error) {
         console.log(error);
       }
