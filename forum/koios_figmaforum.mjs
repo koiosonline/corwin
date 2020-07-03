@@ -29,7 +29,7 @@ async function testbutton() {
     target.style.whiteSpace ="pre"; //werkt goed in combi met innerText
     
     console.log("link");
-        LinkClickButton("testbutton");subscribe("testbuttonclick",Input);  
+    LinkClickButton("testbutton");subscribe("testbuttonclick",Input);  
         
         function Input() {
             var target=getElement("testinput")    
