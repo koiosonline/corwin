@@ -29,8 +29,6 @@ window.addEventListener('DOMContentLoaded', asyncloaded);  // load
 async function asyncloaded() {    
     //var testbutton = getElement("test");
     //testButton();
-    var testinput = getElement("testinput");
-    testinput.contentEditable="true";
 
     const KoiosSpace="koiosonline";
     await authorize();
@@ -86,6 +84,8 @@ async function WriteThread(threadAddress) {
  */
 async function ReadSpace() {
 
+  var testinput = getElement("testinput");
+  testinput.contentEditable="true";
   await UpdateSpace();
   var createnewthread = document.getElementsByClassName("threadaddinfo");
   createnewthread.contentEditable="true"; // make div editable
