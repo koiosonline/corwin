@@ -31,7 +31,7 @@ async function testbutton() {
     console.log("link");
         LinkClickButton("testbutton");subscribe("testbuttonclick",Input);  
         
-        async function Input() {
+        function Input() {
             var target=getElement("testinput")    
             console.log(target.innerHTML);
      }  
