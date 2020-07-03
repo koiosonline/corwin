@@ -29,9 +29,9 @@ async function testbutton() {
     target.style.whiteSpace ="pre"; //werkt goed in combi met innerText
     
     console.log("link");
-        LinkClickButton("test");subscribe("testbuttonclick",Input);  
+        LinkClickButton("testbutton);subscribe("testbuttonclick",Input);  
         
-        function Input() {
+        async function Input() {
             var target=getElement("testinput")    
             console.log(target.innerHTML);
      }  
