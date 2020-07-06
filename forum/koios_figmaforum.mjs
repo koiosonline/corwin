@@ -24,7 +24,7 @@ async function asyncloaded() {
     await authorize()
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
-    await WriteThread();
+    WriteThread();
     //testbutton();
 }
 
