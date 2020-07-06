@@ -24,6 +24,7 @@ async function asyncloaded() {
     await authorize()
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
+    WriteThread();
     testbutton();
 }
 
@@ -39,4 +40,53 @@ async function testbutton() {
 async function Input() {
     var target=getElement("testinput")    
     console.log(target.innerHTML);
+    await currentThread.post(foruminput.innerHTML);
 }  
+
+async function WriteThread() {
+    currentThread = await space.joinThread("testthread", {
+        firstModerator: Moderator,
+        members: false
+    });
+
+}
+
+/*
+ * Show the posts in the interface
+ */
+async function ShowPosts(posts) {
+    console.log(posts);
+    for (var i=0;i<posts.length;i++) {        
+        if (!document.getElementById(posts[i].postId) ){ // check if post is already shown
+            var did=posts[i].author;           
+            var date = new Date(posts[i].timestamp * 1000);
+            console.log(`${i} ${posts[i].message} ${did} ${date.toString() }`)
+            
+            var target = GlobalForumentryList.AddListItem() // make new entry
+            target.getElementsByClassName("forummessage")[0].innerHTML = posts[i].message            
+            FitOneLine(target.getElementsByClassName("forummessage")[0])
+            target.getElementsByClassName("forumtime")[0].innerHTML = date
+            FitOneLine(target.getElementsByClassName("forumtime")[0])
+            
+            target.id = posts[i].postId                                        // remember which postId's we've shown
+            FindSender (target.getElementsByClassName("forumsender")[0],did);  // show then profilename (asynchronous)  
+            FitOneLine(target.getElementsByClassName("forumsender")[0])
+            var deletebutton=target.getElementsByClassName("forumdelete")[0]
+            SetDeleteButton(deletebutton,posts[i].postId)            
+        }
+    }
+    
+    var postdomids=document.getElementsByClassName("forumentry");
+    //console.log(postdomids);
+    for (var i=0;i<postdomids.length;i++) {
+        
+        var checkpostid=postdomids[i].id;
+        console.log(`checkpostid=${checkpostid}`);
+        var found=false;
+        for (var j=0;j<posts.length;j++) {
+            if (posts[j].postId == checkpostid) { found=true;break; }
+        }
+        if (!found)
+            postdomids[i].style.textDecoration="line-through";   
+    }   
+}
