@@ -1,5 +1,5 @@
 import { } from "./3box.js"; 
-//import { getUserAddress, getWeb3,authorize } from "./koios_web3.mjs";
+import { getUserAddress, getWeb3,authorize } from "./koios_web3.mjs";
 import {DomList,LinkClickButton,subscribe,FitOneLine,getElement} from '../lib/koios_util.mjs';
 import {log} from '../lib/koios_log.mjs'; 
 
@@ -21,9 +21,10 @@ window.onerror = async function(message, source, lineno, colno, error) {   // es
 window.addEventListener('DOMContentLoaded', asyncloaded);
 
 async function asyncloaded() {
-    testbutton();
+    await authorize()
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
+    testbutton();
 }
 
 async function testbutton() {
