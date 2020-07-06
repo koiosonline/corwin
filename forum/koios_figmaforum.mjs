@@ -53,7 +53,7 @@ async function WriteThread() {
         var target=getElement("testinput")    
         console.log(target.innerHTML);
         try {
-            await currentThread.post(foruminput.innerHTML); 
+            await currentThread.post(target.innerHTML); 
           } catch (error) {
             console.log(error);
           }
