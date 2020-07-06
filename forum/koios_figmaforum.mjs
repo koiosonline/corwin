@@ -25,16 +25,7 @@ async function asyncloaded() {
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
     WriteThread();
-    //testbutton();
-}
-
-async function testbutton() {
-    var target=getElement("testinput")    
-    target.contentEditable="true"; // make div editable
-    target.style.whiteSpace ="pre"; //werkt goed in combi met innerText
-    
-    console.log("link");
-    LinkClickButton("testbutton");subscribe("testbuttonclick",Input);  
+    console.log(space);
 }
 
 async function WriteThread() {
@@ -105,6 +96,25 @@ async function ShowPosts(posts) {
         if (!found)
             postdomids[i].style.textDecoration="line-through";   
     }   
+}
+
+/*
+ * Add button to delete a post
+ */
+function SetDeleteButton(domid,postid) { // in seperate function to remember state
+    var id=`delete-${postid}`
+    domid.id=id
+    LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry); 
+    
+    async function DeleteForumEntry() {
+        console.log(currentThread);
+        try {
+          await currentThread.deletePost(postid);
+          await UpdateThread();
+        } catch (error) {
+          console.log(error);
+        }
+    }
 }
 
 /*
