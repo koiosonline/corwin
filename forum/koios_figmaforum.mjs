@@ -24,8 +24,8 @@ async function asyncloaded() {
     await authorize()
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
-    WriteThread();
-    testbutton();
+    await WriteThread();
+    //testbutton();
 }
 
 async function testbutton() {
@@ -37,18 +37,34 @@ async function testbutton() {
     LinkClickButton("testbutton");subscribe("testbuttonclick",Input);  
 }
 
-async function Input() {
-    var target=getElement("testinput")    
-    console.log(target.innerHTML);
-    await currentThread.post(foruminput.innerHTML);
-}  
-
 async function WriteThread() {
+    FindSender(document.getElementsByClassName("myname"),box.DID)
+    var target=getElement("testinput")    
+    target.contentEditable="true"; // make div editable
+    target.style.whiteSpace ="pre"; //werkt goed in combi met innerText
+    LinkClickButton("testbutton");subscribe("testbuttonclick",Input);  
+
     currentThread = await space.joinThread("testthread", {
         firstModerator: Moderator,
         members: false
     });
 
+    async function Input() {
+        var target=getElement("testinput")    
+        console.log(target.innerHTML);
+        try {
+            await currentThread.post(foruminput.innerHTML); 
+          } catch (error) {
+            console.log(error);
+          }
+    }  
+    currentThread.onUpdate(async () => {
+        var uposts = await currentThread.getPosts()
+        await ShowPosts(uposts);
+    })
+    currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
+    const posts = await currentThread.getPosts()
+    await ShowPosts(posts);
 }
 
 /*
