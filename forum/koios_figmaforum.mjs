@@ -106,3 +106,11 @@ async function ShowPosts(posts) {
             postdomids[i].style.textDecoration="line-through";   
     }   
 }
+
+/*
+ * Add 3id as name of the post sender
+ */
+async function FindSender (target,did) {
+    var profile = await Box.getProfile(did);
+    target.innerHTML = profile.name ? profile.name : did           
+}
