@@ -9,6 +9,7 @@ let currentThread;
 var GlobalForumentryList = new DomList("forumentry");
 var GlobalThreadList = new DomList("threadentry");  
 const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
+const KoiosSpace = "koiostestspace";
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -21,6 +22,8 @@ window.addEventListener('DOMContentLoaded', asyncloaded);
 
 async function asyncloaded() {
     testbutton();
+    box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
+    space = await box.openSpace(KoiosSpace);
 }
 
 async function testbutton() {
