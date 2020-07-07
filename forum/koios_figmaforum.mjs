@@ -24,21 +24,48 @@ async function asyncloaded() {
     await authorize()
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
-    WriteThread();
+    ReadSpace();
     console.log(space);
 }
 
-async function WriteThread() {
+/*
+ * Creates a new open thread, which everyone can join and post to.
+ */
+async function CreateOpenThread(threadName, firstModerator) {
+    var newThread = await space.joinThread(threadName, {
+        firstModerator: firstModerator,
+        members: false
+    });
+    await ShowThreads(newThread);
+    await WriteThread(newThread.address);
+}
+
+async function ReadSpace() {
+    const threads = await space.subscribedThreads();
+    await ShowThreads(threads);
+    var createnewthread = getElement("threadaddinfo");
+    createnewthread.contentEditable="true"; // make div editable
+    LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);   
+
+    async function OpenThread() {
+        var newthread = getElement("threadaddinfo");
+        console.log(newthread.innerHTML);
+        try {
+            await CreateOpenThread(newthread.innerHTML, Moderator); // thread inherited from parent function
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+async function WriteThread(threadAddress) {
     FindSender(document.getElementsByClassName("myname"),box.DID)
     var target=getElement("testinput")    
     target.contentEditable="true"; // make div editable
     target.style.whiteSpace ="pre"; //werkt goed in combi met innerText
     LinkClickButton("testbutton");subscribe("testbuttonclick",Input);  
 
-    currentThread = await space.joinThread("testthread", {
-        firstModerator: Moderator,
-        members: false
-    });
+    currentThread = await space.joinThreadByAddress(threadAddress);
 
     async function Input() {
         var target=getElement("testinput")    
@@ -124,3 +151,54 @@ async function FindSender (target,did) {
     var profile = await Box.getProfile(did);
     target.innerHTML = profile.name ? profile.name : did           
 }
+
+/*
+ * Show the threads in the interface
+ */
+async function ShowThreads(threads) {
+    for (var i=0;i<threads.length;i++) {        
+      var target = GlobalThreadList.AddListItem() // make new entry
+      target.getElementsByClassName("threadname")[0].innerHTML = threads[i].name.substr(24);
+      target.getElementsByClassName("firstmoderator")[0].innerHTML = threads[i].firstModerator;
+      var deletebutton=target.getElementsByClassName("threaddelete")[0]
+      var gotobutton=target.getElementsByClassName("threadgoto")[0]
+      SetThreadDeleteButton(deletebutton, threads[i].address)
+      SetGoToThreadButton(gotobutton, threads[i].address)      
+    }
+  }    
+  
+  /*
+   * Add button to delete a thread
+   */
+  function SetThreadDeleteButton(domid,threadid) { // in seperate function to remember state
+      var id=`delete-${threadid}`
+      domid.id=id
+      LinkClickButton(id);subscribe(`${id}click`,DeleteThread); 
+      
+      function DeleteThread() {
+        try {
+          console.log(`Deleting thread ${threadid}`);
+          space.unsubscribeThread(threadid);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+  }
+
+  /*
+ * Add button to open the thread and see posts within that thread
+ */
+function SetGoToThreadButton(domid,threadid) { // in seperate function to remember state
+    var id=`goto-${threadid}`
+    domid.id=id
+    LinkClickButton(id);subscribe(`${id}click`,GoToThread); 
+    
+    function GoToThread() {
+      try {
+        GlobalForumentryList.EmptyList();
+        WriteThread(threadid);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
