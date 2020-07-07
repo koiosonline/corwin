@@ -10,6 +10,7 @@ var GlobalForumentryList = new DomList("forumentry");
 var GlobalThreadList = new DomList("threadentry");  
 const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 const KoiosSpace = "koiostestspace";
+const ThreadNameForTest= "/orbitdb/zdpuAskcBtYNnpi2ZscLhL7pEQmzRscH5eSBLyConFYB6AP29/3box.thread.koiostestspace.testthread";
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -25,6 +26,7 @@ async function asyncloaded() {
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
     ReadSpace();
+    WriteThread(ThreadNameForTest);
     console.log(space);
 }
 
@@ -45,6 +47,7 @@ async function ReadSpace() {
     await ShowThreads(threads);
     var createnewthread = getElement("threadaddinfo");
     createnewthread.contentEditable="true"; // make div editable
+    createnewthread.style.whiteSpace ="pre";
     LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);   
 
     async function OpenThread() {
