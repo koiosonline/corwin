@@ -26,7 +26,7 @@ async function asyncloaded() {
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
     ReadSpace();
-    WriteThread(ThreadNameForTest);
+    //WriteThread(ThreadNameForTest);
     console.log(space);
 }
 
@@ -40,6 +40,7 @@ async function CreateOpenThread(threadName, firstModerator) {
     });
     await ShowThreads(newThread);
     await WriteThread(newThread.address);
+    console.log(newThread);
 }
 
 async function ReadSpace() {
