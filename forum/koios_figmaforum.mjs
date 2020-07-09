@@ -161,8 +161,6 @@ async function FindSender (target,did) {
  * Show the threads in the interface
  */
 async function ShowThreads(threads) {
-  console.log(threads);
-  console.log(threads.length);
     for (var i=0;i<threads.length;i++) {        
       var target = GlobalThreadList.AddListItem() // make new entry
       target.getElementsByClassName("threadname")[0].innerHTML = threads[i].name.substr(24);
@@ -172,6 +170,7 @@ async function ShowThreads(threads) {
       SetThreadDeleteButton(deletebutton, threads[i].address)
       SetGoToThreadButton(gotobutton, threads[i].address)      
     }
+    console.log(GlobalThreadList);
   }    
   
   /*
