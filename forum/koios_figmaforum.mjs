@@ -46,7 +46,7 @@ async function CreateOpenThread(threadName, firstModerator) {
 async function ReadSpace() {
     const threads = await space.subscribedThreads();
     console.log(threads);
-    await ShowThreads(threads);
+    //await ShowThreads(threads);
     var createnewthread = getElement("threadaddinfo");
     createnewthread.contentEditable="true"; // make div editable
     createnewthread.style.whiteSpace ="pre";
@@ -87,7 +87,7 @@ async function WriteThread(threadAddress) {
     })
     currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
     const posts = await currentThread.getPosts()
-    //await ShowPosts(posts);
+    await ShowPosts(posts);
 }
 
 /*
