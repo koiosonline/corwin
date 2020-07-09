@@ -164,7 +164,7 @@ async function ShowThreads(threads) {
   //GlobalThreadList.EmptyList();
     for (var i=0;i<threads.length;i++) {        
       var target = GlobalThreadList.AddListItem() // make new entry
-      target.getElementsByClassName("threadname")[0].innerHTML = threads[i].name.substr(24);
+      target.getElementsByClassName("threadname")[0].innerHTML = threads[i].name.substr(27);
       //target.getElementsByClassName("firstmoderator")[0].innerHTML = threads[i].firstModerator;
       var deletebutton=target.getElementsByClassName("threaddelete")[0]
       var gotobutton=target.getElementsByClassName("threadgoto")[0]
