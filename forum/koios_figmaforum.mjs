@@ -38,8 +38,8 @@ async function CreateOpenThread(threadName, firstModerator) {
         firstModerator: firstModerator,
         members: false
     });
-    await ShowThreads(newThread);
     await WriteThread(newThread.address);
+    await ShowThreads(newThread);
     console.log(newThread);
 }
 
@@ -61,6 +61,11 @@ async function ReadSpace() {
             console.log(error);
         }
     }
+
+    createnewthread.onUpdate(async () => {
+      var threads = await space.subscribedThreads();
+      await ShowThreads(threads);
+    })
 }
 
 async function WriteThread(threadAddress) {
