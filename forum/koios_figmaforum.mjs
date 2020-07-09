@@ -46,7 +46,7 @@ async function CreateOpenThread(threadName, firstModerator) {
 async function ReadSpace() {
     const threads = await space.subscribedThreads();
     console.log(threads);
-    //await ShowThreads(threads);
+    await ShowThreads(threads);
     var createnewthread = getElement("threadaddinfo");
     createnewthread.contentEditable="true"; // make div editable
     createnewthread.style.whiteSpace ="pre";
@@ -163,12 +163,14 @@ async function FindSender (target,did) {
 async function ShowThreads(threads) {
     for (var i=0;i<threads.length;i++) {        
       var target = GlobalThreadList.AddListItem() // make new entry
-      target.getElementsByClassName("threadname")[0].innerHTML = threads[i].name.substr(24);
+      target.getElementsByClassName("threadname")[0].innerHTML; //= threads[i].name.substr(24);
       //target.getElementsByClassName("firstmoderator")[0].innerHTML = threads[i].firstModerator;
       var deletebutton=target.getElementsByClassName("threaddelete")[0]
       var gotobutton=target.getElementsByClassName("threadgoto")[0]
       SetThreadDeleteButton(deletebutton, threads[i].address)
-      SetGoToThreadButton(gotobutton, threads[i].address)      
+      SetGoToThreadButton(gotobutton, threads[i].address)
+      console.log(threads[i]);
+      console.log(GlobalThreadList);      
     }
     console.log(GlobalThreadList);
   }    
