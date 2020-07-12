@@ -62,7 +62,7 @@ async function ReadSpace() {
 }
 
 async function UpdateSpace() {
-  GlobalThreadList.EmptyList();
+  //GlobalThreadList.EmptyList();
   const threads = await space.subscribedThreads();
   console.log(threads);
   await ShowThreads(threads);
