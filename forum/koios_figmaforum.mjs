@@ -38,14 +38,12 @@ async function CreateOpenThread(threadName, firstModerator) {
         firstModerator: firstModerator,
         members: false
     });
-    await WriteThread(newThread.address);
+    //await WriteThread(newThread.address);
     console.log(newThread);
 }
 
 async function ReadSpace() {
-    const threads = await space.subscribedThreads();
-    console.log(threads);
-    await ShowThreads(threads);
+    await UpdateSpace();
     var createnewthread = getElement("threadaddinfo");
     createnewthread.contentEditable="true"; // make div editable
     createnewthread.style.whiteSpace ="pre";
@@ -55,7 +53,7 @@ async function ReadSpace() {
         var newthread = getElement("threadaddinfo");
         console.log(newthread.innerHTML);
         try {
-            await CreateOpenThread(newthread.innerHTML, Moderator); // thread inherited from parent function
+            CreateOpenThread(newthread.innerHTML, Moderator); // thread inherited from parent function
             UpdateSpace();
         } catch (error) {
             console.log(error);
@@ -64,6 +62,7 @@ async function ReadSpace() {
 }
 
 async function UpdateSpace() {
+  GlobalThreadList.EmptyList();
   const threads = await space.subscribedThreads();
   console.log(threads);
   await ShowThreads(threads);
