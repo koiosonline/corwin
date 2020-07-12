@@ -43,11 +43,12 @@ async function CreateOpenThread(threadName, firstModerator) {
 }
 
 async function ReadSpace() {
-    UpdateSpace();
     var createnewthread = getElement("threadaddinfo");
     createnewthread.contentEditable="true"; // make div editable
     createnewthread.style.whiteSpace ="pre";
     LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);   
+
+    UpdateSpace();
 
     async function OpenThread() {
         var newthread = getElement("threadaddinfo");
@@ -62,7 +63,7 @@ async function ReadSpace() {
 }
 
 async function UpdateSpace() {
-  //GlobalThreadList.EmptyList();
+  GlobalThreadList.EmptyList();
   const threads = await space.subscribedThreads();
   console.log(threads);
   await ShowThreads(threads);
