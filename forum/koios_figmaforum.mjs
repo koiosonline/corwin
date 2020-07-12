@@ -25,7 +25,7 @@ async function asyncloaded() {
     await authorize()
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
-    ReadSpace();
+    UpdateSpace();
     //WriteThread(ThreadNameForTest);
     console.log(space);
 }
@@ -46,9 +46,7 @@ async function ReadSpace() {
     var createnewthread = getElement("threadaddinfo");
     createnewthread.contentEditable="true"; // make div editable
     createnewthread.style.whiteSpace ="pre";
-    LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);   
-
-    UpdateSpace();
+    LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);
 
     async function OpenThread() {
         var newthread = getElement("threadaddinfo");
@@ -63,10 +61,10 @@ async function ReadSpace() {
 }
 
 async function UpdateSpace() {
-  GlobalThreadList.EmptyList();
   const threads = await space.subscribedThreads();
   console.log(threads);
   await ShowThreads(threads);
+  ReadSpace();
 }
 
 async function WriteThread(threadAddress) {
