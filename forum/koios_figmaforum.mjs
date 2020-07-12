@@ -43,7 +43,7 @@ async function CreateOpenThread(threadName, firstModerator) {
 }
 
 async function ReadSpace() {
-    await UpdateSpace();
+    UpdateSpace();
     var createnewthread = getElement("threadaddinfo");
     createnewthread.contentEditable="true"; // make div editable
     createnewthread.style.whiteSpace ="pre";
