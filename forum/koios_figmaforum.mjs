@@ -39,7 +39,6 @@ async function CreateOpenThread(threadName, firstModerator) {
         members: false
     });
     await WriteThread(newThread.address);
-    await ShowThreads(newThread);
     console.log(newThread);
 }
 
@@ -57,15 +56,17 @@ async function ReadSpace() {
         console.log(newthread.innerHTML);
         try {
             await CreateOpenThread(newthread.innerHTML, Moderator); // thread inherited from parent function
+            UpdateSpace();
         } catch (error) {
             console.log(error);
         }
     }
+}
 
-    createnewthread.onUpdate(async () => {
-      var threads = await space.subscribedThreads();
-      await ShowThreads(threads);
-    })
+async function UpdateSpace() {
+  const threads = await space.subscribedThreads();
+  console.log(threads);
+  await ShowThreads(threads);
 }
 
 async function WriteThread(threadAddress) {
