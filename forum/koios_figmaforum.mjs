@@ -27,8 +27,11 @@ async function asyncloaded() {
     space = await box.openSpace(KoiosSpace);
     UpdateSpace();
     ReadSpace();
-    //WriteThread(ThreadNameForTest);
-    console.log(space);
+
+    console.log("FORUMLIST: ", GlobalForumentryList);
+    console.log(GlobalForumentryList.ListLength());
+    console.log("THREADLIST: ", GlobalThreadList);
+    console.log(GlobalThreadList.ListLength());
 }
 
 /*
