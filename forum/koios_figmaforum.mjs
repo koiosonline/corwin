@@ -217,7 +217,7 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
     
     function GoToThread() {
       try {
-        console.log(GlobalForumentryList);
+        console.log("FORUMLIST: ", GlobalForumentryList);
         console.log(GlobalForumentryList.ListLength());
         if(GlobalForumentryList.ListLength() > 0) {GlobalForumentryList.EmptyList();}
         console.log(GlobalForumentryList);
