@@ -182,11 +182,8 @@ async function ShowThreads(threads) {
       var deletebutton=target.getElementsByClassName("threaddelete")[0]
       var gotobutton=target.getElementsByClassName("threadgoto")[0]
       SetThreadDeleteButton(deletebutton, threads[i].address)
-      SetGoToThreadButton(gotobutton, threads[i].address)
-      console.log(threads[i]);
-      console.log(GlobalThreadList);      
+      SetGoToThreadButton(gotobutton, threads[i].address)     
     }
-    console.log(GlobalThreadList);
   }    
   
   /*
