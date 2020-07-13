@@ -217,8 +217,6 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
     
     function GoToThread() {
       try {
-        GlobalForumentryList.EmptyList();
-        UpdateSpace();
         WriteThread(threadid);
       } catch (error) {
         console.log(error);
