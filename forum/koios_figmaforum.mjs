@@ -218,10 +218,10 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
     function GoToThread() {
       try {
         console.log(GlobalForumentryList);
-        console.log(GlobalForumentryList.length);
-        if(GlobalForumentryList.length > 0) {GlobalForumentryList.EmptyList();}
+        console.log(GlobalForumentryList.ListLength());
+        if(GlobalForumentryList.ListLength() > 0) {GlobalForumentryList.EmptyList();}
         console.log(GlobalForumentryList);
-        console.log(GlobalForumentryList.length);
+        console.log(GlobalForumentryList.ListLength());
         WriteThread(threadid);
       } catch (error) {
         console.log(error);
