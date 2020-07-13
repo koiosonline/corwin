@@ -111,14 +111,14 @@ async function ShowPosts(posts) {
             console.log(`${i} ${posts[i].message} ${did} ${date.toString() }`)
             
             var target = GlobalForumentryList.AddListItem() // make new entry
-            target.getElementsByClassName("forummessage")[0].innerHTML = posts[i].message            
-            FitOneLine(target.getElementsByClassName("forummessage")[0])
-            target.getElementsByClassName("forumtime")[0].innerHTML = date
-            FitOneLine(target.getElementsByClassName("forumtime")[0])
+            target.getElementsByClassName("forummessagetext")[0].innerHTML = posts[i].message            
+            FitOneLine(target.getElementsByClassName("forummessagetext")[0])
+            target.getElementsByClassName("forumtimetext")[0].innerHTML = date
+            FitOneLine(target.getElementsByClassName("forumtimetext")[0])
             
             target.id = posts[i].postId                                        // remember which postId's we've shown
-            FindSender (target.getElementsByClassName("forumsender")[0],did);  // show then profilename (asynchronous)  
-            FitOneLine(target.getElementsByClassName("forumsender")[0])
+            FindSender (target.getElementsByClassName("forumsendertext")[0],did);  // show then profilename (asynchronous)  
+            FitOneLine(target.getElementsByClassName("forumsendertext")[0])
             var deletebutton=target.getElementsByClassName("forumdelete")[0]
             SetDeleteButton(deletebutton,posts[i].postId)            
         }
@@ -180,7 +180,7 @@ async function ShowThreads(threads) {
   //GlobalThreadList.EmptyList();
     for (var i=0;i<threads.length;i++) {        
       var target = GlobalThreadList.AddListItem() // make new entry
-      target.getElementsByClassName("threadname")[0].innerHTML = threads[i].name; //.substr(27);
+      target.getElementsByClassName("threadnametext")[0].innerHTML = threads[i].name.substr(27);
       //target.getElementsByClassName("firstmoderator")[0].innerHTML = threads[i].firstModerator;
       var deletebutton=target.getElementsByClassName("threaddelete")[0]
       var gotobutton=target.getElementsByClassName("threadgoto")[0]
