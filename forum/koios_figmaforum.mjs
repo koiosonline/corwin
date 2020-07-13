@@ -138,7 +138,7 @@ async function ShowPosts(posts) {
 /*
  * Add button to delete a post
  */
-function SetDeleteButton(domid,postid) { // in seperate function to remember state
+async function SetDeleteButton(domid,postid) { // in seperate function to remember state
     var id=`delete-${postid}`
     domid.id=id
     LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry); 
