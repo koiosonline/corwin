@@ -53,6 +53,7 @@ async function ReadSpace() {
         console.log(newthread.innerHTML);
         try {
             CreateOpenThread(newthread.innerHTML, Moderator); // thread inherited from parent function
+            GlobalThreadList.EmptyList();
             UpdateSpace();
         } catch (error) {
             console.log(error);
@@ -64,7 +65,7 @@ async function UpdateSpace() {
   const threads = await space.subscribedThreads();
   console.log(threads);
   await ShowThreads(threads);
-  ReadSpace();
+  //ReadSpace();
 }
 
 async function WriteThread(threadAddress) {
@@ -209,6 +210,7 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
     function GoToThread() {
       try {
         WriteThread(threadid);
+        GlobalForumentryList.EmptyList();
       } catch (error) {
         console.log(error);
       }
