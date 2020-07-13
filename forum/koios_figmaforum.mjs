@@ -152,6 +152,14 @@ function SetDeleteButton(domid,postid) { // in seperate function to remember sta
           console.log(error);
         }
     }
+
+    currentThread.onUpdate(async () => {
+      var uposts = await currentThread.getPosts()
+      await ShowPosts(uposts);
+  })
+  currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
+  const posts = await currentThread.getPosts()
+  await ShowPosts(posts);
 }
 
 /*
@@ -210,6 +218,7 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
     function GoToThread() {
       try {
         GlobalForumentryList.EmptyList();
+        UpdateSpace();
         WriteThread(threadid);
       } catch (error) {
         console.log(error);
