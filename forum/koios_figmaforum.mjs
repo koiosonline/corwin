@@ -7,7 +7,7 @@ let box;
 let space;
 let currentThread;
 var GlobalForumentryList = new DomList("forumentry @relative");
-var GlobalThreadList = new DomList("threadentry");  
+var GlobalThreadList = new DomList("threadentry @relative");  
 const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 const KoiosSpace = "koiostestspace";
 const ThreadNameForTest= "/orbitdb/zdpuAskcBtYNnpi2ZscLhL7pEQmzRscH5eSBLyConFYB6AP29/3box.thread.koiostestspace.testthread";
