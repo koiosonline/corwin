@@ -147,7 +147,6 @@ async function SetDeleteButton(domid,postid) { // in seperate function to rememb
         console.log(currentThread);
         try {
           await currentThread.deletePost(postid);
-          await UpdateThread();
         } catch (error) {
           console.log(error);
         }
