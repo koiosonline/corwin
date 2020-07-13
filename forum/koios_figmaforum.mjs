@@ -27,11 +27,6 @@ async function asyncloaded() {
     space = await box.openSpace(KoiosSpace);
     UpdateSpace();
     ReadSpace();
-
-    console.log("FORUMLIST: ", GlobalForumentryList);
-    console.log(GlobalForumentryList.ListLength());
-    console.log("THREADLIST: ", GlobalThreadList);
-    console.log(GlobalThreadList.ListLength());
 }
 
 /*
@@ -217,8 +212,7 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
     
     function GoToThread() {
       try {
-        console.log("FORUMLIST: ", GlobalForumentryList);
-        //if(GlobalForumentryList.ListLength() > 0) {GlobalForumentryList.EmptyList();}
+        GlobalForumentryList.EmptyList();
         WriteThread(threadid);
       } catch (error) {
         console.log(error);
