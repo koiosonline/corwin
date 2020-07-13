@@ -26,6 +26,7 @@ async function asyncloaded() {
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
     UpdateSpace();
+    ReadSpace();
     //WriteThread(ThreadNameForTest);
     console.log(space);
 }
@@ -217,6 +218,7 @@ function SetGoToThreadButton(domid,threadid) { // in seperate function to rememb
     function GoToThread() {
       try {
         WriteThread(threadid);
+        if(GlobalForumentryList > 0) {GlobalForumentryList.EmptyList()};
       } catch (error) {
         console.log(error);
       }
