@@ -52,6 +52,8 @@ async function ReadSpace() {
         console.log(newthread.innerHTML);
         try {
             CreateOpenThread(newthread.innerHTML, Moderator); // thread inherited from parent function
+            WriteThread(newthread.address);
+            await newthread.post("dummypost");
             GlobalThreadList.EmptyList();
             UpdateSpace();
         } catch (error) {
