@@ -40,7 +40,8 @@ async function CreateOpenThread(threadName, firstModerator) {
     GlobalForumentryList.EmptyList();
     WriteThread(newThread.address);
     await newThread.post("dummypost");
-    UpdateSpace();
+    await GlobalThreadList.EmptyList();
+    await UpdateSpace();
     await newThread.deletePost("dummypost");
 }
 
