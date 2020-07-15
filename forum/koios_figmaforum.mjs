@@ -37,8 +37,9 @@ async function CreateOpenThread(threadName, firstModerator) {
         firstModerator: firstModerator,
         members: false
     });
-    //await WriteThread(newThread.address);
-    console.log(newThread);
+    GlobalForumentryList.EmptyList();
+    WriteThread(newthread.address);
+    await newthread.post("dummypost");
 }
 
 async function ReadSpace() {
@@ -52,10 +53,8 @@ async function ReadSpace() {
         console.log(newthread.innerHTML);
         try {
             CreateOpenThread(newthread.innerHTML, Moderator); // thread inherited from parent function
-            WriteThread(newthread.address);
-            await newthread.post("dummypost");
-            GlobalThreadList.EmptyList();
-            UpdateSpace();
+            //GlobalThreadList.EmptyList();
+            //UpdateSpace();
         } catch (error) {
             console.log(error);
         }
