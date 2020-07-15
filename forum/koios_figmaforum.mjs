@@ -39,7 +39,7 @@ async function CreateOpenThread(threadName, firstModerator) {
     });
     GlobalForumentryList.EmptyList();
     WriteThread(newthread.address);
-    await newthread.post("dummypost");
+    newthread.post("dummypost");
 }
 
 async function ReadSpace() {
