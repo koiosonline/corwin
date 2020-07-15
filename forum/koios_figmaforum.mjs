@@ -38,8 +38,8 @@ async function CreateOpenThread(threadName, firstModerator) {
         members: false
     });
     GlobalForumentryList.EmptyList();
-    WriteThread(newthread.address);
-    newthread.post("dummypost");
+    WriteThread(newThread.address);
+    newThread.post("dummypost");
 }
 
 async function ReadSpace() {
