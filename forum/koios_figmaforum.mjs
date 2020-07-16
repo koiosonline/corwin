@@ -59,7 +59,7 @@ async function CreateOpenThread(threadName, firstModerator) {
         firstModerator: firstModerator,
         members: false
     });
-    GlobalForumentryList.EmptyList();
+    UpdateSpace();
     WriteThread(newThread.address);
     var dummypost = await newThread.post("dummypost");
     await newThread.deletePost(dummypost);
@@ -77,7 +77,6 @@ async function ReadSpace() {
         try {
             CreateOpenThread(newthread.innerHTML, Moderator); // thread inherited from parent function
             console.log(space);
-            GlobalThreadList.EmptyList();
             await UpdateSpace();
         } catch (error) {
             console.log(error);
