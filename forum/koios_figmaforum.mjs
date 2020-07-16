@@ -68,6 +68,7 @@ async function CreateOpenThread(threadName, firstModerator) {
     WriteThread(newThread.address);
     var dummypost = await newThread.post("dummypost");
     await newThread.deletePost(dummypost);
+    UpdateSpace();
 }
 
 async function ReadSpace() {
@@ -81,8 +82,8 @@ async function ReadSpace() {
         console.log(newthread.innerHTML);
         try {
             CreateOpenThread(newthread.innerHTML, Moderator); // thread inherited from parent function
-            console.log(space);
-            await UpdateSpace();
+            //console.log(space);
+            //await UpdateSpace();
         } catch (error) {
             console.log(error);
         }
@@ -202,7 +203,6 @@ async function ShowThreads(threads) {
   //GlobalThreadList.EmptyList();
     for (var i=0;i<threads.length;i++) {        
       var target = GlobalThreadList.AddListItem() // make new entry
-      console.log("threaddata: ", threads[i]);
       target.getElementsByClassName("threadnametext")[0].innerHTML = threads[i].name;
       //target.getElementsByClassName("firstmoderator")[0].innerHTML = threads[i].firstModerator;
       var deletebutton=target.getElementsByClassName("threaddelete")[0]
