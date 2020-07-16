@@ -57,7 +57,8 @@ async function UpdateTestButtons() {
 async function CreateOpenThread(threadName, firstModerator) {
     var newThread = await space.joinThread(threadName, {
         firstModerator: firstModerator,
-        members: false
+        members: false,
+        noAutoSub: true
     });
     console.log("new thread: ", newThread);
     await space.subscribeThread(newThread.address, {
@@ -66,8 +67,6 @@ async function CreateOpenThread(threadName, firstModerator) {
       members: false
     });
     WriteThread(newThread.address);
-    var dummypost = await newThread.post("dummypost");
-    await newThread.deletePost(dummypost);
     UpdateSpace();
 }
 
