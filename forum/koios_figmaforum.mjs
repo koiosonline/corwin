@@ -27,6 +27,28 @@ async function asyncloaded() {
     space = await box.openSpace(KoiosSpace);
     UpdateSpace();
     ReadSpace();
+    UpdateTestButtons();
+}
+
+async function UpdateTestButtons() {
+  LinkClickButton("updatethreads");subscribe("updatethreadsclick",UpdateT);
+  LinkClickButton("updateposts");subscribe("updatepostsclick",UpdateP);
+
+  async function UpdateT() {
+      try {
+          UpdateSpace();
+      } catch (error) {
+          console.log(error);
+      }
+  }
+
+  async function UpdateP() {
+    try {
+        UpdatePosts();
+    } catch (error) {
+        console.log(error);
+    }
+}
 }
 
 /*
