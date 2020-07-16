@@ -128,10 +128,12 @@ async function WriteThread(threadAddress) {
  * Show the posts in the interface
  */
 async function ShowPosts(posts) {
+    console.log(posts);
     for (var i=0;i<posts.length;i++) {        
         if (!document.getElementById(posts[i].postId) ){ // check if post is already shown
             var did=posts[i].author;           
             var date = new Date(posts[i].timestamp * 1000);
+            console.log(`${i} ${posts[i].message} ${did} ${date.toString() }`)
             
             var target = GlobalForumentryList.AddListItem() // make new entry
             target.getElementsByClassName("forummessagetext")[0].innerHTML = posts[i].message            
@@ -152,6 +154,7 @@ async function ShowPosts(posts) {
     for (var i=0;i<postdomids.length;i++) {
         
         var checkpostid=postdomids[i].id;
+        console.log(`checkpostid=${checkpostid}`);
         var found=false;
         for (var j=0;j<posts.length;j++) {
             if (posts[j].postId == checkpostid) { found=true;break; }
@@ -170,6 +173,7 @@ async function SetDeleteButton(domid,postid) { // in seperate function to rememb
     LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry); 
     
     async function DeleteForumEntry() {
+        console.log(currentThread);
         try {
           await currentThread.deletePost(postid);
           UpdatePosts();
@@ -215,7 +219,6 @@ async function ShowThreads(threads) {
         try {
           console.log(`Deleting thread ${threadid}`);
           space.unsubscribeThread(threadid);
-          UpdateSpace();
         } catch (error) {
           console.log(error);
         }
