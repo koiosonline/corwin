@@ -59,7 +59,8 @@ async function CreateOpenThread(threadName, firstModerator) {
         firstModerator: firstModerator,
         members: false
     });
-    UpdateSpace();
+    space.subscribeThread(newThread.address);
+    //UpdateSpace();
     WriteThread(newThread.address);
     var dummypost = await newThread.post("dummypost");
     await newThread.deletePost(dummypost);
