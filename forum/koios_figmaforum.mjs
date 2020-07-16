@@ -40,7 +40,6 @@ async function CreateOpenThread(threadName, firstModerator) {
     GlobalForumentryList.EmptyList();
     WriteThread(newThread.address);
     var dummypost = await newThread.post("dummypost");
-    //await GlobalThreadList.EmptyList();
     await newThread.deletePost(dummypost);
     ShowThreads(newThread);
 }
@@ -56,8 +55,8 @@ async function ReadSpace() {
         console.log(newthread.innerHTML);
         try {
             CreateOpenThread(newthread.innerHTML, Moderator); // thread inherited from parent function
-            //GlobalThreadList.EmptyList();
-            //UpdateSpace();
+            GlobalThreadList.EmptyList();
+            await UpdateSpace();
         } catch (error) {
             console.log(error);
         }
@@ -69,6 +68,11 @@ async function UpdateSpace() {
   console.log(threads);
   await ShowThreads(threads);
   //ReadSpace();
+}
+
+async function UpdatePosts() {
+  var posts = await currentThread.getPosts()
+  await ShowPosts(posts);
 }
 
 async function WriteThread(threadAddress) {
@@ -150,18 +154,11 @@ async function SetDeleteButton(domid,postid) { // in seperate function to rememb
         console.log(currentThread);
         try {
           await currentThread.deletePost(postid);
+          UpdatePosts();
         } catch (error) {
           console.log(error);
         }
     }
-
-    currentThread.onUpdate(async () => {
-      var uposts = await currentThread.getPosts()
-      await ShowPosts(uposts);
-  })
-  currentThread.onNewCapabilities((event, did) => console.log(did, event, ' the chat'))
-  const posts = await currentThread.getPosts()
-  await ShowPosts(posts);
 }
 
 /*
