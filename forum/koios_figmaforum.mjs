@@ -26,6 +26,9 @@ async function asyncloaded() {
     await authorize()
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
+    
+    getElement("posttext").addEventListener('animatedclick',Input)
+    
     UpdateSpace();
     ReadSpace();    
 }
@@ -87,7 +90,7 @@ async function WriteThread(threadAddress) {
     target.contentEditable="true"; // make div editable
     target.style.whiteSpace ="pre"; //werkt goed in combi met innerText
     //LinkClickButton("testbutton");subscribe("testbuttonclick",Input);  
-getElement("posttext").addEventListener('animatedclick',Input)
+
 
     currentThread = await space.joinThreadByAddress(threadAddress);
 
