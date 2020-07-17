@@ -27,34 +27,9 @@ async function asyncloaded() {
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
     UpdateSpace();
-    ReadSpace();
-    UpdateTestButtons();
+    ReadSpace();    
 }
 
-async function UpdateTestButtons() {
-  //LinkClickButton("updatethreads");subscribe("updatethreadsclick",UpdateT);
-  //LinkClickButton("updateposts");subscribe("updatepostsclick",UpdateP);
-  
-  getElement("updatethreads").addEventListener('animatedclick',UpdateT)
-  getElement("updateposts").addEventListener('animatedclick',UpdateP)
-  
-
-  async function UpdateT() {
-      try {
-          UpdateSpace();
-      } catch (error) {
-          console.log(error);
-      }
-  }
-
-  async function UpdateP() {
-    try {
-        UpdatePosts();
-    } catch (error) {
-        console.log(error);
-    }
-}
-}
 
 /*
  * Creates a new open thread, which everyone can join and post to.
