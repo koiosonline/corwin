@@ -197,9 +197,11 @@ async function ShowThreads(threads) {
    * Add button to delete a thread
    */
   function SetThreadDeleteButton(domid,threadid) { // in seperate function to remember state
-      var id=`delete-${threadid}`
-      domid.id=id
+      //var id=`delete-${threadid}`
+      //domid.id=id
       //LinkClickButton(id);subscribe(`${id}click`,DeleteThread); 
+      
+      domid.addEventListener('animatedclick',DeleteThread)
       
       function DeleteThread() {
         try {
