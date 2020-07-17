@@ -74,7 +74,8 @@ async function ReadSpace() {
     var createnewthread = getElement("threadaddinfo");
     createnewthread.contentEditable="true"; // make div editable
     createnewthread.style.whiteSpace ="pre";
-    LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);
+    //LinkClickButton("threadadd");subscribe("threadaddclick",OpenThread);
+    getElement("threadadd").addEventListener('animatedclick',OpenThread)
 
     async function OpenThread() {
         var newthread = getElement("threadaddinfo");
