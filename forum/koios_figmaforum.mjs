@@ -154,9 +154,12 @@ async function ShowPosts(posts) {
  * Add button to delete a post
  */
 async function SetDeleteButton(domid,postid) { // in seperate function to remember state
-    var id=`delete-${postid}`
-    domid.id=id
+    //var id=`delete-${postid}`
+    //domid.id=id
     //LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry); 
+    
+    domid.addEventListener('animatedclick',DeleteForumEntry)
+    
     
     async function DeleteForumEntry() {
         console.log(currentThread);
