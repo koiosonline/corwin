@@ -32,8 +32,12 @@ async function asyncloaded() {
 }
 
 async function UpdateTestButtons() {
-  LinkClickButton("updatethreads");subscribe("updatethreadsclick",UpdateT);
-  LinkClickButton("updateposts");subscribe("updatepostsclick",UpdateP);
+  //LinkClickButton("updatethreads");subscribe("updatethreadsclick",UpdateT);
+  //LinkClickButton("updateposts");subscribe("updatepostsclick",UpdateP);
+  
+  getElement("updatethreads").addEventListener('animatedclick',UpdateT)
+  getElement("updateposts").addEventListener('animatedclick',UpdateP)
+  
 
   async function UpdateT() {
       try {
@@ -107,7 +111,8 @@ async function WriteThread(threadAddress) {
     var target=getElement("testinput")    
     target.contentEditable="true"; // make div editable
     target.style.whiteSpace ="pre"; //werkt goed in combi met innerText
-    LinkClickButton("testbutton");subscribe("testbuttonclick",Input);  
+    //LinkClickButton("testbutton");subscribe("testbuttonclick",Input);  
+getElement("testbutton").addEventListener('animatedclick',Input)
 
     currentThread = await space.joinThreadByAddress(threadAddress);
 
@@ -176,7 +181,7 @@ async function ShowPosts(posts) {
 async function SetDeleteButton(domid,postid) { // in seperate function to remember state
     var id=`delete-${postid}`
     domid.id=id
-    LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry); 
+    //LinkClickButton(id);subscribe(`${id}click`,DeleteForumEntry); 
     
     async function DeleteForumEntry() {
         console.log(currentThread);
@@ -219,7 +224,7 @@ async function ShowThreads(threads) {
   function SetThreadDeleteButton(domid,threadid) { // in seperate function to remember state
       var id=`delete-${threadid}`
       domid.id=id
-      LinkClickButton(id);subscribe(`${id}click`,DeleteThread); 
+      //LinkClickButton(id);subscribe(`${id}click`,DeleteThread); 
       
       function DeleteThread() {
         try {
@@ -237,7 +242,7 @@ async function ShowThreads(threads) {
 function SetGoToThreadButton(domid,threadid) { // in seperate function to remember state
     var id=`goto-${threadid}`
     domid.id=id
-    LinkClickButton(id);subscribe(`${id}click`,GoToThread); 
+    //LinkClickButton(id);subscribe(`${id}click`,GoToThread); 
     
     function GoToThread() {
       try {
