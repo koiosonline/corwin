@@ -84,6 +84,17 @@ async function UpdatePosts() {
   await ShowPosts(posts);
 }
 
+async function Input() {
+    var target=getElement("testinput")    
+    console.log(target.innerHTML);
+    try {
+        if (currentThread)
+            await currentThread.post(target.innerHTML); 
+      } catch (error) {
+        console.log(error);
+      }
+}  
+
 async function WriteThread(threadAddress) {
     FindSender(document.getElementsByClassName("myname"),box.DID)
     var target=getElement("testinput")    
@@ -94,15 +105,7 @@ async function WriteThread(threadAddress) {
 
     currentThread = await space.joinThreadByAddress(threadAddress);
 
-    async function Input() {
-        var target=getElement("testinput")    
-        console.log(target.innerHTML);
-        try {
-            await currentThread.post(target.innerHTML); 
-          } catch (error) {
-            console.log(error);
-          }
-    }  
+  
     currentThread.onUpdate(async () => {
         var uposts = await currentThread.getPosts()
         await ShowPosts(uposts);
