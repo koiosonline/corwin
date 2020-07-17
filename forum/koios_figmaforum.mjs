@@ -25,7 +25,7 @@ async function asyncloaded() {
     //window.LOG='Verbose' // ipfs debug
     await authorize()
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
-    box.auth(KoiosSpace, "/orbitdb/zdpuAskcBtYNnpi2ZscLhL7pEQmzRscH5eSBLyConFYB6AP29/");
+    await box.syncDone
     space = await box.openSpace(KoiosSpace);
     
     getElement("posttext").addEventListener('animatedclick',Input)
