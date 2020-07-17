@@ -1,7 +1,7 @@
 import { } from "./3box.js"; 
 import { getUserAddress, getWeb3,authorize } from "./koios_web3.mjs";
-import {DomList,LinkClickButton,subscribe,FitOneLine,getElement} from '../lib/koios_util.mjs';
-import {log} from '../lib/koios_log.mjs'; 
+import {DomList,LinkClickButton,subscribe,FitOneLine,getElement} from '../lib/koiosf_util.mjs';
+import {log} from '../lib/koiosf_log.mjs'; 
 
 let box;
 let space;
