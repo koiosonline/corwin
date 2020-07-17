@@ -215,8 +215,12 @@ async function ShowThreads(threads) {
  * Add button to open the thread and see posts within that thread
  */
 function SetGoToThreadButton(domid,threadid) { // in seperate function to remember state
-    var id=`goto-${threadid}`
-    domid.id=id
+
+domid.addEventListener('animatedclick',GoToThread)
+
+
+   // var id=`goto-${threadid}`
+   // domid.id=id
     //LinkClickButton(id);subscribe(`${id}click`,GoToThread); 
     
     function GoToThread() {
