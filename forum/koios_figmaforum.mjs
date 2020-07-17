@@ -73,8 +73,10 @@ async function ReadSpace() {
 }
 
 async function UpdateSpace() {
+  console.log("space before: ", space);
   GlobalThreadList.EmptyList();
   const threads = await space.subscribedThreads();
+  console.log("space after: ", space);
   console.log(threads);
   await ShowThreads(threads);
 }
