@@ -22,6 +22,7 @@ window.onerror = async function(message, source, lineno, colno, error) {   // es
 window.addEventListener('DOMContentLoaded', asyncloaded);
 
 async function asyncloaded() {
+    window.LOG='Verbose' // ipfs debug
     await authorize()
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
     space = await box.openSpace(KoiosSpace);
