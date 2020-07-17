@@ -29,9 +29,10 @@ async function asyncloaded() {
     space = await box.openSpace(KoiosSpace);
     
     getElement("posttext").addEventListener('animatedclick',Input)
-    
+    console.log(space);
     UpdateSpace();
     ReadSpace();    
+    console.log("space after: ", space);
 }
 
 
