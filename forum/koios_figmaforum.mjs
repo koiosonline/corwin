@@ -25,6 +25,7 @@ async function asyncloaded() {
     //window.LOG='Verbose' // ipfs debug
     await authorize()
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
+    box.auth(KoiosSpace, "/orbitdb/zdpuAskcBtYNnpi2ZscLhL7pEQmzRscH5eSBLyConFYB6AP29/");
     space = await box.openSpace(KoiosSpace);
     
     getElement("posttext").addEventListener('animatedclick',Input)
@@ -73,10 +74,8 @@ async function ReadSpace() {
 }
 
 async function UpdateSpace() {
-  console.log("space before: ", space);
   GlobalThreadList.EmptyList();
   const threads = await space.subscribedThreads();
-  console.log("space after: ", space);
   console.log(threads);
   await ShowThreads(threads);
 }
