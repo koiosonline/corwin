@@ -112,7 +112,7 @@ async function WriteThread(threadAddress) {
     target.contentEditable="true"; // make div editable
     target.style.whiteSpace ="pre"; //werkt goed in combi met innerText
     //LinkClickButton("testbutton");subscribe("testbuttonclick",Input);  
-getElement("testbutton").addEventListener('animatedclick',Input)
+getElement("posttext").addEventListener('animatedclick',Input)
 
     currentThread = await space.joinThreadByAddress(threadAddress);
 
