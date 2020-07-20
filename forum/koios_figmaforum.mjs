@@ -42,7 +42,8 @@ async function asyncloaded() {
 async function CreateOpenThread(threadName, firstModerator) {
     var newThread = await space.joinThread(threadName, {
         firstModerator: firstModerator,
-        members: false
+        members: false,
+        noAutoSub: false
     });
     console.log("new thread: ", newThread);
     await space.subscribeThread(newThread.address, {
