@@ -45,11 +45,11 @@ async function CreateOpenThread(threadName, firstModerator) {
         members: false,
     });
     console.log("new thread: ", newThread);
-    /*await space.subscribeThread(newThread.address, {
+    await space.subscribeThread(newThread.address, {
       name: threadName,
       firstModerator: firstModerator,
       members: false
-    });*/
+    });
     WriteThread(newThread.address);
     UpdateSpace();
 }
