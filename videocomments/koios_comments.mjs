@@ -36,7 +36,7 @@ async function SetVideoTitle(target) {
 }
 
 async function WriteThread(threadName) {
-    var target=getElement("commentinput")    
+    var target=getElement("commenttext")    
     target.contentEditable="true"; // make div editable
     target.style.whiteSpace ="pre"; //werkt goed in combi met innerText 
 
