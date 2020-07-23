@@ -31,6 +31,8 @@ async function asyncloaded() {
 }
 
 async function SetVideoTitle() {
+    console.log(dummyvideos[0]);
+    console.log("title: ", titletext.innerHTML);
     titletext.innerHTML = dummyvideos[0];
     
 }
