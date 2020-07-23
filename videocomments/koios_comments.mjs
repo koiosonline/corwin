@@ -1,5 +1,5 @@
 import { } from "./3box.js"; 
-import { getUserAddress, getWeb3,authorize } from "./koios_web3.mjs";
+import { getUserAddress, getWeb3,authorize } from "../forum/koios_web3.mjs";
 import {DomList,getElement} from '../lib/koiosf_util.mjs';
 import {log} from '../lib/koiosf_log.mjs'; 
 
