@@ -26,14 +26,14 @@ async function asyncloaded() {
     await box.syncDone
     space = await box.openSpace(KoiosSpace);
     
-    SetVideoTitle();
+    SetVideoTitle(getElement("titletext"));
     getElement("posttext").addEventListener('animatedclick',PostComment)
 }
 
-async function SetVideoTitle() {
+async function SetVideoTitle(target) {
     console.log(dummyvideos[0]);
     console.log("title: ", titletext.innerHTML);
-    titletext.innerHTML = dummyvideos[0];
+    target.innerHTML = dummyvideos[0];
     
 }
 
