@@ -31,20 +31,18 @@ async function asyncloaded() {
 }
 
 async function SetVideoTitle(target) {
-    console.log(dummyvideos[0]);
-    console.log("title: ", target.innerHTML);
     target.innerHTML = dummyvideos[0];
-    
+    WriteThread(target.innerHTML);
 }
 
-async function WriteThread(threadAddress) {
-    FindSender(document.getElementsByClassName("myname"),box.DID)
-    var target=getElement("testinput")    
+async function WriteThread(threadName) {
+    var target=getElement("commentinput")    
     target.contentEditable="true"; // make div editable
-    target.style.whiteSpace ="pre"; //werkt goed in combi met innerText
-    //LinkClickButton("testbutton");subscribe("testbuttonclick",Input);  
+    target.style.whiteSpace ="pre"; //werkt goed in combi met innerText 
 
-    currentThread = await space.joinThreadByAddress(threadAddress);
+    currentThread = await space.joinThread(threadName, {
+        firstModerator: Moderator
+    });
 
     currentThread.onUpdate(async () => {
         var uposts = await currentThread.getPosts()
@@ -54,6 +52,46 @@ async function WriteThread(threadAddress) {
     const posts = await currentThread.getPosts()
     console.log("posts: ", posts);
     await ShowPosts(posts);
+}
+
+/*
+ * Show the posts in the interface
+ */
+async function ShowPosts(posts) {
+    for (var i=0;i<posts.length;i++) {        
+        if (!document.getElementById(posts[i].postId) ){ // check if post is already shown
+            console.log(posts[i]);
+            var did=posts[i].author;           
+            var date = new Date(posts[i].timestamp * 1000);
+            console.log(`${i} ${posts[i].message} ${did} ${date.toString() }`)
+            
+            var target = GlobalForumentryList.AddListItem() // make new entry
+            target.getElementsByClassName("commentmessagetext")[0].innerHTML = posts[i].message            
+            FitOneLine(target.getElementsByClassName("commentmessagetext")[0])
+            target.getElementsByClassName("commenttimetext")[0].innerHTML = date
+            FitOneLine(target.getElementsByClassName("commenttimetext")[0])
+            
+            target.id = posts[i].postId                                        // remember which postId's we've shown
+            FindSender (target.getElementsByClassName("commentsendertext")[0],did);  // show then profilename (asynchronous)  
+            FitOneLine(target.getElementsByClassName("commentsendertext")[0])
+            var deletebutton=target.getElementsByClassName("commentdelete")[0]
+            SetDeleteButton(deletebutton,posts[i].postId)            
+        }
+    }
+    
+    var postdomids=document.getElementsByClassName("commentmentry");
+    //console.log(postdomids);
+    for (var i=0;i<postdomids.length;i++) {
+        
+        var checkpostid=postdomids[i].id;
+        console.log(`checkpostid=${checkpostid}`);
+        var found=false;
+        for (var j=0;j<posts.length;j++) {
+            if (posts[j].postId == checkpostid) { found=true;break; }
+        }
+        if (!found)
+            postdomids[i].style.textDecoration="line-through";   
+    }   
 }
 
 async function PostComment() {
