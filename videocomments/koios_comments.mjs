@@ -36,16 +36,19 @@ async function asyncloaded() {
 async function SetVideoTitle(target, index) {
     target.innerHTML = dummyvideos[index];
     WriteThread(target.innerHTML);
+    console.log(currentThread);
 }
 
 async function NextVideo() {
-    index = index++;
+    index = index +  1;
+    console.log(index);
     if (index > dummyvideos.length) index = dummyvideos.length;
     SetVideoTitle(getElement("titletext"), index);
 }
 
 async function LastVideo() {
-    index = index--;
+    index = index - 1;
+    console.log(index);
     if (index < 0) index = 0;
     SetVideoTitle(getElement("titletext"), index);
 }
