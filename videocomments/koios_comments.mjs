@@ -27,7 +27,7 @@ async function asyncloaded() {
     await box.syncDone
     space = await box.openSpace(KoiosSpace);
     
-    SetVideoTitle(getElement("titletext", index));
+    SetVideoTitle(getElement("titletext"), index);
     getElement("posttext").addEventListener('animatedclick',PostComment)
     getElement("nextvideo").addEventListener('animatedclick',NextVideo)
     getElement("lastvideo").addEventListener('animatedclick',LastVideo)
@@ -41,13 +41,13 @@ async function SetVideoTitle(target, index) {
 async function NextVideo() {
     index = index++;
     if (index > dummyvideos.length) index = dummyvideos.length;
-    SetVideoTitle("titletext", index);
+    SetVideoTitle(getElement("titletext"), index);
 }
 
 async function LastVideo() {
     index = index--;
     if (index < 0) index = 0;
-    SetVideoTitle("titletext", index);
+    SetVideoTitle(getElement("titletext"), index);
 }
 
 async function WriteThread(threadName) {
