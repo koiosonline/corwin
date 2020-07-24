@@ -94,6 +94,21 @@ async function ShowPosts(posts) {
     }   
 }
 
+async function SetDeleteButton(domid,postid) { 
+    domid.addEventListener('animatedclick',DeleteForumEntry)
+    
+    
+    async function DeleteForumEntry() {
+        console.log(currentThread);
+        try {
+          await currentThread.deletePost(postid);
+          UpdatePosts();
+        } catch (error) {
+          console.log(error);
+        }
+    }
+}
+
 async function PostComment() {
     var target=getElement("commenttext")    
     try {
