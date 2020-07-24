@@ -6,6 +6,7 @@ import {log} from '../lib/koiosf_log.mjs';
 let box;
 let space;
 let currentThread;
+let index = 0;
 var GlobalCommentList = new DomList("commententry");
 const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 const KoiosSpace = "koiostestspace2";
@@ -26,13 +27,27 @@ async function asyncloaded() {
     await box.syncDone
     space = await box.openSpace(KoiosSpace);
     
-    SetVideoTitle(getElement("titletext"));
+    SetVideoTitle(getElement("titletext", index));
     getElement("posttext").addEventListener('animatedclick',PostComment)
+    getElement("nextvideo").addEventListener('animatedclick',NextVideo)
+    getElement("lastvideo").addEventListener('animatedclick',LastVideo)
 }
 
-async function SetVideoTitle(target) {
-    target.innerHTML = dummyvideos[0];
+async function SetVideoTitle(target, index) {
+    target.innerHTML = dummyvideos[index];
     WriteThread(target.innerHTML);
+}
+
+async function NextVideo() {
+    index = index++;
+    if (index > dummyvideos.length) index = dummyvideos.length;
+    SetVideoTitle("titletext", index);
+}
+
+async function LastVideo() {
+    index = index--;
+    if (index < 0) index = 0;
+    SetVideoTitle("titletext", index);
 }
 
 async function WriteThread(threadName) {
