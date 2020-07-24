@@ -65,7 +65,7 @@ async function ShowPosts(posts) {
             var date = new Date(posts[i].timestamp * 1000);
             console.log(`${i} ${posts[i].message} ${did} ${date.toString() }`)
             
-            var target = GlobalForumentryList.AddListItem() // make new entry
+            var target = GlobalCommentList.AddListItem() // make new entry
             target.getElementsByClassName("commentmessagetext")[0].innerHTML = posts[i].message            
             FitOneLine(target.getElementsByClassName("commentmessagetext")[0])
             target.getElementsByClassName("commenttimetext")[0].innerHTML = date
@@ -79,7 +79,7 @@ async function ShowPosts(posts) {
         }
     }
     
-    var postdomids=document.getElementsByClassName("commentmentry");
+    var postdomids=document.getElementsByClassName("commententry");
     //console.log(postdomids);
     for (var i=0;i<postdomids.length;i++) {
         
