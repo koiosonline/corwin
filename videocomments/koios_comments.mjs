@@ -109,6 +109,11 @@ async function SetDeleteButton(domid,postid) {
     }
 }
 
+async function FindSender (target,did) {
+    var profile = await Box.getProfile(did);
+    target.innerHTML = profile.name ? profile.name : did           
+}
+
 async function PostComment() {
     var target=getElement("commenttext")    
     try {
