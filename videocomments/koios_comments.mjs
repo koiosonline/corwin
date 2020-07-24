@@ -31,6 +31,9 @@ async function asyncloaded() {
     getElement("posttext").addEventListener('animatedclick',PostComment)
     getElement("nextvideo").addEventListener('animatedclick',NextVideo)
     getElement("lastvideo").addEventListener('animatedclick',LastVideo)
+    var target=getElement("commenttext")    
+    target.contentEditable="true"; // make div editable
+    target.style.whiteSpace ="pre";  
 }
 
 async function SetVideoTitle(target, index) {
@@ -54,10 +57,7 @@ async function LastVideo() {
 }
 
 async function WriteThread(threadName) {
-    var target=getElement("commenttext")    
-    target.contentEditable="true"; // make div editable
-    target.style.whiteSpace ="pre"; //werkt goed in combi met innerText 
-
+    GlobalCommentList.EmptyList();
     currentThread = await space.joinThread(threadName, {
         firstModerator: Moderator
     });
