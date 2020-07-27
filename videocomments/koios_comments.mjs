@@ -39,19 +39,16 @@ async function asyncloaded() {
 async function SetVideoTitle(target, index) {
     target.innerHTML = dummyvideos[index];
     WriteThread(target.innerHTML);
-    console.log(currentThread);
 }
 
 async function NextVideo() {
     index = index +  1;
-    console.log(index);
-    if (index > dummyvideos.length) index = dummyvideos.length;
+    if (index > (dummyvideos.length - 1)) index = dummyvideos.length - 1;
     SetVideoTitle(getElement("titletext"), index);
 }
 
 async function LastVideo() {
     index = index - 1;
-    console.log(index);
     if (index < 0) index = 0;
     SetVideoTitle(getElement("titletext"), index);
 }
@@ -93,7 +90,13 @@ async function ShowPosts(posts) {
             FindSender (target.getElementsByClassName("commentsendertext")[0],did);  // show then profilename (asynchronous)  
             FitOneLine(target.getElementsByClassName("commentsendertext")[0])
             var deletebutton=target.getElementsByClassName("commentdelete")[0]
-            SetDeleteButton(deletebutton,posts[i].postId)            
+            SetDeleteButton(deletebutton,posts[i].postId)
+            var votecounter=target.getElementsByClassName("commentupvotecounter")[0]
+            votecounter.innerHTML = 0;            
+            var upvotebutton=target.getElementsByClassName("commentupvote")[0]
+            SetVoteButton(upvotebutton,posts[i].postId,true,votecounter);
+            var deletebutton=target.getElementsByClassName("commentdownvote")[0]
+            SetVoteButton(downvotebutton,posts[i].postId,true,votecounter);
         }
     }
     
@@ -120,7 +123,6 @@ async function SetDeleteButton(domid,postid) {
         console.log(currentThread);
         try {
           await currentThread.deletePost(postid);
-          UpdatePosts();
         } catch (error) {
           console.log(error);
         }
@@ -141,3 +143,24 @@ async function PostComment() {
         console.log(error);
       }
 }  
+
+async function SetVoteButton(domid,postid,upordownvote,votecounter) { 
+    domid.addEventListener('animatedclick',VoteMessage)
+    
+    async function VoteMessage() {
+        if(upordownvote) {
+            try {
+                votecounter = votecounter + 1;
+              } catch (error) {
+                console.log(error);
+              }
+        }
+        else {
+            try {
+            votecounter = votecounter - 1;
+            } catch (error) {
+            console.log(error);
+            }
+        }
+    }
+}
