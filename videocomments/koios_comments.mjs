@@ -95,7 +95,7 @@ async function ShowPosts(posts) {
             votecounter.innerHTML = 0;            
             var upvotebutton=target.getElementsByClassName("commentupvote")[0]
             SetVoteButton(upvotebutton,posts[i].postId,true,votecounter);
-            var deletebutton=target.getElementsByClassName("commentdownvote")[0]
+            var downvotebutton=target.getElementsByClassName("commentdownvote")[0]
             SetVoteButton(downvotebutton,posts[i].postId,true,votecounter);
         }
     }
