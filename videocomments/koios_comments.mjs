@@ -150,14 +150,15 @@ async function SetVoteButton(domid,postid,upordownvote,votecounter) {
     async function VoteMessage() {
         if(upordownvote) {
             try {
-                votecounter = votecounter + 1;
+                votecounter.innerHTML = votecounter.innerHTML + 1;
+                
               } catch (error) {
                 console.log(error);
               }
         }
         else {
             try {
-            votecounter = votecounter - 1;
+                votecounter.innerHTML = votecounter.innerHTML - 1;
             } catch (error) {
             console.log(error);
             }
