@@ -9,7 +9,7 @@ let currentThread;
 var GlobalForumentryList = new DomList("forumentry");
 var GlobalThreadList = new DomList("threadentry");  
 const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
-const KoiosSpace = "koiostestspace";
+const KoiosSpace = "koiostestspace2";
 const ThreadNameForTest= "/orbitdb/zdpuAskcBtYNnpi2ZscLhL7pEQmzRscH5eSBLyConFYB6AP29/3box.thread.koiostestspace.testthread";
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
@@ -22,15 +22,17 @@ window.onerror = async function(message, source, lineno, colno, error) {   // es
 window.addEventListener('DOMContentLoaded', asyncloaded);
 
 async function asyncloaded() {
-    window.LOG='Verbose' // ipfs debug
+    //window.LOG='Verbose' // ipfs debug
     await authorize()
     box = await Box.openBox(getUserAddress(), getWeb3().givenProvider);    
+    await box.syncDone
     space = await box.openSpace(KoiosSpace);
     
     getElement("posttext").addEventListener('animatedclick',Input)
-    
+    console.log(space);
     UpdateSpace();
     ReadSpace();    
+    console.log("space after: ", space);
 }
 
 
@@ -41,6 +43,7 @@ async function CreateOpenThread(threadName, firstModerator) {
     var newThread = await space.joinThread(threadName, {
         firstModerator: firstModerator,
         members: false,
+        noAutoSub: false
     });
     console.log("new thread: ", newThread);
     await space.subscribeThread(newThread.address, {
