@@ -96,8 +96,7 @@ async function ShowPosts(posts) {
             
             var target = GlobalCommentList.AddListItem() // make new entry
             target.getElementsByClassName("commentmessagetext")[0].innerHTML = posts[i].message            
-            var posttime = target.getElementsByClassName("commenttimetext")[0]
-            SetTime((posts[i].timestamp * 1000), posttime.innerHTML);
+            target.getElementsByClassName("commenttimetext")[0].innerHTML = SetTime(posts[i].timestamp * 1000);
             
             target.id = posts[i].postId                                        // remember which postId's we've shown
             FindSender (target.getElementsByClassName("commentsendertext")[0],did,target.getElementsByClassName("userphoto")[0]);  // show then profilename (asynchronous)  
@@ -194,10 +193,9 @@ async function SetDownVoteButton(domid,postid,votecounter) {
     }
 }
 
-async function SetTime(timesettings, timestamp) {
+async function SetTime(timesettings) {
     var dateobject = new Date(timesettings);
     var hours = dateobject.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit'});
-    var day = dateobject.getDay();
-    var month = dateobject.getMonth();
-    timestamp = hours.concat("\n", day, "/", month);
+    var day = dateobject.toLocaleDateString('en-GB');
+    return hours.concat("\n", day);
 }
