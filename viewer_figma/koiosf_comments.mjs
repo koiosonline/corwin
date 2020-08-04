@@ -140,7 +140,6 @@ async function ShowPosts(posts) {
 async function SetDeleteButton(domid,postid) { 
     domid.addEventListener('animatedclick',DeleteForumEntry)
     
-    
     async function DeleteForumEntry() {
         console.log(currentThread);
         try {
@@ -173,13 +172,11 @@ async function PostComment() {
 }  
 
 async function SetUpVoteButton(domid,postid,votecounter) { 
-    domid.addEventListener('animatedclick',VoteMessage)
-    console.log("votecounter: ", votecounter)
+    domid.addEventListener('animatedclick',UpVoteMessage)
     
-    async function VoteMessage() {
+    async function UpVoteMessage() {
         try {
             votecounter = votecounter + 1
-            console.log("votecounter after: ", votecounter)
             await space.public.set(postid, votecounter)
         } catch (error) {
             console.log(error);
@@ -188,13 +185,12 @@ async function SetUpVoteButton(domid,postid,votecounter) {
 }
 
 async function SetDownVoteButton(domid,postid,votecounter) { 
-    domid.addEventListener('animatedclick',VoteMessage)
+    domid.addEventListener('animatedclick',DownVoteMessage)
     console.log("votecounter: ", votecounter)
     
-    async function VoteMessage() {
+    async function DownVoteMessage() {
         try {
             votecounter = votecounter - 1
-            console.log("votecounter after: ", votecounter)
             await space.public.set(postid, votecounter)
         } catch (error) {
             console.log(error);
