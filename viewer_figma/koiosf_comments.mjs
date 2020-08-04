@@ -116,7 +116,7 @@ async function ShowPosts(posts) {
             FitOneLine(target.getElementsByClassName("commenttimetext")[0])
             
             target.id = posts[i].postId                                        // remember which postId's we've shown
-            FindSender (target.getElementsByClassName("commentsendertext")[0],did);  // show then profilename (asynchronous)  
+            FindSender (target.getElementsByClassName("commentsendertext")[0],did,target.getElementsByClassName("userphoto")[0]);  // show then profilename (asynchronous)  
             FitOneLine(target.getElementsByClassName("commentsendertext")[0])
             var deletebutton=target.getElementsByClassName("commentdelete")[0]
             SetDeleteButton(deletebutton,posts[i].postId)
@@ -158,9 +158,20 @@ async function SetDeleteButton(domid,postid) {
     }
 }
 
-async function FindSender (target,did) {
+async function FindSender (target,did,profilepicture) {
     var profile = await Box.getProfile(did);
-    target.innerHTML = profile.name ? profile.name : did           
+    target.innerHTML = profile.name ? profile.name : did
+    if (profile.image) {
+        var imagecid=profile.image[0].contentUrl
+        imagecid=imagecid[`\/`]
+        console.log(imagecid);
+        profilepicture.innerHTML.src=await GetImageIPFS(imagecid)
+    }           
+}
+
+async function GetPicture (target,did) {
+    var picture = await Box.getProfile(did);
+
 }
 
 async function PostComment() {
