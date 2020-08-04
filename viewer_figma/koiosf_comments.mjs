@@ -92,7 +92,7 @@ async function ShowPosts(posts) {
         if (!document.getElementById(posts[i].postId) ){ // check if post is already shown
             console.log(posts[i]);
             var did=posts[i].author;           
-            console.log(`${i} ${posts[i].message} ${did} ${posttime.toString() }`)
+            console.log(`${i} ${posts[i].message} ${did}`)
             
             var target = GlobalCommentList.AddListItem() // make new entry
             target.getElementsByClassName("commentmessagetext")[0].innerHTML = posts[i].message            
