@@ -1,5 +1,3 @@
-//import { } from "../forum/3box.js"; 
-
 import { } from "../lib/3box.js"; // from "https://unpkg.com/3box/dist/3box.js"; // prevent rate errors
 
 import { getUserAddress, getWeb3Provider,authorize } from "./koiosf_login.mjs";
@@ -9,11 +7,9 @@ import {log} from '../lib/koiosf_log.mjs';
 let box;
 let space;
 let currentThread;
-let index = 0;
 var GlobalCommentList = new DomList("commententry");
 const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 const KoiosSpace = "koiostestspace2";
-var dummyvideos = new Array("1.1 Testvideo", "1.2 Testvideo2", "1.3 Testvideo3");
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -26,6 +22,8 @@ window.addEventListener('DOMContentLoaded', asyncloaded);
 
 async function ScrCommentMadeVisible() {
     console.log("In ScrCommentMadeVisible");
+
+    await initOrbitDB();
     
     await authorize()
     
@@ -43,7 +41,6 @@ async function ScrCommentMadeVisible() {
         target.style.whiteSpace ="pre";  
     }
 }    
-
 
 subscribe("web3providerfound",NextStep)
 
@@ -73,11 +70,6 @@ async function Init3box() {
 
 async function asyncloaded() {  
     LinkVisible("scr_comment" ,ScrCommentMadeVisible)   
-}
-    
-async function SetVideoTitle(target, index) {
-    target.innerHTML = dummyvideos[index];
-    WriteThread(target.innerHTML);
 }
 
 async function WriteThread(threadName) {
@@ -120,8 +112,7 @@ async function ShowPosts(posts) {
             FitOneLine(target.getElementsByClassName("commentsendertext")[0])
             var deletebutton=target.getElementsByClassName("commentdelete")[0]
             SetDeleteButton(deletebutton,posts[i].postId)
-            var votecounter=target.getElementsByClassName("commentupvotecounter")[0]
-            votecounter.innerHTML = 0;            
+            var votecounter=target.getElementsByClassName("commentupvotecounter")[0]          
             var upvotebutton=target.getElementsByClassName("commentupvote")[0]
             SetVoteButton(upvotebutton,posts[i].postId,true,votecounter);
             var downvotebutton=target.getElementsByClassName("commentdownvote")[0]
