@@ -197,5 +197,5 @@ async function SetTime(timesettings) {
     var dateobject = new Date(timesettings);
     var hours = dateobject.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit'});
     var day = dateobject.toLocaleDateString('en-GB');
-    return hours.concat("\n", day);
+    return hours.concat('\n', day);
 }
