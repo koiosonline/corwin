@@ -176,6 +176,7 @@ async function SetVoteButton(domid,postid,upordownvote,votecounter) {
         if(upordownvote) {
             try {
                 await space.public.set(postid, votecounter + 1)
+                votecounter = await space.public.get(postid)
               } catch (error) {
                 console.log(error);
               }
@@ -183,6 +184,7 @@ async function SetVoteButton(domid,postid,upordownvote,votecounter) {
         else {
             try {
                 await space.public.set(postid, votecounter + 1)
+                votecounter = await space.public.get(postid)
             } catch (error) {
             console.log(error);
             }
