@@ -3,7 +3,7 @@
 import { } from "../lib/3box.js"; // from "https://unpkg.com/3box/dist/3box.js"; // prevent rate errors
 
 import { getUserAddress, getWeb3Provider,authorize } from "./koiosf_login.mjs";
-import {DomList,getElement,FitOneLine,LinkVisible,subscribe} from '../lib/koiosf_util.mjs';
+import {DomList,getElement,FitOneLine,LinkVisible,subscribe,GetImageIPFS} from '../lib/koiosf_util.mjs';
 import {log} from '../lib/koiosf_log.mjs'; 
 
 let box;
