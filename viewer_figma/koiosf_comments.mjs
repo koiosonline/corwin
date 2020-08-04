@@ -201,7 +201,7 @@ async function SetTime(timesettings) {
     var minutes = dateobject.getMinutes();
     var day = dateobject.getDay();
     var month = dateobject.getMonth();
-    var timestamp = hours.concat(":", minutes, '\xa0', day,"/",month);
+    var timestamp = hours + ":" + minutes + '\xa0' + day + "/" + month;
 
     return timestamp;
 }
