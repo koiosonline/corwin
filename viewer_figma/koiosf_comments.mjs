@@ -93,7 +93,7 @@ async function ShowPosts(posts) {
             console.log(posts[i]);
             var did=posts[i].author;           
             posttime = await SetTime(posts[i].timestamp * 1000);
-            console.log(`${i} ${posts[i].message} ${did} ${date.toString() }`)
+            console.log(`${i} ${posts[i].message} ${did} ${posttime.toString() }`)
             
             var target = GlobalCommentList.AddListItem() // make new entry
             target.getElementsByClassName("commentmessagetext")[0].innerHTML = posts[i].message            
@@ -201,6 +201,7 @@ async function SetTime(timesettings) {
     var minutes = dateobject.getMinutes();
     var day = dateobject.getDay();
     var month = dateobject.getMonth();
-    
-    return hours.concat(":", minutes, '\xa0', day,"/",month);
+    var timestamp = hours.concat(":", minutes, '\xa0', day,"/",month);
+
+    return timestamp;
 }
