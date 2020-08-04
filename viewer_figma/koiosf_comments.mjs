@@ -92,16 +92,13 @@ async function ShowPosts(posts) {
         if (!document.getElementById(posts[i].postId) ){ // check if post is already shown
             console.log(posts[i]);
             var did=posts[i].author;           
-            var date = new Date(posts[i].timestamp * 1000);
-            var hours = date.toLocaleTimeString();
-            var dayofthemonth = hours.concat(" ", date.getDate(), "-", date.getMonth())
+            posttime = await SetTime(posts[i].timestamp * 1000);
             console.log(`${i} ${posts[i].message} ${did} ${date.toString() }`)
             
             var target = GlobalCommentList.AddListItem() // make new entry
             target.getElementsByClassName("commentmessagetext")[0].innerHTML = posts[i].message            
             
-            target.getElementsByClassName("commenttimetext")[0].innerHTML = dayofthemonth
-            FitOneLine(target.getElementsByClassName("commenttimetext")[0])
+            target.getElementsByClassName("commenttimetext")[0].innerHTML = posttime
             
             target.id = posts[i].postId                                        // remember which postId's we've shown
             FindSender (target.getElementsByClassName("commentsendertext")[0],did,target.getElementsByClassName("userphoto")[0]);  // show then profilename (asynchronous)  
@@ -196,4 +193,14 @@ async function SetDownVoteButton(domid,postid,votecounter) {
             console.log(error);
         }
     }
+}
+
+async function SetTime(timesettings) {
+    var dateobject = new Date(timesettings);
+    var hours = dateobject.getHours();
+    var minutes = dateobject.getMinutes();
+    var day = dateobject.getDay();
+    var month = dateobject.getMonth();
+    
+    return hours.concat(":", minutes, '\xa0', day,"/",month);
 }
