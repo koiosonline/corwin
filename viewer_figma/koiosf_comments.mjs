@@ -96,8 +96,8 @@ async function ShowPosts(posts) {
             
             var target = GlobalCommentList.AddListItem() // make new entry
             target.getElementsByClassName("commentmessagetext")[0].innerHTML = posts[i].message            
-            var timestamp = target.getElementsByClassName("commenttimetext")[0]
-            SetTime((posts[i].timestamp * 1000), timestamp.innerHTML);
+            var posttime = target.getElementsByClassName("commenttimetext")[0]
+            SetTime((posts[i].timestamp * 1000), posttime.innerHTML);
             
             target.id = posts[i].postId                                        // remember which postId's we've shown
             FindSender (target.getElementsByClassName("commentsendertext")[0],did,target.getElementsByClassName("userphoto")[0]);  // show then profilename (asynchronous)  
