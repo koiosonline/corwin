@@ -106,7 +106,7 @@ async function ShowPosts(posts) {
             var did=posts[i].author;           
             var date = new Date(posts[i].timestamp * 1000);
             var hours = date.toLocaleTimeString();
-            var dayofthemonth = `${hours} ${date.getDate}-${date.getMonth}`
+            var dayofthemonth = hours.concat(" ", date.getDate, "-", date.getMonth)
             console.log(`${i} ${posts[i].message} ${did} ${date.toString() }`)
             
             var target = GlobalCommentList.AddListItem() // make new entry
