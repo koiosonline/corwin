@@ -165,7 +165,7 @@ async function FindSender (target,did,profilepicture) {
         var imagecid=profile.image[0].contentUrl
         imagecid=imagecid[`\/`]
         console.log(imagecid);
-        profilepicture.innerHTML.src=await GetImageIPFS(imagecid)
+        profilepicture.src=await GetImageIPFS(imagecid)
     }           
 }
 
