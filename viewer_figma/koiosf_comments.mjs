@@ -10,7 +10,6 @@ let currentThread;
 var GlobalCommentList = new DomList("commententry");
 const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 const KoiosSpace = "koiostestspace2";
-const VoteSpace = "commentvotespace";
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -173,10 +172,11 @@ async function PostComment() {
 
 async function SetUpVoteButton(domid,postid,votecounter) { 
     domid.addEventListener('animatedclick',UpVoteMessage)
-    
+    console.log("before: ", votecounter)
     async function UpVoteMessage() {
         try {
             votecounter = votecounter + 1
+            console.log("after: ", votecounter)
             await space.public.set(postid, votecounter)
         } catch (error) {
             console.log(error);
@@ -186,10 +186,11 @@ async function SetUpVoteButton(domid,postid,votecounter) {
 
 async function SetDownVoteButton(domid,postid,votecounter) { 
     domid.addEventListener('animatedclick',DownVoteMessage)
-    
+    console.log("before: ", votecounter)
     async function DownVoteMessage() {
         try {
             votecounter = votecounter - 1
+            console.log("after: ", votecounter)
             await space.public.set(postid, votecounter)
         } catch (error) {
             console.log(error);
