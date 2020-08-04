@@ -175,7 +175,7 @@ async function SetUpVoteButton(domid,postid,votecounter) {
     console.log("before: ", votecounter)
     async function UpVoteMessage() {
         try {
-            votecounter = votecounter + 1
+            votecounter = parseInt(votecounter) + 1
             console.log("after: ", votecounter)
             await space.public.set(postid, votecounter)
         } catch (error) {
@@ -189,7 +189,7 @@ async function SetDownVoteButton(domid,postid,votecounter) {
     console.log("before: ", votecounter)
     async function DownVoteMessage() {
         try {
-            votecounter = votecounter - 1
+            votecounter = parseInt(votecounter) - 1
             console.log("after: ", votecounter)
             await space.public.set(postid, votecounter)
         } catch (error) {
