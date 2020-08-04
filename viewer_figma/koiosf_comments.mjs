@@ -50,6 +50,25 @@ async function NextStep() {
     init3boxpromise=Init3box();    
 }   
 
+async function initOrbitDB() {
+    const IPFS = require('ipfs')
+    const OrbitDB = require('orbit-db')
+
+    // Create IPFS instance
+    const ipfs = new IPFS(ipfsOptions)
+
+    ipfs.on('ready', async () => {
+    // Create OrbitDB instance
+    const orbitdb = await OrbitDB.createInstance(ipfs)
+    })
+
+    const ipfs = new IPFS()
+    ipfs.on('ready', async () => {
+        const orbitdb = await OrbitDB.createInstance(ipfs)
+        const db = await orbitdb.keyvalue('comment-scores')
+    })
+    console.log("database: ", db);
+}
 
 async function Init3box() {
     console.log("Init3box");
@@ -158,11 +177,6 @@ async function FindSender (target,did,profilepicture) {
         console.log(imagecid);
         profilepicture.src=await GetImageIPFS(imagecid)
     }           
-}
-
-async function GetPicture (target,did) {
-    var picture = await Box.getProfile(did);
-
 }
 
 async function PostComment() {
