@@ -112,7 +112,7 @@ async function ShowPosts(posts) {
             var target = GlobalCommentList.AddListItem() // make new entry
             target.getElementsByClassName("commentmessagetext")[0].innerHTML = posts[i].message            
             FitOneLine(target.getElementsByClassName("commentmessagetext")[0])
-            target.getElementsByClassName("commenttimetext")[0].innerHTML = concat(hours, day)
+            target.getElementsByClassName("commenttimetext")[0].innerHTML = hours
             FitOneLine(target.getElementsByClassName("commenttimetext")[0])
             
             target.id = posts[i].postId                                        // remember which postId's we've shown
