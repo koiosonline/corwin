@@ -92,7 +92,7 @@ async function ShowPosts(posts) {
         if (!document.getElementById(posts[i].postId) ){ // check if post is already shown
             console.log(posts[i]);
             var did=posts[i].author;           
-            posttime = await SetTime(posts[i].timestamp * 1000);
+            posttime = SetTime(posts[i].timestamp * 1000);
             console.log(`${i} ${posts[i].message} ${did} ${posttime.toString() }`)
             
             var target = GlobalCommentList.AddListItem() // make new entry
