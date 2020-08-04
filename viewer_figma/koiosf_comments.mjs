@@ -99,7 +99,7 @@ async function ShowPosts(posts) {
             
             var target = GlobalCommentList.AddListItem() // make new entry
             target.getElementsByClassName("commentmessagetext")[0].innerHTML = posts[i].message            
-            FitOneLine(target.getElementsByClassName("commentmessagetext")[0])
+            
             target.getElementsByClassName("commenttimetext")[0].innerHTML = dayofthemonth
             FitOneLine(target.getElementsByClassName("commenttimetext")[0])
             
