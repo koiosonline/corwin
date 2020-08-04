@@ -110,7 +110,7 @@ async function ShowPosts(posts) {
             var deletebutton=target.getElementsByClassName("commentdelete")[0]
             SetDeleteButton(deletebutton,posts[i].postId)
             var votecounter=target.getElementsByClassName("commentupvotecounter")[0]
-            if(space.public.get(posts[i].postId) == undefined) await space.public.set(postid, 0)     
+            if(space.public.get(posts[i].postId) == "undefined") await space.public.set(postid, 0)     
             votecounter.innerHTML = await space.public.get(posts[i].postId)  
             var upvotebutton=target.getElementsByClassName("commentupvote")[0]
             SetVoteButton(upvotebutton,posts[i].postId,true,votecounter.innerHTML);
@@ -171,6 +171,7 @@ async function PostComment() {
 
 async function SetVoteButton(domid,postid,upordownvote,votecounter) { 
     domid.addEventListener('animatedclick',VoteMessage)
+    console.log("votecounter: ", votecounter)
     
     async function VoteMessage() {
         if(upordownvote) {
