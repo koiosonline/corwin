@@ -116,9 +116,9 @@ async function ShowPosts(posts) {
                 votecounter.innerHTML = 0
             }  
             var upvotebutton=target.getElementsByClassName("commentupvote")[0]
-            SetVoteButton(upvotebutton,posts[i].postId,true,votecounter.innerHTML);
+            SetUpVoteButton(upvotebutton,posts[i].postId,votecounter.innerHTML);
             var downvotebutton=target.getElementsByClassName("commentdownvote")[0]
-            SetVoteButton(downvotebutton,posts[i].postId,false,votecounter.innerHTML);
+            SetDownVoteButton(downvotebutton,posts[i].postId,votecounter.innerHTML);
         }
     }
     
@@ -172,27 +172,32 @@ async function PostComment() {
       }
 }  
 
-async function SetVoteButton(domid,postid,upordownvote,votecounter) { 
+async function SetUpVoteButton(domid,postid,votecounter) { 
     domid.addEventListener('animatedclick',VoteMessage)
     console.log("votecounter: ", votecounter)
     
     async function VoteMessage() {
-        if(upordownvote) {
-            try {
-                votecounter = votecounter + 1
-                console.log("votecounter after: ", votecounter)
-                await space.public.set(postid, votecounter)
-              } catch (error) {
-                console.log(error);
-              }
-        }
-        else {
-            try {
-                votecounter = votecounter - 1
-                await space.public.set(postid, votecounter)
-            } catch (error) {
+        try {
+            votecounter = votecounter + 1
+            console.log("votecounter after: ", votecounter)
+            await space.public.set(postid, votecounter)
+        } catch (error) {
             console.log(error);
-            }
+        }
+    }
+}
+
+async function SetDownVoteButton(domid,postid,votecounter) { 
+    domid.addEventListener('animatedclick',VoteMessage)
+    console.log("votecounter: ", votecounter)
+    
+    async function VoteMessage() {
+        try {
+            votecounter = votecounter - 1
+            console.log("votecounter after: ", votecounter)
+            await space.public.set(postid, votecounter)
+        } catch (error) {
+            console.log(error);
         }
     }
 }
