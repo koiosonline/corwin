@@ -9,11 +9,9 @@ import {log} from '../lib/koiosf_log.mjs';
 let box;
 let space;
 let currentThread;
-let index = 0;
 var GlobalCommentList = new DomList("commententry");
 const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 const KoiosSpace = "koiostestspace2";
-var dummyvideos = new Array("1.1 Testvideo", "1.2 Testvideo2", "1.3 Testvideo3");
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -73,11 +71,6 @@ async function Init3box() {
 
 async function asyncloaded() {  
     LinkVisible("scr_comment" ,ScrCommentMadeVisible)   
-}
-    
-async function SetVideoTitle(target, index) {
-    target.innerHTML = dummyvideos[index];
-    WriteThread(target.innerHTML);
 }
 
 async function WriteThread(threadName) {
