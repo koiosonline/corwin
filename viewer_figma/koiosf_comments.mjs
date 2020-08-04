@@ -196,9 +196,8 @@ async function SetDownVoteButton(domid,postid,votecounter) {
 
 async function SetTime(timesettings, timestamp) {
     var dateobject = new Date(timesettings);
-    var hours = dateobject.getHours().toString();
-    var minutes = dateobject.getMinutes();
+    var hours = dateobject.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit'});
     var day = dateobject.getDay();
     var month = dateobject.getMonth();
-    timestamp = hours.concat(":", minutes, "\n", day, "/", month);
+    timestamp = hours.concat("\n", day, "/", month);
 }
