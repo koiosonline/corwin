@@ -105,14 +105,13 @@ async function ShowPosts(posts) {
             console.log(posts[i]);
             var did=posts[i].author;           
             var date = new Date(posts[i].timestamp * 1000);
-            var hours = date.getHours();
-            var day = date.getDate();
+            var hours = date.toLocaleTimeString();
             console.log(`${i} ${posts[i].message} ${did} ${date.toString() }`)
             
             var target = GlobalCommentList.AddListItem() // make new entry
             target.getElementsByClassName("commentmessagetext")[0].innerHTML = posts[i].message            
             FitOneLine(target.getElementsByClassName("commentmessagetext")[0])
-            target.getElementsByClassName("commenttimetext")[0].innerHTML = hours, day
+            target.getElementsByClassName("commenttimetext")[0].innerHTML = hours
             FitOneLine(target.getElementsByClassName("commenttimetext")[0])
             
             target.id = posts[i].postId                                        // remember which postId's we've shown
