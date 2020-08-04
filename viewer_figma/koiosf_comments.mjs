@@ -113,9 +113,9 @@ async function ShowPosts(posts) {
             await space.public.set(posts[i].postId, 0);        
             votecounter.innerHTML = await space.public.get(posts[i].postId)  
             var upvotebutton=target.getElementsByClassName("commentupvote")[0]
-            SetVoteButton(upvotebutton,posts[i].postId,true,votecounter);
+            SetVoteButton(upvotebutton,posts[i].postId,true,votecounter.innerHTML);
             var downvotebutton=target.getElementsByClassName("commentdownvote")[0]
-            SetVoteButton(downvotebutton,posts[i].postId,false,votecounter);
+            SetVoteButton(downvotebutton,posts[i].postId,false,votecounter.innerHTML);
         }
     }
     
