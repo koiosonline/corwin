@@ -61,7 +61,10 @@ async function initOrbitDB() {
     // Create OrbitDB instance
     const orbitdb = await OrbitDB.createInstance(ipfs)
     })
+    InitDatabase();
+}
 
+async function InitDatabase() {
     const ipfs = new IPFS()
     ipfs.on('ready', async () => {
         const orbitdb = await OrbitDB.createInstance(ipfs)
