@@ -177,6 +177,7 @@ async function SetVoteButton(domid,postid,upordownvote,votecounter) {
         if(upordownvote) {
             try {
                 votecounter = votecounter + 1
+                console.log("votecounter after: ", votecounter)
                 await space.public.set(postid, votecounter)
               } catch (error) {
                 console.log(error);
