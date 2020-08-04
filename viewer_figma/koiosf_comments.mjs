@@ -51,15 +51,6 @@ async function NextStep() {
     init3boxpromise=Init3box();    
 }   
 
-async function InitDatabase() {
-    const ipfs = new IPFS()
-    ipfs.on('ready', async () => {
-        const orbitdb = await OrbitDB.createInstance(ipfs)
-        const db = await orbitdb.keyvalue('comment-scores')
-    })
-    console.log("database: ", db);
-}
-
 async function Init3box() {
     console.log("Init3box");
     var ga=getUserAddress()
@@ -120,7 +111,8 @@ async function ShowPosts(posts) {
             FitOneLine(target.getElementsByClassName("commentsendertext")[0])
             var deletebutton=target.getElementsByClassName("commentdelete")[0]
             SetDeleteButton(deletebutton,posts[i].postId)
-            var votecounter=target.getElementsByClassName("commentupvotecounter")[0]        
+            var votecounter=target.getElementsByClassName("commentupvotecounter")[0]
+            await space.public.set(posts[i].postId, 0);        
             votecounter.innerHTML = await space.public.get(posts[i].postId)  
             var upvotebutton=target.getElementsByClassName("commentupvote")[0]
             SetVoteButton(upvotebutton,posts[i].postId,true,votecounter);
