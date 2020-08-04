@@ -10,6 +10,7 @@ let currentThread;
 var GlobalCommentList = new DomList("commententry");
 const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
 const KoiosSpace = "koiostestspace2";
+const VoteSpace = "commentvotespace";
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -50,20 +51,6 @@ async function NextStep() {
     init3boxpromise=Init3box();    
 }   
 
-async function initOrbitDB() {
-    const IPFS = require('ipfs')
-    const OrbitDB = require('orbit-db')
-
-    // Create IPFS instance
-    const ipfs = new IPFS(ipfsOptions)
-
-    ipfs.on('ready', async () => {
-    // Create OrbitDB instance
-    const orbitdb = await OrbitDB.createInstance(ipfs)
-    })
-    InitDatabase();
-}
-
 async function InitDatabase() {
     const ipfs = new IPFS()
     ipfs.on('ready', async () => {
@@ -86,7 +73,6 @@ async function Init3box() {
     console.log("after syncdone");
     space = await box.openSpace(KoiosSpace);
     console.log("after openspace");
-
 }
 
 
@@ -134,11 +120,12 @@ async function ShowPosts(posts) {
             FitOneLine(target.getElementsByClassName("commentsendertext")[0])
             var deletebutton=target.getElementsByClassName("commentdelete")[0]
             SetDeleteButton(deletebutton,posts[i].postId)
-            var votecounter=target.getElementsByClassName("commentupvotecounter")[0]          
+            var votecounter=target.getElementsByClassName("commentupvotecounter")[0]        
+            votecounter.innerHTML = await space.public.get(posts[i].postId)  
             var upvotebutton=target.getElementsByClassName("commentupvote")[0]
             SetVoteButton(upvotebutton,posts[i].postId,true,votecounter);
             var downvotebutton=target.getElementsByClassName("commentdownvote")[0]
-            SetVoteButton(downvotebutton,posts[i].postId,true,votecounter);
+            SetVoteButton(downvotebutton,posts[i].postId,false,votecounter);
         }
     }
     
@@ -198,15 +185,14 @@ async function SetVoteButton(domid,postid,upordownvote,votecounter) {
     async function VoteMessage() {
         if(upordownvote) {
             try {
-                votecounter.innerHTML = votecounter.innerHTML + 1;
-                
+                await space.public.set(postid, votecounter + 1)
               } catch (error) {
                 console.log(error);
               }
         }
         else {
             try {
-                votecounter.innerHTML = votecounter.innerHTML - 1;
+                await space.public.set(postid, votecounter + 1)
             } catch (error) {
             console.log(error);
             }
