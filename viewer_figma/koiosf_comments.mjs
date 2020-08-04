@@ -23,8 +23,6 @@ window.addEventListener('DOMContentLoaded', asyncloaded);
 
 async function ScrCommentMadeVisible() {
     console.log("In ScrCommentMadeVisible");
-
-    await initOrbitDB();
     
     await authorize()
     
