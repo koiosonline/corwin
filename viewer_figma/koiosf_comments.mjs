@@ -174,16 +174,16 @@ async function SetVoteButton(domid,postid,upordownvote,votecounter) {
     async function VoteMessage() {
         if(upordownvote) {
             try {
-                await space.public.set(postid, votecounter + 1)
-                votecounter = await space.public.get(postid)
+                votecounter = votecounter + 1
+                await space.public.set(postid, votecounter)
               } catch (error) {
                 console.log(error);
               }
         }
         else {
             try {
-                await space.public.set(postid, votecounter + 1)
-                votecounter = await space.public.get(postid)
+                votecounter = votecounter - 1
+                await space.public.set(postid, votecounter)
             } catch (error) {
             console.log(error);
             }
