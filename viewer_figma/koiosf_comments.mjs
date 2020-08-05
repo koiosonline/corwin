@@ -164,6 +164,7 @@ async function SetDeleteButton(domid,postid) {
         console.log(currentThread);
         try {
           await currentThread.deletePost(postid);
+          await ShowPosts(postid, true);
         } catch (error) {
           console.log(error);
         }
@@ -199,6 +200,7 @@ async function SetUpVoteButton(domid,postid,votecounter) {
             votecounter = parseInt(votecounter) + 1
             console.log("after: ", votecounter)
             await space.public.set(postid, votecounter)
+            await ShowPosts(postid, false, true);
         } catch (error) {
             console.log(error);
         }
@@ -213,6 +215,7 @@ async function SetDownVoteButton(domid,postid,votecounter) {
             votecounter = parseInt(votecounter) - 1
             console.log("after: ", votecounter)
             await space.public.set(postid, votecounter)
+            await ShowPosts(postid, false, true);
         } catch (error) {
             console.log(error);
         }
