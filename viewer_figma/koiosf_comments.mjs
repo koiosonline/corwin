@@ -101,7 +101,7 @@ async function WriteThread(vidinfo) {
 /*
  * Show the posts in the interface
  */
-async function ShowPosts(posts, deletion, voting) {
+async function ShowPosts(posts) {
     deletion = deletion || false;
     voting = voting || false;
 
@@ -131,17 +131,6 @@ async function ShowPosts(posts, deletion, voting) {
             var downvotebutton=target.getElementsByClassName("commentdownvote")[0]
             SetDownVoteButton(downvotebutton,posts[i].postId,votecounter.innerHTML);
         }
-
-        if(deletion) {
-            GlobalCommentList.remove(posts);
-        }
-
-        if(voting) {
-            var target = GlobalCommentList
-            target.id = posts
-            var votecounter=target.getElementsByClassName("commentupvotecounter")[0]    
-            votecounter.innerHTML = await space.public.get(posts)
-        }
     }
     
     var postdomids=document.getElementsByClassName("commententry");
@@ -166,7 +155,6 @@ async function SetDeleteButton(domid,postid) {
         console.log(currentThread);
         try {
           await currentThread.deletePost(postid);
-          await ShowPosts(postid, true);
         } catch (error) {
           console.log(error);
         }
@@ -202,7 +190,6 @@ async function SetUpVoteButton(domid,postid,votecounter) {
             votecounter = parseInt(votecounter) + 1
             console.log("after: ", votecounter)
             await space.public.set(postid, votecounter)
-            await ShowPosts(postid, false, true);
         } catch (error) {
             console.log(error);
         }
@@ -217,7 +204,6 @@ async function SetDownVoteButton(domid,postid,votecounter) {
             votecounter = parseInt(votecounter) - 1
             console.log("after: ", votecounter)
             await space.public.set(postid, votecounter)
-            await ShowPosts(postid, false, true);
         } catch (error) {
             console.log(error);
         }
