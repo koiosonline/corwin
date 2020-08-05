@@ -137,7 +137,9 @@ async function ShowPosts(posts, deletion, voting) {
         }
 
         if(voting) {
-            var votecounter=GlobalCommentList.getElementsByClassName("commentupvotecounter")[0]    
+            var target = GlobalCommentList
+            target.id = posts[i].postId
+            var votecounter=target.getElementsByClassName("commentupvotecounter")[0]    
             votecounter.innerHTML = await space.public.get(posts[i].postId)
         }
     }
