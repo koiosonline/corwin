@@ -20,23 +20,22 @@ window.onerror = async function(message, source, lineno, colno, error) {   // es
 
 window.addEventListener('DOMContentLoaded', asyncloaded);
 
+async function asyncloaded() {  
+    LinkVisible("scr_comment" ,ScrCommentMadeVisible)   
+    getElement("posttext").addEventListener('animatedclick',PostComment)    
+    var target=getElement("commenttext")    
+    target.contentEditable="true"; // make div editable
+    target.style.whiteSpace ="pre";  
+}
+
 async function ScrCommentMadeVisible() {
     console.log("In ScrCommentMadeVisible");
     
     await authorize()
-    
+    console.log(init3boxpromise);
     await init3boxpromise;
-    
-    
-    var titletext="test thread"
-    
     if (space) { // else no connection to 3box
-        WriteThread(titletext);
-        getElement("titletext").innerHTML=titletext   
-        getElement("posttext").addEventListener('animatedclick',PostComment)    
-        var target=getElement("commenttext")    
-        target.contentEditable="true"; // make div editable
-        target.style.whiteSpace ="pre";  
+        WriteThread(currentvideo)       
     }
 }    
 
@@ -45,8 +44,9 @@ subscribe("web3providerfound",NextStep)
 var init3boxpromise;
 
 async function NextStep() {
-    init3boxpromise=Init3box();    
-}   
+    init3boxpromise=Init3box();  
+    console.log(init3boxpromise);
+}     
 
 async function Init3box() {
     console.log("Init3box");
@@ -55,25 +55,39 @@ async function Init3box() {
     console.log(ga)
     console.log(pr);
     console.log("Start openbox")
+    console.log(Box);
     box = await Box.openBox(ga,pr);    
     console.log("after openbox");
-    await box.syncDone
+   // await box.syncDone
     console.log("after syncdone");
+    console.log(box);
     space = await box.openSpace(KoiosSpace);
-    console.log("after openspace");
+    console.log("after openspace");  
 }
 
+subscribe("loadvideo",NewVideo) 
 
-async function asyncloaded() {  
-    LinkVisible("scr_comment" ,ScrCommentMadeVisible)   
+var currentvideo;
+
+async function NewVideo(vidinfo) {
+    console.log(`new video ${vidinfo.videoid}`)        
+    currentvideo=vidinfo
+    if (!space) return; //  no connection to 3box yet; fixed elsewhere
+    WriteThread(currentvideo)
 }
 
-async function WriteThread(threadName) {
+async function WriteThread(vidinfo) {
+    getElement("titletext").innerHTML=vidinfo.txt   
     GlobalCommentList.EmptyList();
-    currentThread = await space.joinThread(threadName, {
+    
+   // remove previous onUpdate & onNewCapabilities ??   
+    currentThread = await space.joinThread(vidinfo.videoid, {
         firstModerator: Moderator
     });
-
+    
+    console.log("currentThread");
+    console.log(currentThread);
+    
     currentThread.onUpdate(async () => {
         var uposts = await currentThread.getPosts()
         await ShowPosts(uposts);
