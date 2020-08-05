@@ -101,7 +101,10 @@ async function WriteThread(vidinfo) {
 /*
  * Show the posts in the interface
  */
-async function ShowPosts(posts) {
+async function ShowPosts(posts, deletion, voting) {
+    deletion = deletion || false;
+    voting = voting || false;
+
     for (var i=0;i<posts.length;i++) {        
         if (!document.getElementById(posts[i].postId) ){ // check if post is already shown
             console.log(posts[i]);
@@ -127,6 +130,15 @@ async function ShowPosts(posts) {
             SetUpVoteButton(upvotebutton,posts[i].postId,votecounter.innerHTML);
             var downvotebutton=target.getElementsByClassName("commentdownvote")[0]
             SetDownVoteButton(downvotebutton,posts[i].postId,votecounter.innerHTML);
+        }
+
+        if(deletion) {
+            GlobalCommentList.remove(posts);
+        }
+
+        if(voting) {
+            var votecounter=GlobalCommentList.getElementsByClassName("commentupvotecounter")[0]    
+            votecounter.innerHTML = await space.public.get(posts[i].postId)
         }
     }
     
