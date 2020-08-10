@@ -104,6 +104,7 @@ async function WriteThread(vidinfo) {
 async function ShowPosts(posts, deletion, voting) {
     deletion = deletion || false;
     voting = voting || false;
+    console.log(voting);
 
     for (var i=0;i<posts.length;i++) {        
         if (!document.getElementById(posts[i].postId) ){ // check if post is already shown
@@ -209,6 +210,7 @@ async function SetDownVoteButton(domid,post,votecounter) {
             votecounter = parseInt(votecounter) - 1
             console.log("after: ", votecounter)
             await space.public.set(post.postId, votecounter)
+            ShowPosts(post, false, true)
         } catch (error) {
             console.log(error);
         }
