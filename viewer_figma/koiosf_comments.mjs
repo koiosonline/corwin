@@ -136,11 +136,14 @@ async function ShowPosts(posts) {
     for (var i=0;i<postdomids.length;i++) {
         
         console.log("domid: ", postdomids[i])
+        
         var checkpostid=postdomids[i].id;
         console.log(`checkpostid=${checkpostid}`);
         var found=false;
         for (var j=0;j<posts.length;j++) {
-            if (posts[j].postId == checkpostid) { 
+            if (posts[j].postId == checkpostid) 
+            {
+                postdomids[i].children.commentupvotecounter.innerHTML=await space.public.get(posts[j].postId) 
                 found=true;break; 
             }
         }
