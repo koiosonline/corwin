@@ -132,20 +132,16 @@ async function ShowPosts(posts) {
     }
     
     var postdomids=document.getElementsByClassName("commententry");
-    //console.log(postdomids);
+    console.log("domids: ", postdomids)
     for (var i=0;i<postdomids.length;i++) {
         
+        console.log("domid: ", postdomids[i])
         var checkpostid=postdomids[i].id;
         console.log(`checkpostid=${checkpostid}`);
         var found=false;
-        if(posts.length <= 1 && posts.postId == checkpostid) {
-            postdomids[i].votecounter.innerHTML= await space.public.get(posts.postId);
-        }
-        else {
-            for (var j=0;j<posts.length;j++) {
-                if (posts[j].postId == checkpostid) { 
-                    found=true;break; 
-                }
+        for (var j=0;j<posts.length;j++) {
+            if (posts[j].postId == checkpostid) { 
+                found=true;break; 
             }
         }
         if (!found)
