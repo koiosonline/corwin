@@ -101,10 +101,7 @@ async function WriteThread(vidinfo) {
 /*
  * Show the posts in the interface
  */
-async function ShowPosts(posts, deletion, voting) {
-    deletion = deletion || false;
-    voting = voting || false;
-    console.log(voting);
+async function ShowPosts(posts) {
 
     for (var i=0;i<posts.length;i++) {        
         if (!document.getElementById(posts[i].postId) ){ // check if post is already shown
@@ -132,10 +129,6 @@ async function ShowPosts(posts, deletion, voting) {
             var downvotebutton=target.getElementsByClassName("commentdownvote")[0]
             SetDownVoteButton(downvotebutton,posts[i],votecounter.innerHTML);
         }
-
-        if (voting) {  
-            console.log("list: ", GlobalCommentList)
-        }
     }
     
     var postdomids=document.getElementsByClassName("commententry");
@@ -146,7 +139,10 @@ async function ShowPosts(posts, deletion, voting) {
         console.log(`checkpostid=${checkpostid}`);
         var found=false;
         for (var j=0;j<posts.length;j++) {
-            if (posts[j].postId == checkpostid) { found=true;break; }
+            if (posts[j].postId == checkpostid) { 
+                checkpostid.votecounter.innerHTML= await space.public.get(posts[j].postId)
+                found=true;break; 
+            }
         }
         if (!found)
             postdomids[i].style.textDecoration="line-through";   
@@ -195,7 +191,6 @@ async function SetUpVoteButton(domid,post,votecounter) {
             votecounter = parseInt(votecounter) + 1
             console.log("after: ", votecounter)
             await space.public.set(post.postId, votecounter)
-            ShowPosts(post, false, true)
         } catch (error) {
             console.log(error);
         }
@@ -210,7 +205,6 @@ async function SetDownVoteButton(domid,post,votecounter) {
             votecounter = parseInt(votecounter) - 1
             console.log("after: ", votecounter)
             await space.public.set(post.postId, votecounter)
-            ShowPosts(post, false, true)
         } catch (error) {
             console.log(error);
         }
