@@ -138,9 +138,9 @@ async function ShowPosts(posts) {
         var checkpostid=postdomids[i].id;
         console.log(`checkpostid=${checkpostid}`);
         var found=false;
+        if(posts.postId == checkpostid) {postdomids[i].votecounter.innerHTML= await space.public.get(posts[j].postId);}
         for (var j=0;j<posts.length;j++) {
             if (posts[j].postId == checkpostid) { 
-                postdomids[i].votecounter.innerHTML= await space.public.get(posts[j].postId)
                 found=true;break; 
             }
         }
@@ -191,6 +191,7 @@ async function SetUpVoteButton(domid,post,votecounter) {
             votecounter = parseInt(votecounter) + 1
             console.log("after: ", votecounter)
             await space.public.set(post.postId, votecounter)
+            ShowPosts(post);
         } catch (error) {
             console.log(error);
         }
@@ -205,6 +206,7 @@ async function SetDownVoteButton(domid,post,votecounter) {
             votecounter = parseInt(votecounter) - 1
             console.log("after: ", votecounter)
             await space.public.set(post.postId, votecounter)
+            ShowPosts(post);
         } catch (error) {
             console.log(error);
         }
