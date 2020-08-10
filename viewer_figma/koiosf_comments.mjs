@@ -140,7 +140,7 @@ async function ShowPosts(posts) {
         var found=false;
         for (var j=0;j<posts.length;j++) {
             if (posts[j].postId == checkpostid) { 
-                checkpostid.votecounter.innerHTML= await space.public.get(posts[j].postId)
+                postdomids[i].votecounter.innerHTML= await space.public.get(posts[j].postId)
                 found=true;break; 
             }
         }
