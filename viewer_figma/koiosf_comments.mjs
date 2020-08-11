@@ -8,8 +8,11 @@ let box;
 let space;
 let currentThread;
 var GlobalCommentList = new DomList("commententry");
-const Moderator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2";
-const KoiosSpace = "koiostestspace2";
+const FirstModerator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2"; //For making the initial thread 
+const Moderators = [
+    "0x5C84209877934c61047100121C70a4CF68Ec270E"
+]
+const KoiosSpace = "koiosvideocomments";
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
     console.log("In onerror");
@@ -82,8 +85,11 @@ async function WriteThread(vidinfo) {
     
    // remove previous onUpdate & onNewCapabilities ??   
     currentThread = await space.joinThread(vidinfo.videoid, {
-        firstModerator: Moderator
+        firstModerator: FirstModerator
     });
+    for(var i = 0; i < Moderators.length; i++) {
+        currentThread.addModerator(Moderators[i]);
+    }
     
     console.log("currentThread");
     console.log(currentThread);
