@@ -131,9 +131,9 @@ async function ShowPosts(posts) {
                 votecounter.innerHTML = 0
             }  
             var upvotebutton=target.getElementsByClassName("commentupvote")[0]
-            SetUpVoteButton(upvotebutton,posts[i],votecounter.innerHTML);
+            SetUpVoteButton(upvotebutton,posts[i],votecounter.innerHTML,did);
             var downvotebutton=target.getElementsByClassName("commentdownvote")[0]
-            SetDownVoteButton(downvotebutton,posts[i],votecounter.innerHTML);
+            SetDownVoteButton(downvotebutton,posts[i],votecounter.innerHTML,did);
         }
     }
     
@@ -192,30 +192,48 @@ async function PostComment() {
       }
 }  
 
-async function SetUpVoteButton(domid,post,votecounter) { 
+async function SetUpVoteButton(domid,post,votecounter,did) { 
     domid.addEventListener('animatedclick',UpVoteMessage)
     console.log("before: ", votecounter)
     async function UpVoteMessage() {
         try {
-            votecounter = parseInt(votecounter) + 1
-            console.log("after: ", votecounter)
-            await space.public.set(post.postId, votecounter)
-            ShowPosts(post);
+            if(space.public.get(did) == post.postId) {
+                votecounter = parseInt(votecounter) - 1
+                console.log("after: ", votecounter)
+                await space.public.set(post.postId, votecounter)
+                await space.public.set(did, "not voted")
+            }
+            else {
+                votecounter = parseInt(votecounter) + 1
+                console.log("after: ", votecounter)
+                await space.public.set(post.postId, votecounter)
+                await space.public.set(did, post.postId)
+                ShowPosts(post);
+            }
         } catch (error) {
             console.log(error);
         }
     }
 }
 
-async function SetDownVoteButton(domid,post,votecounter) { 
+async function SetDownVoteButton(domid,post,votecounter,did) { 
     domid.addEventListener('animatedclick',DownVoteMessage)
     console.log("before: ", votecounter)
     async function DownVoteMessage() {
         try {
-            votecounter = parseInt(votecounter) - 1
-            console.log("after: ", votecounter)
-            await space.public.set(post.postId, votecounter)
-            ShowPosts(post);
+            if(space.public.get(did) == post.postId) {
+                votecounter = parseInt(votecounter) + 1
+                console.log("after: ", votecounter)
+                await space.public.set(post.postId, votecounter)
+                await space.public.set(did, "not voted")
+            }
+            else {
+                votecounter = parseInt(votecounter) - 1
+                console.log("after: ", votecounter)
+                await space.public.set(post.postId, votecounter)
+                await space.public.set(did, post.postId)
+                ShowPosts(post);
+            }
         } catch (error) {
             console.log(error);
         }
