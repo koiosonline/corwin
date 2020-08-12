@@ -10,7 +10,7 @@ let currentThread;
 var GlobalCommentList = new DomList("commententry");
 const FirstModerator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2"; //For making the initial thread 
 const Moderators = [
-    "0x5C84209877934c61047100121C70a4CF68Ec270E"
+    "0x8e2A89fF2F45ed7f8C8506f846200D671e2f176f"
 ]
 const KoiosSpace = "koiostestspace2";
 
