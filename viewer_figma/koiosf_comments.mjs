@@ -9,9 +9,6 @@ let space;
 let currentThread;
 var GlobalCommentList = new DomList("commententry");
 const FirstModerator="0xe88cAc4e10C4D316E0d52B82dd54f26ade3f0Bb2"; //For making the initial thread 
-const Moderators = [
-    "0x8e2A89fF2F45ed7f8C8506f846200D671e2f176f"
-]
 const KoiosSpace = "koiostestspace2";
 
 window.onerror = async function(message, source, lineno, colno, error) {   // especially for ios
@@ -86,12 +83,6 @@ async function WriteThread(vidinfo) {
     currentThread = await space.joinThread(vidinfo.videoid, {
         firstModerator: FirstModerator
     });
-    for(var i = 0; i < Moderators.length; i++) {
-        currentThread.addModerator(Moderators[i]);
-    }
-    
-    console.log("currentThread");
-    console.log(currentThread);
     
     currentThread.onUpdate(async () => {
         var uposts = await currentThread.getPosts()
