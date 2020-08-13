@@ -143,7 +143,8 @@ async function ShowPosts(posts) {
         var checkpostid=postdomids[i].id;
         console.log(`checkpostid=${checkpostid}`);
         var found=false;
-        if (posts.length == 1 && posts.postId == checkpostid) {
+        console.log("length: ", posts.length)
+        if (posts.postId == checkpostid) {
             postdomids[i].getElementsByClassName("commentupvotecountertext")[0].innerHTML = await space.public.get(posts.postId);
             console.log("upvotes: ", await space.public.get(posts.postId));
         }
