@@ -147,7 +147,7 @@ async function ShowPosts(posts) {
             if (posts[j].postId == checkpostid) 
             {
                 postdomids[i].getElementsByClassName("commentupvotecountertext")[0].innerHTML = await space.public.get(posts[i].postId)
-                console.log(await space.public.get(posts[i].postId))
+                console.log("upvotes: ", await space.public.get(posts[i].postId))
                 found=true;break; 
             }
         }
@@ -202,12 +202,14 @@ async function SetUpVoteButton(domid,post,votecounter,did) {
                 console.log("after: ", votecounter)
                 await space.public.set(post.postId, votecounter)
                 await space.public.set(did, "not voted")
+                ShowPosts(post)
             }
             else {
                 votecounter = parseInt(votecounter) + 1
                 console.log("after: ", votecounter)
                 await space.public.set(post.postId, votecounter)
                 await space.public.set(did, post.postId)
+                ShowPosts(post)
             }
         } catch (error) {
             console.log(error);
@@ -225,6 +227,7 @@ async function SetDownVoteButton(domid,post,votecounter,did) {
                 console.log("after: ", votecounter)
                 await space.public.set(post.postId, votecounter)
                 await space.public.set(did, "not voted")
+                ShowPosts(post)
             }
             else {
                 votecounter = parseInt(votecounter) - 1
