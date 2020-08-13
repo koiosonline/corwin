@@ -124,16 +124,16 @@ async function ShowPosts(posts) {
             FitOneLine(target.getElementsByClassName("commentsendertext")[0])
             var deletebutton=target.getElementsByClassName("commentdelete")[0]
             SetDeleteButton(deletebutton,posts[i].postId)
-            var votecounter=target.getElementsByClassName("commentupvotecounter")[0]    
+            var votecounter=target.getElementsByClassName("commentupvotecountertext")[0]    
             votecounter.innerHTML = await space.public.get(posts[i].postId)
             if (votecounter.innerHTML === 'undefined') {
                 await space.public.set(posts[i].postId, 0)
                 votecounter.innerHTML = 0
             }  
             var upvotebutton=target.getElementsByClassName("commentupvote")[0]
-            SetUpVoteButton(upvotebutton,posts[i],votecounter.innerHTML,did);
+            SetUpVoteButton(upvotebutton,posts[i],votecounter,did);
             var downvotebutton=target.getElementsByClassName("commentdownvote")[0]
-            SetDownVoteButton(downvotebutton,posts[i],votecounter.innerHTML,did);
+            SetDownVoteButton(downvotebutton,posts[i],votecounter,did);
         }
     }
     
