@@ -147,6 +147,7 @@ async function ShowPosts(posts) {
             if (posts[j].postId == checkpostid) 
             {
                 postdomids[i].getElementsByClassName("commentupvotecountertext")[0].innerHTML = await space.public.get(posts[i].postId)
+                console.log(await space.public.get(posts[i].postId))
                 found=true;break; 
             }
         }
