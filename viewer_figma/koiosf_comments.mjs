@@ -80,8 +80,7 @@ async function NewVideo(vidinfo) {
 }
 
 async function WriteThread(vidinfo) {
-    getElement("titletext").innerHTML=vidinfo.txt   
-    GlobalCommentList.EmptyList();
+    getElement("titletext").innerHTML=vidinfo.txt
     
    // remove previous onUpdate & onNewCapabilities ??   
     currentThread = await space.joinThread(vidinfo.videoid, {
@@ -139,21 +138,20 @@ async function ShowPosts(posts) {
     
     var postdomids=document.getElementsByClassName("commententry");
     for (var i=0;i<postdomids.length;i++) {
-        console.log("domid: ", postdomids[i])
         var checkpostid=postdomids[i].id;
-        console.log(`checkpostid=${checkpostid}`);
         var found=false;
-        console.log("length: ", posts.length)
+        
         if (posts.postId == checkpostid) {
             postdomids[i].getElementsByClassName("commentupvotecountertext")[0].innerHTML = await space.public.get(posts.postId);
-            console.log("upvotes: ", await space.public.get(posts.postId));
         }
+
         for (var j=0;j<posts.length;j++) {
             if (posts[j].postId == checkpostid) 
             {
                 found=true;break; 
             }
         }
+
         if (!found)
             postdomids[i].style.textDecoration="line-through";   
     }   
@@ -195,25 +193,12 @@ async function PostComment() {
 
 async function SetUpVoteButton(domid,post,votecounter,did) { 
     domid.addEventListener('animatedclick',UpVoteMessage)
-    console.log("before: ", votecounter)
     async function UpVoteMessage() {
         try {
-            console.log("did key: ", space.public.get(did))
-            console.log("postid: ", post.postId)
-            if(space.public.get(did) == post.postId) {
-                votecounter = parseInt(votecounter) - 1
-                console.log("after: ", votecounter)
-                await space.public.set(post.postId, votecounter)
-                await space.public.set(did, "not voted")
-                ShowPosts(post)
-            }
-            else {
-                votecounter = parseInt(votecounter) + 1
-                console.log("after: ", votecounter)
-                await space.public.set(post.postId, votecounter)
-                await space.public.set(did, post.postId)
-                ShowPosts(post)
-            }
+            votecounter = parseInt(votecounter) + 1
+            await space.public.set(post.postId, votecounter)
+            await space.public.set(did, post.postId)
+            ShowPosts(post)
         } catch (error) {
             console.log(error);
         }
@@ -222,23 +207,12 @@ async function SetUpVoteButton(domid,post,votecounter,did) {
 
 async function SetDownVoteButton(domid,post,votecounter,did) { 
     domid.addEventListener('animatedclick',DownVoteMessage)
-    console.log("before: ", votecounter)
     async function DownVoteMessage() {
         try {
-            if(space.public.get(did) == post.postId) {
-                votecounter = parseInt(votecounter) + 1
-                console.log("after: ", votecounter)
-                await space.public.set(post.postId, votecounter)
-                await space.public.set(did, "not voted")
-                ShowPosts(post)
-            }
-            else {
-                votecounter = parseInt(votecounter) - 1
-                console.log("after: ", votecounter)
-                await space.public.set(post.postId, votecounter)
-                await space.public.set(did, post.postId)
-                ShowPosts(post);
-            }
+            votecounter = parseInt(votecounter) + 1
+            await space.public.set(post.postId, votecounter)
+            await space.public.set(did, "not voted")
+            ShowPosts(post)   
         } catch (error) {
             console.log(error);
         }
