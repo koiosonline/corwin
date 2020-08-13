@@ -143,9 +143,9 @@ async function ShowPosts(posts) {
         var checkpostid=postdomids[i].id;
         console.log(`checkpostid=${checkpostid}`);
         var found=false;
-        if (posts.postId == checkpostid) {
-            postdomids[i].getElementsByClassName("commentupvotecountertext")[0].innerHTML = await space.public.get(posts[i].postId);
-            console.log("upvotes: ", await space.public.get(posts[i].postId));
+        if (posts.length == 1 && posts.postId == checkpostid) {
+            postdomids[i].getElementsByClassName("commentupvotecountertext")[0].innerHTML = await space.public.get(posts.postId);
+            console.log("upvotes: ", await space.public.get(posts.postId));
         }
         for (var j=0;j<posts.length;j++) {
             if (posts[j].postId == checkpostid) 
