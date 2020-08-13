@@ -133,9 +133,9 @@ async function ShowPosts(posts) {
                 votecounter.innerHTML = 0
             }  
             var upvotebutton=target.getElementsByClassName("commentupvote")[0]
-            SetUpVoteButton(upvotebutton,posts[i],votecounter,did);
+            SetUpVoteButton(upvotebutton,posts[i],votecounter.innerHTML,did);
             var downvotebutton=target.getElementsByClassName("commentdownvote")[0]
-            SetDownVoteButton(downvotebutton,posts[i],votecounter,did);
+            SetDownVoteButton(downvotebutton,posts[i],votecounter.innerHTML,did);
         }
     }
     
