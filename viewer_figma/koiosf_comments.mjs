@@ -138,18 +138,15 @@ async function ShowPosts(posts) {
     }
     
     var postdomids=document.getElementsByClassName("commententry");
-    console.log("domids: ", postdomids)
     for (var i=0;i<postdomids.length;i++) {
-        
         console.log("domid: ", postdomids[i])
-        
         var checkpostid=postdomids[i].id;
         console.log(`checkpostid=${checkpostid}`);
         var found=false;
         for (var j=0;j<posts.length;j++) {
             if (posts[j].postId == checkpostid) 
             {
-                postdomids[i].children.commentupvotecounter.innerHTML=await space.public.get(posts[j].postId) 
+
                 found=true;break; 
             }
         }
@@ -197,6 +194,8 @@ async function SetUpVoteButton(domid,post,votecounter,did) {
     console.log("before: ", votecounter)
     async function UpVoteMessage() {
         try {
+            console.log("did key: ", space.public.get(did))
+            console.log("postid: ", post.postId)
             if(space.public.get(did) == post.postId) {
                 votecounter = parseInt(votecounter) - 1
                 console.log("after: ", votecounter)
